@@ -1,0 +1,3 @@
+﻿  Assembling CheckWord.asm...
+CheckWord.asm(6): warning A4011: multiple .MODEL directives found : .MODEL ignored
+  Project.vcxproj -> C:\Irvine\examples\Wordle\Debug\Project.exe
