@@ -1,0 +1,8 @@
+# Rules in this file were initially inferred by Visual Studio IntelliCode from the Z:\Project32_VS2019 codebase based on best match to current usage at 2/17/2022
+# You can modify the rules from these initially generated values to suit your own policies
+# You can learn more about editorconfig here: https://docs.microsoft.com/en-us/visualstudio/ide/editorconfig-code-style-settings-reference
+[*.asm, *.inc]
+indent_style = space
+indent_size = 4
+insert_final_newline = true
+trim_trailing_whitespace = true
