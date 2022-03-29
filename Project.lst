@@ -1,9 +1,12 @@
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    03/24/22 23:11:57
-CheckWord.asm						     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.29.30141.0	    03/29/22 15:28:12
+main.asm						     Page 1 - 1
 
 
-				; AddTwo.asm - adds two 32-bit integers.
-				; Chapter 3 example
+				.386
+				.model flat,stdcall
+				.stack 4096
+				ExitProcess PROTO, dwExitCode:DWORD
+
 				INCLUDE Irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
 			      C 
@@ -11,6 +14,8 @@ CheckWord.asm						     Page 1 - 1
 			      C 
 			      C INCLUDE SmallWin.inc		; MS-Windows prototypes, structures, and constants
 			      C .NOLIST
+			      C .MODEL flat, stdcall
+c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .MODEL ignored
 			      C .LIST
 			      C 
 			      C INCLUDE VirtualKeys.inc
@@ -22,25 +27,48 @@ CheckWord.asm						     Page 1 - 1
 			      C .NOLIST
 			      C .LIST
 			      C 
-
-				.386
-				.model flat,stdcall
-CheckWord.asm(6) : warning A4011:multiple .MODEL directives found : .MODEL ignored
-				.stack 4096
-				ExitProcess proto,dwExitCode:dword
+ 00000000			.data
+ 00000000 77 68 69 63 68	wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other",0,"words",0,"could",0,"write",0,"first",0,"water",0,"after",0,"where",0,"right",0,"think",0,"three", 0
+	   00 74 68 65 72
+	   65 00 74 68 65
+	   69 72 00 61 62
+	   6F 75 74 00 77
+	   6F 75 6C 64 00
+	   74 68 65 73 65
+	   00 6F 74 68 65
+	   72 00 77 6F 72
+	   64 73 00 63 6F
+	   75 6C 64 00 77
+	   72 69 74 65 00
+	   66 69 72 73 74
+	   00 77 61 74 65
+	   72 00 61 66 74
+	   65 72 00 77 68
+	   65 72 65 00 72
+	   69 67 68 74 00
+	   74 68 69 6E 6B
+	   00 74 68 72 65
+	   65 00
 
  00000000			.code
- 00000000			main proc
- 00000000  B8 00000005			mov	eax,5				
- 00000005  83 C0 06			add	eax,6				
-
-					invoke ExitProcess,0
- 00000008  6A 00	   *	    push   +000000000h
- 0000000A  E8 00000000 E   *	    call   ExitProcess
- 0000000F			main endp
-				end main
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    03/24/22 23:11:57
-CheckWord.asm						     Symbols 2 - 1
+ 00000000			main PROC PUBLIC
+ 00000000  B9 00000011		    mov ecx, 17
+ 00000005  BE 00000000		    mov esi, 0
+ 0000000A  BA 00000000 R	    mov edx, OFFSET wordlist
+ 0000000F			    WordlistLoop:
+				        ;// mov edx, OFFSET wordlist
+ 0000000F  E8 00000000 E	        call WriteString
+ 00000014  E8 00000000 E	        call Crlf
+ 00000019  83 C2 06		        add edx, 6 * SIZEOF BYTE
+ 0000001C  46			        inc esi
+ 0000001D  E2 F0		        loop WordlistLoop
+				    INVOKE ExitProcess, 0
+ 0000001F  6A 00	   *	    push   +000000000h
+ 00000021  E8 00000000 E   *	    call   ExitProcess
+ 00000026			main ENDP
+				END main
+Microsoft (R) Macro Assembler Version 14.29.30141.0	    03/29/22 15:28:12
+main.asm						     Symbols 2 - 1
 
 
 
@@ -132,9 +160,9 @@ Segments and Groups:
                 N a m e                 Size     Length   Align   Combine Class
 
 FLAT . . . . . . . . . . . . . .	GROUP
-STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000000F Para	  Public  'CODE'	
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000066 DWord	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000026 DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -241,7 +269,8 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000000F Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000026 Public STDCALL
+  WordlistLoop . . . . . . . . .	L Near	 0000000F _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -476,6 +505,7 @@ lightRed . . . . . . . . . . . .	Number	 0000000Ch
 magenta  . . . . . . . . . . . .	Number	 00000005h   
 red  . . . . . . . . . . . . . .	Number	 00000004h   
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
+wordlist . . . . . . . . . . . .	Byte	 00000000 _DATA	
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
