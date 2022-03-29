@@ -2,8 +2,12 @@ INCLUDE logic.inc
 
 .code
 ;// outputs pointer to random word in wordlist to act as word chooser
-SelectRandomWord PROC
-
+SelectRandomWord PROC USES eax
+    mov eax, 18
+    call RandomRange
+    mov edx, OFFSET wordlist
+    add edx, 6 * eax * SIZEOF BYTE
+    ret
 SelectRandomWord ENDP
 ;// gets the number of different characters
 CheckDifference PROC, word1: BYTE, word2: BYTE
