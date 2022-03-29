@@ -9,6 +9,7 @@ wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other
 
 .code
 main PROC PUBLIC
+    call Randomize
     mov ecx, 17
     mov esi, 0
     mov edx, OFFSET wordlist
