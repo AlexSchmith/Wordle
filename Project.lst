@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30141.0	    03/29/22 15:28:12
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    03/30/22 13:20:06
 main.asm						     Page 1 - 1
 
 
@@ -26,6 +26,22 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
 			      C 
 			      C .NOLIST
 			      C .LIST
+			      C 
+				INCLUDE graphics.inc
+			      C 
+			      C 
+			      C 
+			      C ; wod = word of day
+			      C ; iterate through the word and for each char return 
+			      C CheckWord PROTO, current_word: BYTE, wod: BYTE
+			      C 
+			      C ; Takes in the result of a character and the character itself
+			      C ; color_bg is 0 for not in word, 1 for in word, and 2 for in correct position and in word
+			      C DisplayChar PROTO, color_bg: BYTE, char: BYTE
+			      C ; Changes the background and sets the cursor to the right position
+			      C SetDisplay PROTO
+			      C 
+			      C OPTION PROC:PRIVATE
 			      C 
  00000000			.data
  00000000 77 68 69 63 68	wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other",0,"words",0,"could",0,"write",0,"first",0,"water",0,"after",0,"where",0,"right",0,"think",0,"three", 0
@@ -67,7 +83,7 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
  00000021  E8 00000000 E   *	    call   ExitProcess
  00000026			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 14.29.30141.0	    03/29/22 15:28:12
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    03/30/22 13:20:06
 main.asm						     Symbols 2 - 1
 
 
@@ -169,6 +185,7 @@ Procedures, parameters, and locals:
 
                 N a m e                 Type     Value    Attr
 
+CheckWord  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 CloseFile  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 CloseHandle  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Clrscr . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -176,6 +193,7 @@ CreateFileA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 CreateOutputFile . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Crlf . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Delay  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+DisplayChar  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 DumpMem  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 DumpRegs . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -239,6 +257,7 @@ SetConsoleScreenBufferSize . . .	P Near	 00000000 FLAT	Length= 00000000 External
 SetConsoleTextAttribute  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleTitleA . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleWindowInfo . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+SetDisplay . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetFilePointer . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetLocalTime . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetTextColor . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL

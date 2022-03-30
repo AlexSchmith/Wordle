@@ -1,5 +1,7 @@
 ; CheckWord.asm - checks word to see if it is a wordle.
 INCLUDE Irvine32.inc
+;INCLUDE logic.inc
+INCLUDE graphics.inc
 
 .386
 .model flat,stdcall
@@ -7,10 +9,12 @@ INCLUDE Irvine32.inc
 ExitProcess proto,dwExitCode:dword
 
 .code
-main proc
+graphics proc
 	mov	eax,5				
 	add	eax,6				
 
 	invoke ExitProcess,0
-main endp
-end main
+graphics endp
+
+
+end 
