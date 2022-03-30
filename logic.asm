@@ -12,14 +12,14 @@ SelectRandomWord PROC USES eax
 SelectRandomWord ENDP
 ;// gets the number of different characters
 CheckDifference PROC, word1: BYTE, word2: BYTE
-
+    ret
 CheckDifference ENDP
 ;// check if letter is in word
 CharInWord PROC, char: BYTE, WordCheck: BYTE
-
+    ret
 CharInWord ENDP
 ;// check if letter in same spot
 CharInSamePos PROC, word1: BYTE, word2: BYTE, pos: BYTE
-
+    ret
 CharInSamePos ENDP
 END
