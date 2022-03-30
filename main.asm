@@ -3,7 +3,9 @@
 .stack 4096
 ExitProcess PROTO, dwExitCode:DWORD
 
-INCLUDE Irvine32.inc
+INCLUDE irvine32.inc
+INCLUDE logic.inc
+
 .data
 wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other",0,"words",0,"could",0,"write",0,"first",0,"water",0,"after",0,"where",0,"right",0,"think",0,"three", 0
 
@@ -20,6 +22,8 @@ main PROC PUBLIC
         add edx, 6 * SIZEOF BYTE
         inc esi
         loop WordlistLoop
+    call SelectRandomWord
+    call WriteString
     INVOKE ExitProcess, 0
 main ENDP
 END main

@@ -1,3 +1,4 @@
+INCLUDE irvine32.inc
 INCLUDE logic.inc
 
 .code
