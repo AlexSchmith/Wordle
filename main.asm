@@ -15,19 +15,35 @@ tries BYTE 0
 
 .code
 main PROC PUBLIC
+    ;// start by getting random word
     call Randomize
-    mov ecx, 17
-    mov esi, 0
-    mov edx, OFFSET wordlist
-    WordlistLoop:
-        ;// mov edx, OFFSET wordlist
-        call WriteString
-        call Crlf
-        add edx, 6 * SIZEOF BYTE
-        inc esi
-        loop WordlistLoop
     call SelectRandomWord
-    call WriteString
-    INVOKE ExitProcess, 0
+    mov wod, edx
+    ;// setting display
+    call SetDisplay
+    LoopRows:
+        ;// getting word input
+        mov ecx, 5
+        mov edx, OFFSET bufferWord
+        call ReadString
+        ;// moving cursor back to beginning of line
+        call GotoXY ;// dont need to set position because theyre already set
+        call CheckWord bufferWord wod
+        CheckDifference bufferWord wod
+        je Winner
+        inc tries
+        cmp tries, 5
+        ;// move cursor down 1 row
+        inc DH
+        call GotoXY
+        jl LoopRows
+    ;// gone through tries, you have lost
+    call DisplayLoser
+    jmp End
+    Winner:
+        ;// looks like theyve won. Time to show it
+        call DisplayWinner
+    End:
+        INVOKE ExitProcess, 0
 main ENDP
 END main
