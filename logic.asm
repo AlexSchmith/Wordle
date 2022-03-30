@@ -7,7 +7,7 @@ SelectRandomWord PROC USES eax
     mov eax, 18
     call RandomRange
     mov edx, OFFSET wordlist
-    add edx, 6 * eax * SIZEOF BYTE
+    add edx, 6 * SIZEOF BYTE
     ret
 SelectRandomWord ENDP
 ;// gets the number of different characters
