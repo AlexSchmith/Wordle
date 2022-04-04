@@ -9,20 +9,41 @@ ExitProcess PROTO, dwExitCode: DWORD
 
 ; Function that checks each character in the word and displays them
 ; Uses esi for the wod and edi for the word
-CheckWord PROC uses esi edi, current_word: DWORD, wod: DWORD
+CheckWord PROC uses eax ecx esi edi, current_word: DWORD, wod: DWORD
 	
 	;use al for each individual char
 	mov ecx, 5
 	mov esi, current_word
+	mov edi, wod
 	WordLoop:
-		mov ah, [esi]
+		mov al, [esi]
+		push [edi]
+		push [esi]
+		call CharInSamePos
+	
+		jne NotCorrect
+		mov ebx, 2
+		jmp Display
+
+		NotCorrect:
+
+		push wod
+		push [esi]
+		call CharInWord
+		jne Wrong
+		mov ebx, 1
+		jmp Display
+		
+		Wrong:
+		mov ebx, 0
+	
+		Display:
 		push eax
-		mov ebx, 2 ; set to yellow
 		push ebx
 		call DisplayChar
 		inc esi
-
-		jmp WordLoop
+		inc edi
+		loop WordLoop
 
 	ret 
 CheckWord ENDP
@@ -37,7 +58,7 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
 	push eax
 	
 	Correct:
-		mov eax, white + (green * 16)
+		mov eax, white + (lightGreen * 16)
 		call SetTextColor
 		jmp print
 	Wrong:
@@ -45,12 +66,12 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
 		call SetTextColor
 		jmp print
 	InWord:
-		mov eax, white + (yellow* 16)
+		mov eax, white + (lightCyan * 16)
 		call SetTextColor
 	Print:
 		pop eax
 		call WriteChar
-		add DL, 5
+		add DL, 1
 		add DH, 0
 		call GotoXY
 		mov eax, black + (white * 16)
