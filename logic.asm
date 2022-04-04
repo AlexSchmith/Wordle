@@ -11,7 +11,16 @@ SelectRandomWord PROC USES eax
     ret
 SelectRandomWord ENDP
 ;// check if letter is in word
-CharInWord PROC, char: BYTE, WordCheck: BYTE
+CharInWord PROC USES eax ecx esi, Char: BYTE, WordCheck : DWORD
+    mov ecx, 5
+    mov esi, WordCheck
+    CharInWordLoop:
+        mov ah, [esi]
+        cmp ah, Char
+        je CharInWordEnd
+        inc esi
+        loop CharInWordLoop
+    CharInWordEnd:
     ret
 CharInWord ENDP
 ;// check if letter in same spot
