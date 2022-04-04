@@ -4,6 +4,6 @@ EXTERNDEF wordlist:BYTE
 ;// functions for logic
 SelectRandomWord PROTO ;// outputs pointer to random word in wordlist to act as word chooser
 CharInWord PROTO, Char: BYTE, WordCheck: DWORD ;// check if letter is in word
-CharInSamePos PROTO, word1: BYTE, word2: BYTE ;// check if letter in same spot
+CharInSamePos PROTO, Char1: BYTE, Char2 : BYTE ;// check if letter in same spot
 
 OPTION PROC:PRIVATE
