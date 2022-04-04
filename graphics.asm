@@ -5,6 +5,13 @@ INCLUDE graphics.inc
 
 ExitProcess PROTO, dwExitCode: DWORD
 
+.data
+
+winner BYTE 
+loser BYTE
+wordle BYTE
+
+
 .code
 
 ; Function that checks each character in the word and displays them
@@ -93,6 +100,19 @@ SetDisplay PROC
 	ret
 
 SetDisplay ENDP
+
+Winner PROC
+	
+Winner ENDP
+
+Loser PROC
+
+Loser ENDP
+
+Wordle PROC 
+
+Wordle ENDP
+
 
 
 END

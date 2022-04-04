@@ -12,5 +12,8 @@ DisplayChar PROTO, color_bg: BYTE, char: BYTE
 
 ; Changes the background and sets the cursor to the right position
 SetDisplay PROTO
+Winner PROTO
+Loser PROTO
+Wordle PROTO
 
 OPTION PROC:PRIVATE
