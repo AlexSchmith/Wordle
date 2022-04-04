@@ -9,7 +9,7 @@ INCLUDE graphics.inc
 
 .data
 wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other",0,"words",0,"could",0,"write",0,"first",0,"water",0,"after",0,"where",0,"right",0,"think",0,"three", 0
-wod BYTE 5 (?), 0
+wod DWORD (?)
 bufferWord BYTE 5 (?), 0
 tries BYTE 0
 
@@ -28,8 +28,12 @@ main PROC PUBLIC
         call ReadString
         ;// moving cursor back to beginning of line
         call GotoXY ;// dont need to set position because theyre already set
-        call CheckWord bufferWord wod
-        CheckDifference bufferWord wod
+        push wod
+        push OFFSET bufferWord
+        call CheckWord
+        push wod
+        push OFFSET bufferWord
+        call Str_compare
         je Winner
         inc tries
         cmp tries, 5
