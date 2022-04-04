@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 15:21:59
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 16:47:18
 graphics.asm						     Page 1 - 1
 
 
@@ -47,11 +47,51 @@ graphics.asm						     Page 1 - 1
 			      C 
 			      C ; Changes the background and sets the cursor to the right position
 			      C SetDisplay PROTO
+			      C Winner PROTO
+			      C Loser PROTO
+			      C Wordle PROTO
 			      C 
 			      C OPTION PROC:PRIVATE
 			      C 
 
 				ExitProcess PROTO, dwExitCode: DWORD
+
+ 00000000			.data
+
+ 00000000 00			rick BYTE ?
+
+
+ 00000001 00			nomaidens BYTE ?
+
+
+
+
+				wordy BYTE " ___ ", 0, "     ", 0, " __  ", 0, " ____", 0, "____ ", 0,
+graphics.asm(18) : error A2042:statement too complex
+				      BYTE " ____", 0, "____ ", 0, " ____", 0, "____ ", 0, " ___ ", 0,
+					  BYTE "     ", 0, " ____", 0, "___  ", 0, "     ",0,
+					  BYTE "||  \\", 0, "     ", 0, "|\\  \\", 0, "|\\   ", 0, "__  \\", 0,
+					  BYTE "|\\   ", 0, "__  \\", 0, "|\\   ", 0, "___ \\", 0, "|\\  \\", 0,
+					  BYTE "     ", 0, "|\\  _", 0, "__ \\ ", 0, "     ",0,
+graphics.asm(23) : error A2042:statement too complex
+					  BYTE "\\ \\  ", 0, "\\    ", 0, "\\ \\  ", 0, "\\ \\  ", 0,
+					  BYTE "\\|\\  ", 0, "\\ \\  ", 0, "\\|\\  ", 0, 
+					  BYTE "\\ \\  ", 0, "\\_|\\ ", 0, "\\ \\  ", 0,
+					  BYTE "\\    ", 0, "\\ \\  ", 0, " __/|", 0, "     ",0,
+					  BYTE " \\ \\ ", 0, " \\  _", 0, "_\\ \\ ", 0, " \\ \\ ", 0, 
+					  BYTE " \\\\\\ ", 0, " \\ \\ ", 0, "  _  ", 0, "_\\ \\ ", 0, 
+					  BYTE " \\ \\\\", 0, " \\ \\ ", 0, " \\   ", 0, " \\ \\ ", 0, " \\_|/", 0, "__   ",0,
+graphics.asm(30) : error A2042:statement too complex
+					  BYTE "  \\ \\", 0, "  \\|\\", 0, "__\\_\\", 0, "  \\ \\", 0,
+					  BYTE "  \\\\\\", 0, "  \\ \\", 0, "  \\\\ ", 0, " \\\\ \\", 0,
+					  BYTE "  \\_\\", 0, "\\ \\ \\", 0, "  \\__", 0, "__\\ \\", 0,
+					  BYTE "  \\_|", 0, "\\ \\  ",0,
+					  BYTE "   \\ ", 0, "\\____", 0, "_____", 0, "___\\ ", 0, "\\____", 0,
+					  ;BYTE "___\\ ", 0, "\\__\\\\", 0, " _\\\\ ", 0, "\\____", 0, "___\\ ", 0,
+					  ;BYTE "\\____", 0, "___\\ ", 0, "\\____", 0, "___\\ ",0,
+					  ;BYTE "    \\", 0, "|____", 0, "_____", 0, "___|\\", 0, "|____", 0, 
+					  ;BYTE "___|\\", 0, "|__|\\", 0, "|__|\\", 0, "|____", 0, "___|\\", 0, 
+					  ;BYTE "|____", 0, "___|\\", 0, "|____", 0, "___| ",0
 
  00000000			.code
 
@@ -147,8 +187,7 @@ graphics.asm						     Page 1 - 1
  000000A1  C2 0008	   *	    ret    00008h
 
  000000A4			DisplayChar ENDP
-graphics.asm(81) : warning A6004:procedure argument or local not referenced : color_bg
-graphics.asm(81) : warning A6004:procedure argument or local not referenced : char
+graphics.asm(115) : warning A6004:procedure argument or local not referenced : color_bg
 
 				; Setup display to set background color and move cursor to the right position
  000000A4			SetDisplay PROC
@@ -164,9 +203,36 @@ graphics.asm(81) : warning A6004:procedure argument or local not referenced : ch
 
  000000BD			SetDisplay ENDP
 
+ 000000BD			Winner PROC
+					
+					
+ 000000BD			Winner ENDP
+
+ 000000BD			Loser PROC
+
+ 000000BD			Loser ENDP
+
+ 000000BD			Wordle PROC 
+ 000000BD  B9 00000046			mov ecx, 70
+ 000000C2  BE 00000000			mov esi, 0
+					mov edx, OFFSET wordy
+graphics.asm(143) : error A2006:undefined symbol : wordy
+graphics.asm(143) : warning A6004:procedure argument or local not referenced : char
+
+ 000000D2				WordLoop:
+ 000000D2  E8 00000000 E			call WriteString
+ 000000D7  E8 00000000 E			call Crlf
+ 000000DC  83 C2 06				add edx, 6 * SIZEOF BYTE
+ 000000DF  46					inc esi
+						
+
+
+ 000000E0			Wordle ENDP
+
+
 
 				END
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 15:21:59
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 16:47:18
 graphics.asm						     Symbols 2 - 1
 
 
@@ -260,8 +326,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000000BD Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000002 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000000E0 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -325,6 +391,7 @@ HeapFree . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 HeapSize . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 IsDigit  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+Loser  . . . . . . . . . . . . .	P Near	 000000BD _TEXT	Length= 00000000 Public STDCALL
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBoxAsk  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBox . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -369,6 +436,9 @@ Str_trim . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 Str_ucase  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SystemTimeToFileTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WaitMsg  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+Winner . . . . . . . . . . . . .	P Near	 000000BD _TEXT	Length= 00000000 Public STDCALL
+Wordle . . . . . . . . . . . . .	P Near	 000000BD _TEXT	Length= 00000023 Public STDCALL
+  WordLoop . . . . . . . . . . .	L Near	 000000D2 _TEXT	
 WriteBinB  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteBin . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteChar  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -618,11 +688,13 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
+nomaidens  . . . . . . . . . . .	Byte	 00000001 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
+rick . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wordlist . . . . . . . . . . . .	Byte	 00000000 FLAT	External STDCALL
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
 	   2 Warnings
-	   0 Errors
+	   4 Errors
