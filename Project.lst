@@ -1,12 +1,8 @@
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    03/30/22 13:20:06
-main.asm						     Page 1 - 1
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 13:44:44
+graphics.asm						     Page 1 - 1
 
 
-				.386
-				.model flat,stdcall
-				.stack 4096
-				ExitProcess PROTO, dwExitCode:DWORD
-
+				; graphics.asm - module for all graphics
 				INCLUDE Irvine32.inc
 			      C ; Include file for Irvine32.lib             (Irvine32.inc)
 			      C 
@@ -14,8 +10,6 @@ main.asm						     Page 1 - 1
 			      C 
 			      C INCLUDE SmallWin.inc		; MS-Windows prototypes, structures, and constants
 			      C .NOLIST
-			      C .MODEL flat, stdcall
-c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .MODEL ignored
 			      C .LIST
 			      C 
 			      C INCLUDE VirtualKeys.inc
@@ -26,6 +20,18 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
 			      C 
 			      C .NOLIST
 			      C .LIST
+			      C 
+				INCLUDE logic.inc
+			      C ;// value for words
+			      C EXTERNDEF wordlist:BYTE
+			      C 
+			      C ;// functions for logic
+			      C SelectRandomWord PROTO ;// outputs pointer to random word in wordlist to act as word chooser
+			      C CheckDifference PROTO, word1: BYTE, word2: BYTE ;// gets the number of different characters
+			      C CharInWord PROTO, char: BYTE, WordCheck: BYTE ;// check if letter is in word
+			      C CharInSamePos PROTO, word1: BYTE, word2: BYTE, pos: BYTE ;// check if letter in same spot
+			      C 
+			      C OPTION PROC:PRIVATE
 			      C 
 				INCLUDE graphics.inc
 			      C 
@@ -38,53 +44,106 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
 			      C ; Takes in the result of a character and the character itself
 			      C ; color_bg is 0 for not in word, 1 for in word, and 2 for in correct position and in word
 			      C DisplayChar PROTO, color_bg: BYTE, char: BYTE
+			      C ;DisplayChar PROTO, uses eax edx
+			      C 
 			      C ; Changes the background and sets the cursor to the right position
 			      C SetDisplay PROTO
 			      C 
 			      C OPTION PROC:PRIVATE
 			      C 
- 00000000			.data
- 00000000 77 68 69 63 68	wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other",0,"words",0,"could",0,"write",0,"first",0,"water",0,"after",0,"where",0,"right",0,"think",0,"three", 0
-	   00 74 68 65 72
-	   65 00 74 68 65
-	   69 72 00 61 62
-	   6F 75 74 00 77
-	   6F 75 6C 64 00
-	   74 68 65 73 65
-	   00 6F 74 68 65
-	   72 00 77 6F 72
-	   64 73 00 63 6F
-	   75 6C 64 00 77
-	   72 69 74 65 00
-	   66 69 72 73 74
-	   00 77 61 74 65
-	   72 00 61 66 74
-	   65 72 00 77 68
-	   65 72 65 00 72
-	   69 67 68 74 00
-	   74 68 69 6E 6B
-	   00 74 68 72 65
-	   65 00
+
+				.386
+				.model flat,stdcall
+graphics.asm(7) : warning A4011:multiple .MODEL directives found : .MODEL ignored
+				.stack 4096
+				ExitProcess PROTO, dwExitCode: DWORD
 
  00000000			.code
- 00000000			main PROC PUBLIC
- 00000000  B9 00000011		    mov ecx, 17
- 00000005  BE 00000000		    mov esi, 0
- 0000000A  BA 00000000 R	    mov edx, OFFSET wordlist
- 0000000F			    WordlistLoop:
-				        ;// mov edx, OFFSET wordlist
- 0000000F  E8 00000000 E	        call WriteString
- 00000014  E8 00000000 E	        call Crlf
- 00000019  83 C2 06		        add edx, 6 * SIZEOF BYTE
- 0000001C  46			        inc esi
- 0000001D  E2 F0		        loop WordlistLoop
-				    INVOKE ExitProcess, 0
- 0000001F  6A 00	   *	    push   +000000000h
- 00000021  E8 00000000 E   *	    call   ExitProcess
- 00000026			main ENDP
-				END main
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    03/30/22 13:20:06
-main.asm						     Symbols 2 - 1
+
+				; Function that checks each character in the word and displays them
+				; Uses esi for the wod and edi for the word
+ 00000000			CheckWord PROC, current_word: BYTE, wod: BYTE
+ 00000000  55		   *	    push   ebp
+ 00000001  8B EC	   *	    mov    ebp, esp
+ 00000003  BE 00000000			mov esi, 0
+				    mov al, [testchar+esi]
+graphics.asm(17) : error A2006:undefined symbol : testchar
+ 00000008  50			    push eax
+				    mov ebx, testbg
+graphics.asm(19) : error A2006:undefined symbol : testbg
+ 00000009  53			    push ebx
+ 0000000A  E8 00000022		    call DisplayChar
+
+ 0000000F  B8 00000005			mov eax, 5
+ 00000014  83 C0 06			add eax, 6
+
+					ret 
+ 00000017  C9		   *	    leave  
+ 00000018  C2 0008	   *	    ret    00008h
+ 0000001B			CheckWord ENDP
+graphics.asm(27) : warning A6004:procedure argument or local not referenced : current_word
+graphics.asm(27) : warning A6004:procedure argument or local not referenced : wod
+
+				; Display the character and whether the character is in the word, in the right position or not in the word
+				; uses eax for color bg and esi for char
+ 0000001B			DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
+ 0000001B  55		   *	    push   ebp
+ 0000001C  8B EC	   *	    mov    ebp, esp
+ 0000001E  53		   *	    push   ebx
+ 0000001F  50		   *	    push   eax
+ 00000020  83 FB 00			cmp ebx, 0
+ 00000023  74 28			je wrong
+ 00000025  83 FB 01			cmp ebx, 1
+ 00000028  74 2F			je inword
+ 0000002A  50				push eax
+					
+ 00000041				correct:
+ 00000041  B8 0000002F				mov eax, white + (green * 16)
+ 00000046  E8 00000000 E			call SetTextColor
+ 0000004B  EB 16				jmp print
+ 0000004D				wrong:
+ 0000004D  B8 0000007F				mov eax, white + (lightGray * 16)
+ 00000052  E8 00000000 E			call SetTextColor
+ 00000057  EB 0A				jmp print
+ 00000059				inword:
+ 00000059  B8 000000EF				mov eax, white + (yellow* 16)
+ 0000005E  E8 00000000 E			call SetTextColor
+ 00000063				print:
+ 00000063  58					pop eax
+ 00000064  E8 00000000 E			call WriteChar
+ 00000069  80 C2 05				add DL, 5
+ 0000006C  80 C6 00				add DH, 0
+ 0000006F  E8 00000000 E			call GotoXY
+ 00000074  B8 000000F0				mov eax, black + (white * 16)
+ 00000079  E8 00000000 E			call SetTextColor
+						ret 
+ 0000007E  58		   *	    pop    eax
+ 0000007F  5B		   *	    pop    ebx
+ 00000080  C9		   *	    leave  
+ 00000081  C2 0008	   *	    ret    00008h
+
+ 00000084			DisplayChar ENDP
+graphics.asm(59) : warning A6004:procedure argument or local not referenced : color_bg
+graphics.asm(59) : warning A6004:procedure argument or local not referenced : char
+
+				; Setup display to set background color and move cursor to the right position
+ 00000084			SetDisplay PROC
+
+ 00000084  B8 000000F8			mov eax, Gray + (white * 16)
+ 00000089  E8 00000000 E		call SetTextColor
+ 0000008E  E8 00000000 E		call Clrscr
+ 00000093  B6 0A			mov DH, 10
+ 00000095  B2 1E		    mov DL, 30
+ 00000097  E8 00000000 E	    call    GotoXY
+					
+ 0000009C  C3				ret
+
+ 0000009D			SetDisplay ENDP
+
+
+				END
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 13:44:44
+graphics.asm						     Symbols 2 - 1
 
 
 
@@ -176,16 +235,21 @@ Segments and Groups:
                 N a m e                 Size     Length   Align   Combine Class
 
 FLAT . . . . . . . . . . . . . .	GROUP
-STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000066 DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000026 DWord	  Public  'CODE'	
+STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000000 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000009D Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
 
                 N a m e                 Type     Value    Attr
 
-CheckWord  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+CharInSamePos  . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+CharInWord . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+CheckDifference  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+CheckWord  . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000031 Public STDCALL
+  current_word . . . . . . . . .	Byte	 bp + 00000008
+  wod  . . . . . . . . . . . . .	Byte	 bp + 0000000C
 CloseFile  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 CloseHandle  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Clrscr . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -193,7 +257,13 @@ CreateFileA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 CreateOutputFile . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Crlf . . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 Delay  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-DisplayChar  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+DisplayChar  . . . . . . . . . .	P Near	 00000031 _TEXT	Length= 00000053 Public STDCALL
+  color_bg . . . . . . . . . . .	Byte	 bp + 00000008
+  char . . . . . . . . . . . . .	Byte	 bp + 0000000C
+  correct  . . . . . . . . . . .	L Near	 00000041 _TEXT	
+  wrong  . . . . . . . . . . . .	L Near	 0000004D _TEXT	
+  inword . . . . . . . . . . . .	L Near	 00000059 _TEXT	
+  print  . . . . . . . . . . . .	L Near	 00000063 _TEXT	
 DumpMem  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 DumpRegs . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ExitProcess  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -250,6 +320,7 @@ ReadInt  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 ReadKeyFlush . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ReadKey  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 ReadString . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+SelectRandomWord . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleCursorInfo . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleCursorPosition . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleMode . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -257,7 +328,7 @@ SetConsoleScreenBufferSize . . .	P Near	 00000000 FLAT	Length= 00000000 External
 SetConsoleTextAttribute  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleTitleA . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleWindowInfo . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-SetDisplay . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
+SetDisplay . . . . . . . . . . .	P Near	 00000084 _TEXT	Length= 00000019 Public STDCALL
 SetFilePointer . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetLocalTime . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetTextColor . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -288,8 +359,6 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000026 Public STDCALL
-  WordlistLoop . . . . . . . . .	L Near	 0000000F _TEXT	
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
@@ -524,9 +593,9 @@ lightRed . . . . . . . . . . . .	Number	 0000000Ch
 magenta  . . . . . . . . . . . .	Number	 00000005h   
 red  . . . . . . . . . . . . . .	Number	 00000004h   
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
-wordlist . . . . . . . . . . . .	Byte	 00000000 _DATA	
+wordlist . . . . . . . . . . . .	Byte	 00000000 FLAT	External STDCALL
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
-	   1 Warnings
-	   0 Errors
+	   5 Warnings
+	   2 Errors
