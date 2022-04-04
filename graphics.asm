@@ -12,21 +12,20 @@ ExitProcess PROTO, dwExitCode: DWORD
 
 ; Function that checks each character in the word and displays them
 ; Uses esi for the wod and edi for the word
-CheckWord PROC, current_word: BYTE, wod: BYTE
+CheckWord PROC uses esi edi, current_word: DWORD, wod: DWORD
 	
 	;use al for each individual char
 	mov ecx, 5
 	mov esi, current_word
 	WordLoop:
-		mov al, [esi]
+		mov ah, [esi]
 		push eax
-
-		mov ebx, 1
+		mov ebx, 2 ; set to yellow
 		push ebx
 		call DisplayChar
 		inc esi
 
-		jmp Loop
+		jmp WordLoop
 
 	ret 
 CheckWord ENDP

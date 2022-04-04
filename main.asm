@@ -12,12 +12,25 @@ wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other
 
 .code
 main PROC PUBLIC
+    call SetDisplay
     call Randomize
+
+    mov esi, OFFSET wordlist
+    mov edi, OFFSET wordlist
+    push esi
+    push edi
+    call CheckWord
+
+    mov edx, 0
+
+
+
     mov ecx, 17
     mov esi, 0
     mov edx, OFFSET wordlist
     WordlistLoop:
         ;// mov edx, OFFSET wordlist
+
         call WriteString
         call Crlf
         add edx, 6 * SIZEOF BYTE

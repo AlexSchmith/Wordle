@@ -20,6 +20,8 @@ CharInWord PROC USES eax ecx esi, Char: BYTE, WordCheck : DWORD
         je CharInWordEnd
         inc esi
         loop CharInWordLoop
+    CharNotInWordEnd:
+    ret
     CharInWordEnd:
     ret
 CharInWord ENDP
