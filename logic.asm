@@ -19,7 +19,9 @@ CharInWord PROC, char: BYTE, WordCheck: BYTE
     ret
 CharInWord ENDP
 ;// check if letter in same spot
-CharInSamePos PROC, word1: BYTE, word2: BYTE, pos: BYTE
+CharInSamePos PROC USES eax, word1: BYTE, word2 : BYTE
+    mov ah, word1
+    cmp ah, word2
     ret
 CharInSamePos ENDP
 END
