@@ -25,7 +25,7 @@ main PROC PUBLIC
     call SetDisplay
     LoopRows:
         ;// getting word input
-        mov ecx, 5
+        mov ecx, 6
         mov edx, OFFSET bufferWord
         call ReadString
         ;// moving cursor back to beginning of line
