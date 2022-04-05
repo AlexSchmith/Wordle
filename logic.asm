@@ -31,8 +31,8 @@ CharInWord PROC USES eax ecx esi, Char: BYTE, WordCheck : DWORD
 CharInWord ENDP
 ;// check if letter in same spot
 CharInSamePos PROC USES eax, Char1: BYTE, Char2 : BYTE
-    mov ah, word1
-    cmp ah, word2
+    mov ah, Char1
+    cmp ah, Char2
     ret
 CharInSamePos ENDP
 END
