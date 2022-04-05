@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 22:10:26
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 06:45:09
 graphics.asm						     Page 1 - 1
 
 
@@ -532,7 +532,7 @@ graphics.asm(117) : warning A6004:procedure argument or local not referenced : c
  00000124  E8 00000000 E		call SetTextColor
  00000129  E8 00000000 E		call ClrScr
 
- 0000012E  B8 000000FC			mov eax, lightRed + (white * 16)
+ 0000012E  B8 000000F2			mov eax, green + (white * 16)
  00000133  E8 00000000 E		call SetTextColor
 
  00000138  B6 05			mov DH, 5
@@ -741,7 +741,7 @@ graphics.asm(117) : warning A6004:procedure argument or local not referenced : c
 
 
 				END
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 22:10:26
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 06:45:09
 graphics.asm						     Symbols 2 - 1
 
 

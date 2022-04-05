@@ -175,7 +175,7 @@ Winner PROC
 	call SetTextColor
 	call ClrScr
 
-	mov eax, lightRed + (white * 16)
+	mov eax, green + (white * 16)
 	call SetTextColor
 
 	mov DH, 5
