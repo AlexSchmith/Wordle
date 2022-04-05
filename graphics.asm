@@ -7,7 +7,14 @@ ExitProcess PROTO, dwExitCode: DWORD
 
 .data
 
-rick BYTE ?
+winners BYTE "$$\     $$\                                                           ", 0
+winner1 BYTE "\$$\   $$  |                                                          ", 0
+winner2 BYTE " \$$\ $$  /$$$$$$\  $$\   $$\       $$\  $$\  $$\  $$$$$$\  $$$$$$$\  ", 0
+winner3 BYTE "  \$$$$  /$$  __$$\ $$ |  $$ |      $$ | $$ | $$ |$$  __$$\ $$  __$$\ ", 0
+winner4 BYTE "   \$$  / $$ /  $$ |$$ |  $$ |      $$ | $$ | $$ |$$ /  $$ |$$ |  $$ |", 0
+winner5 BYTE "    $$ |  $$ |  $$ |$$ |  $$ |      $$ | $$ | $$ |$$ |  $$ |$$ |  $$ |", 0
+winner6 BYTE "    $$ |  \$$$$$$  |\$$$$$$  |      \$$$$$\$$$$  |\$$$$$$  |$$ |  $$ |", 0
+winner7 BYTE "    \__|   \______/  \______/        \_____\____/  \______/ \__|  \__|", 0
 
 
 
@@ -28,7 +35,8 @@ nomaidens4 BYTE "| |\  | (_) | | |  | | (_| | | (_| |  __/ | | \__ \",0
 nomaidens5 BYTE "\_| \_/\___/  \_|  |_/\__,_|_|\__,_|\___|_| |_|___/",0
 nomaidens6 BYTE "                                                   ",0
 
-ending BYTE "Sorry. The Word of the Day was ",0 
+ending 	BYTE "Sorry. The Word of the Day was ",0 
+
 
 empty BYTE "MEME"  
 
@@ -163,7 +171,71 @@ SetDisplay ENDP
 
 
 Winner PROC
+	mov eax, white + (white * 16)
+	call SetTextColor
+	call ClrScr
+
+	mov eax, lightRed + (white * 16)
+	call SetTextColor
+
+	mov DH, 5
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET winners
+	call WriteString
+
+	mov DH, 6
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET winner1
+	call WriteString
+
+	mov DH, 7
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET winner2
+	call WriteString
 	
+	mov DH, 8
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET winner3
+	call WriteString
+	
+	mov DH, 9
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET winner4
+	call WriteString
+
+	mov DH, 10
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET winner5
+	call WriteString
+
+	mov DH, 11
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET winner6
+	call WriteString
+
+
+	mov DH, 12
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET winner7
+	call WriteString
+
+	ret
 	
 Winner ENDP
 

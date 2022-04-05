@@ -44,7 +44,10 @@ main PROC PUBLIC
     mov DL, 0
     call GotoXY
     call WaitMsg
-
+    call Winner
+    mov DH, 30
+    mov DL, 0
+    call GotoXY
  
     INVOKE ExitProcess, 0
 main ENDP

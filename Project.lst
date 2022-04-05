@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 21:39:04
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 22:10:26
 graphics.asm						     Page 1 - 1
 
 
@@ -46,8 +46,9 @@ graphics.asm						     Page 1 - 1
 			      C 
 			      C 
 			      C 
-			      C ; Changes the background and sets the cursor to the right position
+			      C ; Changes the background and sets the cursor to the right position also creates a box and ascii art
 			      C SetDisplay PROTO
+			      C ; ASCII art with results and title screen
 			      C Winner PROTO
 			      C Loser PROTO, wod: DWORD
 			      C Wordle PROTO
@@ -59,12 +60,131 @@ graphics.asm						     Page 1 - 1
 
  00000000			.data
 
- 00000000 00			rick BYTE ?
+ 00000000 24 24 5C 20 20	winners BYTE "$$\     $$\                                                           ", 0
+	   20 20 20 24 24
+	   5C 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   00
+ 00000047 5C 24 24 5C 20	winner1 BYTE "\$$\   $$  |                                                          ", 0
+	   20 20 24 24 20
+	   20 7C 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   20 20 20 20 20
+	   00
+ 0000008E 20 5C 24 24 5C	winner2 BYTE " \$$\ $$  /$$$$$$\  $$\   $$\       $$\  $$\  $$\  $$$$$$\  $$$$$$$\  ", 0
+	   20 24 24 20 20
+	   2F 24 24 24 24
+	   24 24 5C 20 20
+	   24 24 5C 20 20
+	   20 24 24 5C 20
+	   20 20 20 20 20
+	   20 24 24 5C 20
+	   20 24 24 5C 20
+	   20 24 24 5C 20
+	   20 24 24 24 24
+	   24 24 5C 20 20
+	   24 24 24 24 24
+	   24 24 5C 20 20
+	   00
+ 000000D5 20 20 5C 24 24	winner3 BYTE "  \$$$$  /$$  __$$\ $$ |  $$ |      $$ | $$ | $$ |$$  __$$\ $$  __$$\ ", 0
+	   24 24 20 20 2F
+	   24 24 20 20 5F
+	   5F 24 24 5C 20
+	   24 24 20 7C 20
+	   20 24 24 20 7C
+	   20 20 20 20 20
+	   20 24 24 20 7C
+	   20 24 24 20 7C
+	   20 24 24 20 7C
+	   24 24 20 20 5F
+	   5F 24 24 5C 20
+	   24 24 20 20 5F
+	   5F 24 24 5C 20
+	   00
+ 0000011C 20 20 20 5C 24	winner4 BYTE "   \$$  / $$ /  $$ |$$ |  $$ |      $$ | $$ | $$ |$$ /  $$ |$$ |  $$ |", 0
+	   24 20 20 2F 20
+	   24 24 20 2F 20
+	   20 24 24 20 7C
+	   24 24 20 7C 20
+	   20 24 24 20 7C
+	   20 20 20 20 20
+	   20 24 24 20 7C
+	   20 24 24 20 7C
+	   20 24 24 20 7C
+	   24 24 20 2F 20
+	   20 24 24 20 7C
+	   24 24 20 7C 20
+	   20 24 24 20 7C
+	   00
+ 00000163 20 20 20 20 24	winner5 BYTE "    $$ |  $$ |  $$ |$$ |  $$ |      $$ | $$ | $$ |$$ |  $$ |$$ |  $$ |", 0
+	   24 20 7C 20 20
+	   24 24 20 7C 20
+	   20 24 24 20 7C
+	   24 24 20 7C 20
+	   20 24 24 20 7C
+	   20 20 20 20 20
+	   20 24 24 20 7C
+	   20 24 24 20 7C
+	   20 24 24 20 7C
+	   24 24 20 7C 20
+	   20 24 24 20 7C
+	   24 24 20 7C 20
+	   20 24 24 20 7C
+	   00
+ 000001AA 20 20 20 20 24	winner6 BYTE "    $$ |  \$$$$$$  |\$$$$$$  |      \$$$$$\$$$$  |\$$$$$$  |$$ |  $$ |", 0
+	   24 20 7C 20 20
+	   5C 24 24 24 24
+	   24 24 20 20 7C
+	   5C 24 24 24 24
+	   24 24 20 20 7C
+	   20 20 20 20 20
+	   20 5C 24 24 24
+	   24 24 5C 24 24
+	   24 24 20 20 7C
+	   5C 24 24 24 24
+	   24 24 20 20 7C
+	   24 24 20 7C 20
+	   20 24 24 20 7C
+	   00
+ 000001F1 20 20 20 20 5C	winner7 BYTE "    \__|   \______/  \______/        \_____\____/  \______/ \__|  \__|", 0
+	   5F 5F 7C 20 20
+	   20 5C 5F 5F 5F
+	   5F 5F 5F 2F 20
+	   20 5C 5F 5F 5F
+	   5F 5F 5F 2F 20
+	   20 20 20 20 20
+	   20 20 5C 5F 5F
+	   5F 5F 5F 5C 5F
+	   5F 5F 5F 2F 20
+	   20 5C 5F 5F 5F
+	   5F 5F 5F 2F 20
+	   5C 5F 5F 7C 20
+	   20 5C 5F 5F 7C
+	   00
 
 
 
 
- 00000001 20 5F 5F 5F 20	wordy 	BYTE " ___       __   ________  ________  ________  ___       _______      ",0
+ 00000238 20 5F 5F 5F 20	wordy 	BYTE " ___       __   ________  ________  ________  ___       _______      ",0
 	   20 20 20 20 20
 	   20 5F 5F 20 20
 	   20 5F 5F 5F 5F
@@ -78,7 +198,7 @@ graphics.asm						     Page 1 - 1
 	   20 5F 5F 5F 5F
 	   5F 5F 5F 20 20
 	   20 20 20 20 00
- 00000047 7C 5C 20 20 5C	wordy1	BYTE "|\  \     |\  \|\   __  \|\   __  \|\   ___ \|\  \     |\  ___ \     ",0
+ 0000027E 7C 5C 20 20 5C	wordy1	BYTE "|\  \     |\  \|\   __  \|\   __  \|\   ___ \|\  \     |\  ___ \     ",0
 	   20 20 20 20 20
 	   7C 5C 20 20 5C
 	   7C 5C 20 20 20
@@ -92,7 +212,7 @@ graphics.asm						     Page 1 - 1
 	   7C 5C 20 20 5F
 	   5F 5F 20 5C 20
 	   20 20 20 20 00
- 0000008D 5C 20 5C 20 20	wordy2	BYTE "\ \  \    \ \  \ \  \|\  \ \  \|\  \ \  \_|\ \ \  \    \ \   __/|    ",0
+ 000002C4 5C 20 5C 20 20	wordy2	BYTE "\ \  \    \ \  \ \  \|\  \ \  \|\  \ \  \_|\ \ \  \    \ \   __/|    ",0
 	   5C 20 20 20 20
 	   5C 20 5C 20 20
 	   5C 20 5C 20 20
@@ -106,7 +226,7 @@ graphics.asm						     Page 1 - 1
 	   5C 20 5C 20 20
 	   20 5F 5F 2F 7C
 	   20 20 20 20 00
- 000000D3 20 5C 20 5C 20	wordy3	BYTE " \ \  \  __\ \  \ \  \\\  \ \   _  _\ \  \ \\ \ \  \    \ \  \_|/__  ",0
+ 0000030A 20 5C 20 5C 20	wordy3	BYTE " \ \  \  __\ \  \ \  \\\  \ \   _  _\ \  \ \\ \ \  \    \ \  \_|/__  ",0
 	   20 5C 20 20 5F
 	   5F 5C 20 5C 20
 	   20 5C 20 5C 20
@@ -120,7 +240,7 @@ graphics.asm						     Page 1 - 1
 	   20 5C 20 5C 20
 	   20 5C 5F 7C 2F
 	   5F 5F 20 20 00
- 00000119 20 20 5C 20 5C	wordy4	BYTE "  \ \  \|\__\_\  \ \  \\\  \ \  \\  \\ \  \_\\ \ \  \____\ \  \_|\ \ ",0
+ 00000350 20 20 5C 20 5C	wordy4	BYTE "  \ \  \|\__\_\  \ \  \\\  \ \  \\  \\ \  \_\\ \ \  \____\ \  \_|\ \ ",0
 	   20 20 5C 7C 5C
 	   5F 5F 5C 5F 5C
 	   20 20 5C 20 5C
@@ -134,7 +254,7 @@ graphics.asm						     Page 1 - 1
 	   5F 5F 5C 20 5C
 	   20 20 5C 5F 7C
 	   5C 20 5C 20 00
- 0000015F 20 20 20 5C 20	wordy5	BYTE "   \ \____________\ \_______\ \__\\ _\\ \_______\ \_______\ \_______\",0
+ 00000396 20 20 20 5C 20	wordy5	BYTE "   \ \____________\ \_______\ \__\\ _\\ \_______\ \_______\ \_______\",0
 	   5C 5F 5F 5F 5F
 	   5F 5F 5F 5F 5F
 	   5F 5F 5F 5C 20
@@ -148,7 +268,7 @@ graphics.asm						     Page 1 - 1
 	   5F 5F 5F 5C 20
 	   5C 5F 5F 5F 5F
 	   5F 5F 5F 5C 00
- 000001A5 20 20 20 20 5C	wordy6	BYTE "    \|____________|\|_______|\|__|\|__|\|_______|\|_______|\|_______|",0
+ 000003DC 20 20 20 20 5C	wordy6	BYTE "    \|____________|\|_______|\|__|\|__|\|_______|\|_______|\|_______|",0
 	   7C 5F 5F 5F 5F
 	   5F 5F 5F 5F 5F
 	   5F 5F 5F 7C 5C
@@ -163,7 +283,7 @@ graphics.asm						     Page 1 - 1
 	   7C 5F 5F 5F 5F
 	   5F 5F 5F 7C 00
 
- 000001EB 20 5F 20 20 20	nomaidens  BYTE " _   _        ___  ___      _     _                ",0
+ 00000422 20 5F 20 20 20	nomaidens  BYTE " _   _        ___  ___      _     _                ",0
 	   5F 20 20 20 20
 	   20 20 20 20 5F
 	   5F 5F 20 20 5F
@@ -174,7 +294,7 @@ graphics.asm						     Page 1 - 1
 	   20 20 20 20 20
 	   20 20 20 20 20
 	   20 00
- 0000021F 7C 20 5C 20 7C	nomaidens1 BYTE "| \ | |       |  \/  |     (_)   | |               ",0
+ 00000456 7C 20 5C 20 7C	nomaidens1 BYTE "| \ | |       |  \/  |     (_)   | |               ",0
 	   20 7C 20 20 20
 	   20 20 20 20 7C
 	   20 20 5C 2F 20
@@ -185,7 +305,7 @@ graphics.asm						     Page 1 - 1
 	   20 20 20 20 20
 	   20 20 20 20 20
 	   20 00
- 00000253 7C 20 20 5C 7C	nomaidens2 BYTE "|  \| | ___   | .  . | __ _ _  __| | ___ _ __  ___ ",0
+ 0000048A 7C 20 20 5C 7C	nomaidens2 BYTE "|  \| | ___   | .  . | __ _ _  __| | ___ _ __  ___ ",0
 	   20 7C 20 5F 5F
 	   5F 20 20 20 7C
 	   20 2E 20 20 2E
@@ -196,7 +316,7 @@ graphics.asm						     Page 1 - 1
 	   20 5F 20 5F 5F
 	   20 20 5F 5F 5F
 	   20 00
- 00000287 7C 20 2E 20 60	nomaidens3 BYTE "| . ` |/ _ \  | |\/| |/ _` | |/ _` |/ _ \ '_ \/ __|",0
+ 000004BE 7C 20 2E 20 60	nomaidens3 BYTE "| . ` |/ _ \  | |\/| |/ _` | |/ _` |/ _ \ '_ \/ __|",0
 	   20 7C 2F 20 5F
 	   20 5C 20 20 7C
 	   20 7C 5C 2F 7C
@@ -207,7 +327,7 @@ graphics.asm						     Page 1 - 1
 	   5C 20 27 5F 20
 	   5C 2F 20 5F 5F
 	   7C 00
- 000002BB 7C 20 7C 5C 20	nomaidens4 BYTE "| |\  | (_) | | |  | | (_| | | (_| |  __/ | | \__ \",0
+ 000004F2 7C 20 7C 5C 20	nomaidens4 BYTE "| |\  | (_) | | |  | | (_| | | (_| |  __/ | | \__ \",0
 	   20 7C 20 28 5F
 	   29 20 7C 20 7C
 	   20 7C 20 20 7C
@@ -218,7 +338,7 @@ graphics.asm						     Page 1 - 1
 	   2F 20 7C 20 7C
 	   20 5C 5F 5F 20
 	   5C 00
- 000002EF 5C 5F 7C 20 5C	nomaidens5 BYTE "\_| \_/\___/  \_|  |_/\__,_|_|\__,_|\___|_| |_|___/",0
+ 00000526 5C 5F 7C 20 5C	nomaidens5 BYTE "\_| \_/\___/  \_|  |_/\__,_|_|\__,_|\___|_| |_|___/",0
 	   5F 2F 5C 5F 5F
 	   5F 2F 20 20 5C
 	   5F 7C 20 20 7C
@@ -229,7 +349,7 @@ graphics.asm						     Page 1 - 1
 	   7C 5F 7C 20 7C
 	   5F 7C 5F 5F 5F
 	   2F 00
- 00000323 20 20 20 20 20	nomaidens6 BYTE "                                                   ",0
+ 0000055A 20 20 20 20 20	nomaidens6 BYTE "                                                   ",0
 	   20 20 20 20 20
 	   20 20 20 20 20
 	   20 20 20 20 20
@@ -241,7 +361,7 @@ graphics.asm						     Page 1 - 1
 	   20 20 20 20 20
 	   20 00
 
- 00000357 53 6F 72 72 79	ending BYTE "Sorry. The Word of the Day was ",0 
+ 0000058E 53 6F 72 72 79	ending 	BYTE "Sorry. The Word of the Day was ",0 
 	   2E 20 54 68 65
 	   20 57 6F 72 64
 	   20 6F 66 20 74
@@ -249,9 +369,10 @@ graphics.asm						     Page 1 - 1
 	   79 20 77 61 73
 	   20 00
 
- 00000377 4D 45 4D 45		empty BYTE "MEME"  
 
- 0000037B 0F			start_box_h BYTE 15
+ 000005AE 4D 45 4D 45		empty BYTE "MEME"  
+
+ 000005B2 0F			start_box_h BYTE 15
 
  00000000			.code
 
@@ -346,8 +467,8 @@ graphics.asm						     Page 1 - 1
  000000A1  C2 0008	   *	    ret    00008h
 
  000000A4			DisplayChar ENDP
-graphics.asm(109) : warning A6004:procedure argument or local not referenced : color_bg
-graphics.asm(109) : warning A6004:procedure argument or local not referenced : char
+graphics.asm(117) : warning A6004:procedure argument or local not referenced : color_bg
+graphics.asm(117) : warning A6004:procedure argument or local not referenced : char
 
 				; Setup display to set background color and move cursor to the right position
  000000A4			SetDisplay PROC uses eax
@@ -361,7 +482,7 @@ graphics.asm(109) : warning A6004:procedure argument or local not referenced : c
  000000B6  B2 14			mov DL, 20
  000000B8  E8 00000000 E		call GotoXY
 
- 000000BD  E8 0000011D			call Wordle
+ 000000BD  E8 000001CF			call Wordle
 					
  000000C2  B6 0F			mov DH, 15
  000000C4  B2 32		    mov DL, 50
@@ -379,7 +500,7 @@ graphics.asm(109) : warning A6004:procedure argument or local not referenced : c
  000000E7  E8 00000000 E			call SetTextColor
  000000EC  52					push edx
 
- 000000ED  BA 00000377 R			mov edx, OFFSET empty
+ 000000ED  BA 000005AE R			mov edx, OFFSET empty
  000000F2  E8 00000000 E			call WriteString
  000000F7  BA 00000000				mov edx, 0
 
@@ -407,156 +528,220 @@ graphics.asm(109) : warning A6004:procedure argument or local not referenced : c
 
 
  0000011F			Winner PROC
+ 0000011F  B8 000000FF			mov eax, white + (white * 16)
+ 00000124  E8 00000000 E		call SetTextColor
+ 00000129  E8 00000000 E		call ClrScr
+
+ 0000012E  B8 000000FC			mov eax, lightRed + (white * 16)
+ 00000133  E8 00000000 E		call SetTextColor
+
+ 00000138  B6 05			mov DH, 5
+ 0000013A  B2 14			mov DL, 20
+ 0000013C  E8 00000000 E		call GotoXY
+
+ 00000141  BA 00000000 R		mov edx, OFFSET winners
+ 00000146  E8 00000000 E		call WriteString
+
+ 0000014B  B6 06			mov DH, 6
+ 0000014D  B2 14			mov DL, 20
+ 0000014F  E8 00000000 E		call GotoXY
+
+ 00000154  BA 00000047 R		mov edx, OFFSET winner1
+ 00000159  E8 00000000 E		call WriteString
+
+ 0000015E  B6 07			mov DH, 7
+ 00000160  B2 14			mov DL, 20
+ 00000162  E8 00000000 E		call GotoXY
+
+ 00000167  BA 0000008E R		mov edx, OFFSET winner2
+ 0000016C  E8 00000000 E		call WriteString
 					
+ 00000171  B6 08			mov DH, 8
+ 00000173  B2 14			mov DL, 20
+ 00000175  E8 00000000 E		call GotoXY
+
+ 0000017A  BA 000000D5 R		mov edx, OFFSET winner3
+ 0000017F  E8 00000000 E		call WriteString
 					
- 0000011F			Winner ENDP
+ 00000184  B6 09			mov DH, 9
+ 00000186  B2 14			mov DL, 20
+ 00000188  E8 00000000 E		call GotoXY
 
- 0000011F			Loser PROC, wod: DWORD
- 0000011F  55		   *	    push   ebp
- 00000120  8B EC	   *	    mov    ebp, esp
- 00000122  B8 000000FF			mov eax, white + (white * 16)
- 00000127  E8 00000000 E		call SetTextColor
- 0000012C  E8 00000000 E		call ClrScr
+ 0000018D  BA 0000011C R		mov edx, OFFSET winner4
+ 00000192  E8 00000000 E		call WriteString
 
- 00000131  B8 000000FC			mov eax, lightRed + (white * 16)
- 00000136  E8 00000000 E		call SetTextColor
+ 00000197  B6 0A			mov DH, 10
+ 00000199  B2 14			mov DL, 20
+ 0000019B  E8 00000000 E		call GotoXY
 
- 0000013B  B6 05			mov DH, 5
- 0000013D  B2 14			mov DL, 20
- 0000013F  E8 00000000 E		call GotoXY
+ 000001A0  BA 00000163 R		mov edx, OFFSET winner5
+ 000001A5  E8 00000000 E		call WriteString
 
- 00000144  BA 000001EB R		mov edx, OFFSET nomaidens
- 00000149  E8 00000000 E		call WriteString
+ 000001AA  B6 0B			mov DH, 11
+ 000001AC  B2 14			mov DL, 20
+ 000001AE  E8 00000000 E		call GotoXY
 
- 0000014E  B6 06			mov DH, 6
- 00000150  B2 14			mov DL, 20
- 00000152  E8 00000000 E		call GotoXY
+ 000001B3  BA 000001AA R		mov edx, OFFSET winner6
+ 000001B8  E8 00000000 E		call WriteString
 
- 00000157  BA 0000021F R		mov edx, OFFSET nomaidens1
- 0000015C  E8 00000000 E		call WriteString
 
- 00000161  B6 07			mov DH, 7
- 00000163  B2 14			mov DL, 20
- 00000165  E8 00000000 E		call GotoXY
+ 000001BD  B6 0C			mov DH, 12
+ 000001BF  B2 14			mov DL, 20
+ 000001C1  E8 00000000 E		call GotoXY
 
- 0000016A  BA 00000253 R		mov edx, OFFSET nomaidens2
- 0000016F  E8 00000000 E		call WriteString
+ 000001C6  BA 000001F1 R		mov edx, OFFSET winner7
+ 000001CB  E8 00000000 E		call WriteString
+
+ 000001D0  C3				ret
 					
- 00000174  B6 08			mov DH, 8
- 00000176  B2 14			mov DL, 20
- 00000178  E8 00000000 E		call GotoXY
+ 000001D1			Winner ENDP
 
- 0000017D  BA 00000287 R		mov edx, OFFSET nomaidens3
- 00000182  E8 00000000 E		call WriteString
+ 000001D1			Loser PROC, wod: DWORD
+ 000001D1  55		   *	    push   ebp
+ 000001D2  8B EC	   *	    mov    ebp, esp
+ 000001D4  B8 000000FF			mov eax, white + (white * 16)
+ 000001D9  E8 00000000 E		call SetTextColor
+ 000001DE  E8 00000000 E		call ClrScr
+
+ 000001E3  B8 000000FC			mov eax, lightRed + (white * 16)
+ 000001E8  E8 00000000 E		call SetTextColor
+
+ 000001ED  B6 05			mov DH, 5
+ 000001EF  B2 14			mov DL, 20
+ 000001F1  E8 00000000 E		call GotoXY
+
+ 000001F6  BA 00000422 R		mov edx, OFFSET nomaidens
+ 000001FB  E8 00000000 E		call WriteString
+
+ 00000200  B6 06			mov DH, 6
+ 00000202  B2 14			mov DL, 20
+ 00000204  E8 00000000 E		call GotoXY
+
+ 00000209  BA 00000456 R		mov edx, OFFSET nomaidens1
+ 0000020E  E8 00000000 E		call WriteString
+
+ 00000213  B6 07			mov DH, 7
+ 00000215  B2 14			mov DL, 20
+ 00000217  E8 00000000 E		call GotoXY
+
+ 0000021C  BA 0000048A R		mov edx, OFFSET nomaidens2
+ 00000221  E8 00000000 E		call WriteString
 					
- 00000187  B6 09			mov DH, 9
- 00000189  B2 14			mov DL, 20
- 0000018B  E8 00000000 E		call GotoXY
+ 00000226  B6 08			mov DH, 8
+ 00000228  B2 14			mov DL, 20
+ 0000022A  E8 00000000 E		call GotoXY
 
- 00000190  BA 000002BB R		mov edx, OFFSET nomaidens4
- 00000195  E8 00000000 E		call WriteString
+ 0000022F  BA 000004BE R		mov edx, OFFSET nomaidens3
+ 00000234  E8 00000000 E		call WriteString
+					
+ 00000239  B6 09			mov DH, 9
+ 0000023B  B2 14			mov DL, 20
+ 0000023D  E8 00000000 E		call GotoXY
 
- 0000019A  B6 0A			mov DH, 10
- 0000019C  B2 14			mov DL, 20
- 0000019E  E8 00000000 E		call GotoXY
+ 00000242  BA 000004F2 R		mov edx, OFFSET nomaidens4
+ 00000247  E8 00000000 E		call WriteString
 
- 000001A3  BA 000002EF R		mov edx, OFFSET nomaidens5
- 000001A8  E8 00000000 E		call WriteString
+ 0000024C  B6 0A			mov DH, 10
+ 0000024E  B2 14			mov DL, 20
+ 00000250  E8 00000000 E		call GotoXY
 
- 000001AD  B6 0B			mov DH, 11
- 000001AF  B2 14			mov DL, 20
- 000001B1  E8 00000000 E		call GotoXY
+ 00000255  BA 00000526 R		mov edx, OFFSET nomaidens5
+ 0000025A  E8 00000000 E		call WriteString
 
- 000001B6  BA 00000323 R		mov edx, OFFSET nomaidens6
- 000001BB  E8 00000000 E		call WriteString
+ 0000025F  B6 0B			mov DH, 11
+ 00000261  B2 14			mov DL, 20
+ 00000263  E8 00000000 E		call GotoXY
 
- 000001C0  B6 14			mov DH, 20
- 000001C2  B2 28			mov DL, 40
- 000001C4  E8 00000000 E		call GotoXY
+ 00000268  BA 0000055A R		mov edx, OFFSET nomaidens6
+ 0000026D  E8 00000000 E		call WriteString
 
- 000001C9  BA 00000357 R		mov edx, OFFSET ending
- 000001CE  E8 00000000 E		call WriteString
- 000001D3  8B 55 08			mov edx, wod
- 000001D6  E8 00000000 E		call WriteString
+ 00000272  B6 14			mov DH, 20
+ 00000274  B2 28			mov DL, 40
+ 00000276  E8 00000000 E		call GotoXY
+
+ 0000027B  BA 0000058E R		mov edx, OFFSET ending
+ 00000280  E8 00000000 E		call WriteString
+ 00000285  8B 55 08			mov edx, wod
+ 00000288  E8 00000000 E		call WriteString
 
 					ret
- 000001DB  C9		   *	    leave  
- 000001DC  C2 0004	   *	    ret    00004h
+ 0000028D  C9		   *	    leave  
+ 0000028E  C2 0004	   *	    ret    00004h
 
- 000001DF			Loser ENDP
-
-
+ 00000291			Loser ENDP
 
 
- 000001DF			Wordle PROC
- 000001DF  B8 000000FA			mov eax, lightGreen + (white * 16)
- 000001E4  E8 00000000 E		call SetTextColor
+
+
+ 00000291			Wordle PROC
+ 00000291  B8 000000FA			mov eax, lightGreen + (white * 16)
+ 00000296  E8 00000000 E		call SetTextColor
 
 					
- 000001E9  BA 00000001 R		mov edx, OFFSET wordy
- 000001EE  E8 00000000 E		call WriteString
+ 0000029B  BA 00000238 R		mov edx, OFFSET wordy
+ 000002A0  E8 00000000 E		call WriteString
 					
 
- 000001F3  B6 06			mov DH, 6
- 000001F5  B2 14			mov DL, 20
- 000001F7  E8 00000000 E		call GotoXY
+ 000002A5  B6 06			mov DH, 6
+ 000002A7  B2 14			mov DL, 20
+ 000002A9  E8 00000000 E		call GotoXY
 
- 000001FC  BA 00000047 R		mov edx, OFFSET wordy1
- 00000201  E8 00000000 E		call WriteString
+ 000002AE  BA 0000027E R		mov edx, OFFSET wordy1
+ 000002B3  E8 00000000 E		call WriteString
 					
 
- 00000206  B6 07			mov DH, 7
- 00000208  B2 14			mov DL, 20
- 0000020A  E8 00000000 E		call GotoXY
+ 000002B8  B6 07			mov DH, 7
+ 000002BA  B2 14			mov DL, 20
+ 000002BC  E8 00000000 E		call GotoXY
 
- 0000020F  BA 0000008D R		mov edx, OFFSET wordy2
- 00000214  E8 00000000 E		call WriteString
+ 000002C1  BA 000002C4 R		mov edx, OFFSET wordy2
+ 000002C6  E8 00000000 E		call WriteString
 					
 
- 00000219  B6 08			mov DH, 8
- 0000021B  B2 14			mov DL, 20
- 0000021D  E8 00000000 E		call GotoXY
+ 000002CB  B6 08			mov DH, 8
+ 000002CD  B2 14			mov DL, 20
+ 000002CF  E8 00000000 E		call GotoXY
 
- 00000222  BA 000000D3 R		mov edx, OFFSET wordy3
- 00000227  E8 00000000 E		call WriteString
+ 000002D4  BA 0000030A R		mov edx, OFFSET wordy3
+ 000002D9  E8 00000000 E		call WriteString
 					
 
- 0000022C  B6 09			mov DH, 9
- 0000022E  B2 14			mov DL, 20
- 00000230  E8 00000000 E		call GotoXY
+ 000002DE  B6 09			mov DH, 9
+ 000002E0  B2 14			mov DL, 20
+ 000002E2  E8 00000000 E		call GotoXY
 
- 00000235  BA 00000119 R		mov edx, OFFSET wordy4
- 0000023A  E8 00000000 E		call WriteString
-
-
- 0000023F  B6 0A			mov DH, 10
- 00000241  B2 14			mov DL, 20
- 00000243  E8 00000000 E		call GotoXY
-
- 00000248  BA 0000015F R		mov edx, OFFSET wordy5
- 0000024D  E8 00000000 E		call WriteString
+ 000002E7  BA 00000350 R		mov edx, OFFSET wordy4
+ 000002EC  E8 00000000 E		call WriteString
 
 
- 00000252  B6 0B			mov DH, 11
- 00000254  B2 14			mov DL, 20
- 00000256  E8 00000000 E		call GotoXY
+ 000002F1  B6 0A			mov DH, 10
+ 000002F3  B2 14			mov DL, 20
+ 000002F5  E8 00000000 E		call GotoXY
 
- 0000025B  BA 000001A5 R		mov edx, OFFSET wordy6
- 00000260  E8 00000000 E		call WriteString
+ 000002FA  BA 00000396 R		mov edx, OFFSET wordy5
+ 000002FF  E8 00000000 E		call WriteString
+
+
+ 00000304  B6 0B			mov DH, 11
+ 00000306  B2 14			mov DL, 20
+ 00000308  E8 00000000 E		call GotoXY
+
+ 0000030D  BA 000003DC R		mov edx, OFFSET wordy6
+ 00000312  E8 00000000 E		call WriteString
 					
 
- 00000265  B6 0C			mov DH, 12
- 00000267  B2 14			mov DL, 20
- 00000269  E8 00000000 E		call GotoXY
+ 00000317  B6 0C			mov DH, 12
+ 00000319  B2 14			mov DL, 20
+ 0000031B  E8 00000000 E		call GotoXY
 
- 0000026E  C3				ret
+ 00000320  C3				ret
 
- 0000026F			Wordle ENDP
+ 00000321			Wordle ENDP
 
 
 
 				END
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 21:39:04
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 22:10:26
 graphics.asm						     Symbols 2 - 1
 
 
@@ -650,8 +835,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 0000037C Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000026F Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 000005B3 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 00000321 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -715,7 +900,7 @@ HeapFree . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 HeapSize . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 IsDigit  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-Loser  . . . . . . . . . . . . .	P Near	 0000011F _TEXT	Length= 000000C0 Public STDCALL
+Loser  . . . . . . . . . . . . .	P Near	 000001D1 _TEXT	Length= 000000C0 Public STDCALL
   wod  . . . . . . . . . . . . .	DWord	 bp + 00000008
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBoxAsk  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -762,8 +947,8 @@ Str_trim . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 Str_ucase  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SystemTimeToFileTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WaitMsg  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-Winner . . . . . . . . . . . . .	P Near	 0000011F _TEXT	Length= 00000000 Public STDCALL
-Wordle . . . . . . . . . . . . .	P Near	 000001DF _TEXT	Length= 00000090 Public STDCALL
+Winner . . . . . . . . . . . . .	P Near	 0000011F _TEXT	Length= 000000B2 Public STDCALL
+Wordle . . . . . . . . . . . . .	P Near	 00000291 _TEXT	Length= 00000090 Public STDCALL
 WriteBinB  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteBin . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteChar  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -1003,8 +1188,8 @@ black  . . . . . . . . . . . . .	Number	 00000000h
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
-empty  . . . . . . . . . . . . .	Byte	 00000377 _DATA	
-ending . . . . . . . . . . . . .	Byte	 00000357 _DATA	
+empty  . . . . . . . . . . . . .	Byte	 000005AE _DATA	
+ending . . . . . . . . . . . . .	Byte	 0000058E _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
@@ -1015,25 +1200,32 @@ lightGreen . . . . . . . . . . .	Number	 0000000Ah
 lightMagenta . . . . . . . . . .	Number	 0000000Dh   
 lightRed . . . . . . . . . . . .	Number	 0000000Ch   
 magenta  . . . . . . . . . . . .	Number	 00000005h   
-nomaidens1 . . . . . . . . . . .	Byte	 0000021F _DATA	
-nomaidens2 . . . . . . . . . . .	Byte	 00000253 _DATA	
-nomaidens3 . . . . . . . . . . .	Byte	 00000287 _DATA	
-nomaidens4 . . . . . . . . . . .	Byte	 000002BB _DATA	
-nomaidens5 . . . . . . . . . . .	Byte	 000002EF _DATA	
-nomaidens6 . . . . . . . . . . .	Byte	 00000323 _DATA	
-nomaidens  . . . . . . . . . . .	Byte	 000001EB _DATA	
+nomaidens1 . . . . . . . . . . .	Byte	 00000456 _DATA	
+nomaidens2 . . . . . . . . . . .	Byte	 0000048A _DATA	
+nomaidens3 . . . . . . . . . . .	Byte	 000004BE _DATA	
+nomaidens4 . . . . . . . . . . .	Byte	 000004F2 _DATA	
+nomaidens5 . . . . . . . . . . .	Byte	 00000526 _DATA	
+nomaidens6 . . . . . . . . . . .	Byte	 0000055A _DATA	
+nomaidens  . . . . . . . . . . .	Byte	 00000422 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-rick . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
-start_box_h  . . . . . . . . . .	Byte	 0000037B _DATA	
+start_box_h  . . . . . . . . . .	Byte	 000005B2 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
+winner1  . . . . . . . . . . . .	Byte	 00000047 _DATA	
+winner2  . . . . . . . . . . . .	Byte	 0000008E _DATA	
+winner3  . . . . . . . . . . . .	Byte	 000000D5 _DATA	
+winner4  . . . . . . . . . . . .	Byte	 0000011C _DATA	
+winner5  . . . . . . . . . . . .	Byte	 00000163 _DATA	
+winner6  . . . . . . . . . . . .	Byte	 000001AA _DATA	
+winner7  . . . . . . . . . . . .	Byte	 000001F1 _DATA	
+winners  . . . . . . . . . . . .	Byte	 00000000 _DATA	
 wordlist . . . . . . . . . . . .	Byte	 00000000 FLAT	External STDCALL
-wordy1 . . . . . . . . . . . . .	Byte	 00000047 _DATA	
-wordy2 . . . . . . . . . . . . .	Byte	 0000008D _DATA	
-wordy3 . . . . . . . . . . . . .	Byte	 000000D3 _DATA	
-wordy4 . . . . . . . . . . . . .	Byte	 00000119 _DATA	
-wordy5 . . . . . . . . . . . . .	Byte	 0000015F _DATA	
-wordy6 . . . . . . . . . . . . .	Byte	 000001A5 _DATA	
-wordy  . . . . . . . . . . . . .	Byte	 00000001 _DATA	
+wordy1 . . . . . . . . . . . . .	Byte	 0000027E _DATA	
+wordy2 . . . . . . . . . . . . .	Byte	 000002C4 _DATA	
+wordy3 . . . . . . . . . . . . .	Byte	 0000030A _DATA	
+wordy4 . . . . . . . . . . . . .	Byte	 00000350 _DATA	
+wordy5 . . . . . . . . . . . . .	Byte	 00000396 _DATA	
+wordy6 . . . . . . . . . . . . .	Byte	 000003DC _DATA	
+wordy  . . . . . . . . . . . . .	Byte	 00000238 _DATA	
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
