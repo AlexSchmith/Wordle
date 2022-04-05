@@ -33,6 +33,8 @@ main PROC PUBLIC
         ;// getting word input
         mov ecx, 6
         mov edx, OFFSET bufferWord
+        mov eax, white + (gray * 16)
+        call SetTextColor
         call ReadString
         ;// moving cursor back to beginning of line
         mov DH, square_height
@@ -53,6 +55,7 @@ main PROC PUBLIC
         loop LoopRows
     ;// gone through tries, you have lost
     DisplayLoser:
+        push wod
         call Loser
         jmp Stop
     DisplayWinner:

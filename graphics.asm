@@ -97,7 +97,7 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
 		call SetTextColor
 		jmp print
 	Wrong:
-		mov eax, white + (lightGray * 16)
+		mov eax, white + (gray * 16)
 		call SetTextColor
 		jmp print
 	InWord:
@@ -118,7 +118,7 @@ DisplayChar ENDP
 ; Setup display to set background color and move cursor to the right position
 SetDisplay PROC uses eax edx
 	
-	mov eax, gray + (white * 16)
+	mov eax, gray + (lightGray * 16)
 	call SetTextColor
 
 	call Clrscr
@@ -313,7 +313,7 @@ Loser ENDP
 
 
 Wordle PROC
-	mov eax, lightMagenta + (white * 16)
+	mov eax, lightMagenta + (lightGray* 16)
 	call SetTextColor
 
 	

@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 08:44:55
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 10:06:16
 graphics.asm						     Page 1 - 1
 
 
@@ -471,7 +471,7 @@ graphics.asm						     Page 1 - 1
  00000066  E8 00000000 E			call SetTextColor
  0000006B  EB 16				jmp print
  0000006D				Wrong:
- 0000006D  B8 0000007F				mov eax, white + (lightGray * 16)
+ 0000006D  B8 0000008F				mov eax, white + (gray * 16)
  00000072  E8 00000000 E			call SetTextColor
  00000077  EB 0A				jmp print
  00000079				InWord:
@@ -500,7 +500,7 @@ graphics.asm(116) : warning A6004:procedure argument or local not referenced : c
 					
  000000A4  50		   *	    push   eax
  000000A5  52		   *	    push   edx
- 000000A6  B8 000000F8			mov eax, gray + (white * 16)
+ 000000A6  B8 00000078			mov eax, gray + (lightGray * 16)
  000000AB  E8 00000000 E		call SetTextColor
 
  000000B0  E8 00000000 E		call Clrscr
@@ -702,7 +702,7 @@ graphics.asm(116) : warning A6004:procedure argument or local not referenced : c
 
 
  0000029E			Wordle PROC
- 0000029E  B8 000000FD			mov eax, lightMagenta + (white * 16)
+ 0000029E  B8 0000007D			mov eax, lightMagenta + (lightGray* 16)
  000002A3  E8 00000000 E		call SetTextColor
 
 					
@@ -769,7 +769,7 @@ graphics.asm(116) : warning A6004:procedure argument or local not referenced : c
 
 
 				END
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 08:44:55
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 10:06:16
 graphics.asm						     Symbols 2 - 1
 
 
