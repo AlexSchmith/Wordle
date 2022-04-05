@@ -8,6 +8,8 @@ INCLUDE logic.inc
 INCLUDE graphics.inc
 
 .data
+MAX = 5
+
 wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other",0,"words",0,"could",0,"write",0,"first",0,"water",0,"after",0,"where",0,"right",0,"think",0,"three", 0
 wod DWORD (?)
 bufferWord BYTE 5 (?), 0
