@@ -234,6 +234,9 @@ Winner PROC
 	mov edx, OFFSET winner7
 	call WriteString
 
+	mov eax, 10000
+	call Delay
+
 	ret
 	
 Winner ENDP
@@ -296,6 +299,10 @@ Loser PROC, wod: DWORD
 	call WriteString
 	mov edx, wod
 	call WriteString
+
+
+	mov eax, 10000
+	call Delay
 
 	ret
 

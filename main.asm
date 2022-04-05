@@ -29,7 +29,7 @@ main PROC PUBLIC
     mov edx, OFFSET wordlist
    
     call SelectRandomWord
-    call WaitMsg
+    
     push edx
     mov DH, 50
     mov DL, 0
@@ -41,7 +41,6 @@ main PROC PUBLIC
     mov DH, 30
     mov DL, 0
     call GotoXY
-    call WaitMsg
     call Winner
     mov DH, 30
     mov DL, 0
