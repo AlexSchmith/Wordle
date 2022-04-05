@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 07:18:50
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 07:46:36
 graphics.asm						     Page 1 - 1
 
 
@@ -283,7 +283,7 @@ graphics.asm						     Page 1 - 1
 	   7C 5F 5F 5F 5F
 	   5F 5F 5F 7C 00
 
- 00000422 5F 5F 5F 5F 20	nomaidens BYTE "____    ____  ______    __    __     __        ______        _______.___________.", 0
+ 00000422 5F 5F 5F 5F 20	nomaidens  BYTE "____    ____  ______    __    __     __        ______        _______.___________.", 0
 	   20 20 20 5F 5F
 	   5F 5F 20 20 5F
 	   5F 5F 5F 5F 5F
@@ -386,18 +386,18 @@ graphics.asm						     Page 1 - 1
 	   7C 20 20 20 20
 	   20 00
 
- 0000060E 53 6F 72 72 79	ending 	BYTE "Sorry. The Word of the Day was ",0 
+ 0000060E 53 6F 72 72 79	ending 	BYTE "Sorry. The Word of the Day was: ",0 
 	   2E 20 54 68 65
 	   20 57 6F 72 64
 	   20 6F 66 20 74
 	   68 65 20 44 61
 	   79 20 77 61 73
-	   20 00
+	   3A 20 00
 
 
- 0000062E 4D 45 4D 45		empty BYTE "MEME"  
+ 0000062F 4D 45 4D 45		empty BYTE "MEME"  
 
- 00000632 0F			start_box_h BYTE 15
+ 00000633 0F			start_box_h BYTE 15
 
  00000000			.code
 
@@ -525,7 +525,7 @@ graphics.asm(116) : warning A6004:procedure argument or local not referenced : c
  000000E7  E8 00000000 E			call SetTextColor
  000000EC  52					push edx
 
- 000000ED  BA 0000062E R			mov edx, OFFSET empty
+ 000000ED  BA 0000062F R			mov edx, OFFSET empty
  000000F2  E8 00000000 E			call WriteString
  000000F7  BA 00000000				mov edx, 0
 
@@ -690,7 +690,7 @@ graphics.asm(116) : warning A6004:procedure argument or local not referenced : c
 
 
  0000027E			Wordle PROC
- 0000027E  B8 000000F1			mov eax, blue + (white * 16)
+ 0000027E  B8 000000FD			mov eax, lightMagenta + (white * 16)
  00000283  E8 00000000 E		call SetTextColor
 
 					
@@ -757,7 +757,7 @@ graphics.asm(116) : warning A6004:procedure argument or local not referenced : c
 
 
 				END
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 07:18:50
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 07:46:36
 graphics.asm						     Symbols 2 - 1
 
 
@@ -851,7 +851,7 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000633 Para	  Public  'DATA'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 00000634 Para	  Public  'DATA'	
 _TEXT  . . . . . . . . . . . . .	32 Bit	 0000030E Para	  Public  'CODE'	
 
 
@@ -1204,7 +1204,7 @@ black  . . . . . . . . . . . . .	Number	 00000000h
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
-empty  . . . . . . . . . . . . .	Byte	 0000062E _DATA	
+empty  . . . . . . . . . . . . .	Byte	 0000062F _DATA	
 ending . . . . . . . . . . . . .	Byte	 0000060E _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 gray . . . . . . . . . . . . . .	Number	 00000008h   
@@ -1223,7 +1223,7 @@ nomaidens4 . . . . . . . . . . .	Byte	 0000056A _DATA
 nomaidens5 . . . . . . . . . . .	Byte	 000005BC _DATA	
 nomaidens  . . . . . . . . . . .	Byte	 00000422 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
-start_box_h  . . . . . . . . . .	Byte	 00000632 _DATA	
+start_box_h  . . . . . . . . . .	Byte	 00000633 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 winner1  . . . . . . . . . . . .	Byte	 00000047 _DATA	
 winner2  . . . . . . . . . . . .	Byte	 0000008E _DATA	

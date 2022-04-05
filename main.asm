@@ -24,8 +24,6 @@ main PROC PUBLIC
 
     mov edx, 0
 
-
-
     mov ecx, 17
     mov esi, 0
     mov edx, OFFSET wordlist
