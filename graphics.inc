@@ -18,9 +18,4 @@ Winner PROTO
 Loser PROTO, wod: DWORD
 Wordle PROTO
 
-; Displays winner text and fireworks on winning
-DisplayWinner PROTO
-
-; Displays loser text and sadness on loss
-Display Loser PROTO
 OPTION PROC:PRIVATE

@@ -8,11 +8,11 @@ INCLUDE logic.inc
 INCLUDE graphics.inc
 
 .data
-MAX = 5
+
 
 wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other",0,"words",0,"could",0,"write",0,"first",0,"water",0,"after",0,"where",0,"right",0,"think",0,"three", 0
-wod DWORD (?)
-bufferWord BYTE 5 (?), 0
+wod DWORD ?
+bufferWord BYTE 6 DUP (?), 0
 tries BYTE 0
 
 .code
@@ -36,7 +36,7 @@ main PROC PUBLIC
         push wod
         push OFFSET bufferWord
         call Str_compare
-        je Winner
+        je DisplayWinner
         inc tries
         cmp tries, 5
         ;// move cursor down 1 row
@@ -44,12 +44,12 @@ main PROC PUBLIC
         call GotoXY
         jl LoopRows
     ;// gone through tries, you have lost
-    call DisplayLoser
-    jmp End
-    Winner:
+    call Loser
+    jmp Stop
+    DisplayWinner:
         ;// looks like theyve won. Time to show it
-        call DisplayWinner
-    End:
+        call Winner
+    Stop:
         INVOKE ExitProcess, 0
 main ENDP
 END main
