@@ -14,6 +14,8 @@ wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other
 wod DWORD ?
 bufferWord BYTE 6 DUP (?), 0
 tries BYTE 0
+square_length BYTE 50
+square_height BYTE 15
 
 .code
 main PROC PUBLIC
@@ -24,11 +26,18 @@ main PROC PUBLIC
     ;// setting display
     call SetDisplay
     LoopRows:
+        mov DH, square_height
+        add DH, tries
+        mov DL, square_length
+        call GotoXY ;// dont need to set position because theyre already set
         ;// getting word input
         mov ecx, 6
         mov edx, OFFSET bufferWord
         call ReadString
         ;// moving cursor back to beginning of line
+        mov DH, square_height
+        add DH, tries
+        mov DL, square_length
         call GotoXY ;// dont need to set position because theyre already set
         push wod
         push OFFSET bufferWord
@@ -38,10 +47,7 @@ main PROC PUBLIC
         call Str_compare
         je DisplayWinner
         inc tries
-        cmp tries, 5
         ;// move cursor down 1 row
-        inc DH
-        call GotoXY
         loop LoopRows
     ;// gone through tries, you have lost
     call Loser
