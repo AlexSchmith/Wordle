@@ -13,31 +13,17 @@ rick BYTE ?
 nomaidens BYTE ?
 
 
+wordy 	BYTE " ___       __   ________  ________  ________  ___       _______      ",0
+wordy1	BYTE "|\  \     |\  \|\   __  \|\   __  \|\   ___ \|\  \     |\  ___ \     ",0
+wordy2	BYTE "\ \  \    \ \  \ \  \|\  \ \  \|\  \ \  \_|\ \ \  \    \ \   __/|    ",0
+wordy3	BYTE " \ \  \  __\ \  \ \  \\\  \ \   _  _\ \  \ \\ \ \  \    \ \  \_|/__  ",0
+wordy4	BYTE "  \ \  \|\__\_\  \ \  \\\  \ \  \\  \\ \  \_\\ \ \  \____\ \  \_|\ \ ",0
+wordy5	BYTE "   \ \____________\ \_______\ \__\\ _\\ \_______\ \_______\ \_______\",0
+wordy6	BYTE "    \|____________|\|_______|\|__|\|__|\|_______|\|_______|\|_______|",0
 
+empty BYTE "MEME"  
 
-wordy BYTE " ___ ", 0, "     ", 0, " __  ", 0, " ____", 0, "____ ", 0,
-      BYTE " ____", 0, "____ ", 0, " ____", 0, "____ ", 0, " ___ ", 0,
-	  BYTE "     ", 0, " ____", 0, "___  ", 0, "     ",0,
-	  BYTE "||  \\", 0, "     ", 0, "|\\  \\", 0, "|\\   ", 0, "__  \\", 0,
-	  BYTE "|\\   ", 0, "__  \\", 0, "|\\   ", 0, "___ \\", 0, "|\\  \\", 0,
-	  BYTE "     ", 0, "|\\  _", 0, "__ \\ ", 0, "     ",0,
-	  BYTE "\\ \\  ", 0, "\\    ", 0, "\\ \\  ", 0, "\\ \\  ", 0,
-	  BYTE "\\|\\  ", 0, "\\ \\  ", 0, "\\|\\  ", 0, 
-	  BYTE "\\ \\  ", 0, "\\_|\\ ", 0, "\\ \\  ", 0,
-	  BYTE "\\    ", 0, "\\ \\  ", 0, " __/|", 0, "     ",0,
-	  BYTE " \\ \\ ", 0, " \\  _", 0, "_\\ \\ ", 0, " \\ \\ ", 0, 
-	  BYTE " \\\\\\ ", 0, " \\ \\ ", 0, "  _  ", 0, "_\\ \\ ", 0, 
-	  BYTE " \\ \\\\", 0, " \\ \\ ", 0, " \\   ", 0, " \\ \\ ", 0, " \\_|/", 0, "__   ",0,
-	  BYTE "  \\ \\", 0, "  \\|\\", 0, "__\\_\\", 0, "  \\ \\", 0,
-	  BYTE "  \\\\\\", 0, "  \\ \\", 0, "  \\\\ ", 0, " \\\\ \\", 0,
-	  BYTE "  \\_\\", 0, "\\ \\ \\", 0, "  \\__", 0, "__\\ \\", 0,
-	  BYTE "  \\_|", 0, "\\ \\  ",0,
-	  BYTE "   \\ ", 0, "\\____", 0, "_____", 0, "___\\ ", 0, "\\____", 0,
-	  ;BYTE "___\\ ", 0, "\\__\\\\", 0, " _\\\\ ", 0, "\\____", 0, "___\\ ", 0,
-	  ;BYTE "\\____", 0, "___\\ ", 0, "\\____", 0, "___\\ ",0,
-	  ;BYTE "    \\", 0, "|____", 0, "_____", 0, "___|\\", 0, "|____", 0, 
-	  ;BYTE "___|\\", 0, "|__|\\", 0, "|__|\\", 0, "|____", 0, "___|\\", 0, 
-	  ;BYTE "|____", 0, "___|\\", 0, "|____", 0, "___| ",0
+start_box_h BYTE 15
 
 .code
 
@@ -115,18 +101,58 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
 DisplayChar ENDP
 
 ; Setup display to set background color and move cursor to the right position
-SetDisplay PROC
-
-	mov eax, Gray + (white * 16)
-	call SetTextColor
-	call Clrscr
-	mov DH, 10
-    mov DL, 30
-    call    GotoXY
+SetDisplay PROC uses eax
 	
+	mov eax, gray + (white * 16)
+	call SetTextColor
+
+	call Clrscr
+	mov DH, 5
+	mov DL, 20
+	call GotoXY
+
+	call Wordle
+	
+	mov DH, 15
+    mov DL, 50
+    call    GotoXY
+
+	mov eax, gray + (gray * 16)
+	call SetTextColor
+
+	mov esi, 0
+	mov ecx, 6
+	sub DH, 1
+	
+	BoxLoop:
+		mov eax, gray + (gray * 16)
+		call SetTextColor
+		push edx
+
+		mov edx, OFFSET empty
+		call WriteString
+		mov edx, 0
+
+		pop edx
+		mov eax, white + (white * 16)
+		call SetTextColor
+
+		add DH, 1
+		mov DL, 50
+		call GotoXY
+
+		inc esi
+		loop BoxLoop
+	
+	mov DH, 15
+	mov DL, 50
+	call GotoXY
+
 	ret
 
 SetDisplay ENDP
+
+
 
 Winner PROC
 	
@@ -137,18 +163,71 @@ Loser PROC
 
 Loser ENDP
 
-Wordle PROC 
-	mov ecx, 70
-	mov esi, 0
+
+
+
+Wordle PROC	
+	
+
+	
 	mov edx, OFFSET wordy
+	call WriteString
+	call Crlf
 
-	WordLoop:
-		call WriteString
-		call Crlf
-		add edx, 6 * SIZEOF BYTE
-		inc esi
-		
+	mov DH, 6
+	mov DL, 20
+	call GotoXY
 
+	mov edx, OFFSET wordy1
+	call WriteString
+	call Crlf
+
+	mov DH, 7
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET wordy2
+	call WriteString
+	call Crlf
+
+	mov DH, 8
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET wordy3
+	call WriteString
+	call Crlf
+
+	mov DH, 9
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET wordy4
+	call WriteString
+	call Crlf
+
+	mov DH, 10
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET wordy5
+	call WriteString
+	call Crlf
+
+	mov DH, 11
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET wordy6
+	call WriteString
+	call Crlf
+
+	mov DH, 12
+	mov DL, 20
+	call GotoXY
+
+
+	ret
 
 Wordle ENDP
 

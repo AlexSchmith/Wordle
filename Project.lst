@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 16:47:18
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 20:32:11
 graphics.asm						     Page 1 - 1
 
 
@@ -43,7 +43,8 @@ graphics.asm						     Page 1 - 1
 			      C ; Takes in the result of a character and the character itself
 			      C ; color_bg is 0 for not in word, 1 for in word, and 2 for in correct position and in word
 			      C DisplayChar PROTO, color_bg: BYTE, char: BYTE
-			      C ;DisplayChar PROTO, uses eax edx
+			      C 
+			      C 
 			      C 
 			      C ; Changes the background and sets the cursor to the right position
 			      C SetDisplay PROTO
@@ -64,34 +65,108 @@ graphics.asm						     Page 1 - 1
  00000001 00			nomaidens BYTE ?
 
 
+ 00000002 20 5F 5F 5F 20	wordy 	BYTE " ___       __   ________  ________  ________  ___       _______      ",0
+	   20 20 20 20 20
+	   20 5F 5F 20 20
+	   20 5F 5F 5F 5F
+	   5F 5F 5F 5F 20
+	   20 5F 5F 5F 5F
+	   5F 5F 5F 5F 20
+	   20 5F 5F 5F 5F
+	   5F 5F 5F 5F 20
+	   20 5F 5F 5F 20
+	   20 20 20 20 20
+	   20 5F 5F 5F 5F
+	   5F 5F 5F 20 20
+	   20 20 20 20 00
+ 00000048 7C 5C 20 20 5C	wordy1	BYTE "|\  \     |\  \|\   __  \|\   __  \|\   ___ \|\  \     |\  ___ \     ",0
+	   20 20 20 20 20
+	   7C 5C 20 20 5C
+	   7C 5C 20 20 20
+	   5F 5F 20 20 5C
+	   7C 5C 20 20 20
+	   5F 5F 20 20 5C
+	   7C 5C 20 20 20
+	   5F 5F 5F 20 5C
+	   7C 5C 20 20 5C
+	   20 20 20 20 20
+	   7C 5C 20 20 5F
+	   5F 5F 20 5C 20
+	   20 20 20 20 00
+ 0000008E 5C 20 5C 20 20	wordy2	BYTE "\ \  \    \ \  \ \  \|\  \ \  \|\  \ \  \_|\ \ \  \    \ \   __/|    ",0
+	   5C 20 20 20 20
+	   5C 20 5C 20 20
+	   5C 20 5C 20 20
+	   5C 7C 5C 20 20
+	   5C 20 5C 20 20
+	   5C 7C 5C 20 20
+	   5C 20 5C 20 20
+	   5C 5F 7C 5C 20
+	   5C 20 5C 20 20
+	   5C 20 20 20 20
+	   5C 20 5C 20 20
+	   20 5F 5F 2F 7C
+	   20 20 20 20 00
+ 000000D4 20 5C 20 5C 20	wordy3	BYTE " \ \  \  __\ \  \ \  \\\  \ \   _  _\ \  \ \\ \ \  \    \ \  \_|/__  ",0
+	   20 5C 20 20 5F
+	   5F 5C 20 5C 20
+	   20 5C 20 5C 20
+	   20 5C 5C 5C 20
+	   20 5C 20 5C 20
+	   20 20 5F 20 20
+	   5F 5C 20 5C 20
+	   20 5C 20 5C 5C
+	   20 5C 20 5C 20
+	   20 5C 20 20 20
+	   20 5C 20 5C 20
+	   20 5C 5F 7C 2F
+	   5F 5F 20 20 00
+ 0000011A 20 20 5C 20 5C	wordy4	BYTE "  \ \  \|\__\_\  \ \  \\\  \ \  \\  \\ \  \_\\ \ \  \____\ \  \_|\ \ ",0
+	   20 20 5C 7C 5C
+	   5F 5F 5C 5F 5C
+	   20 20 5C 20 5C
+	   20 20 5C 5C 5C
+	   20 20 5C 20 5C
+	   20 20 5C 5C 20
+	   20 5C 5C 20 5C
+	   20 20 5C 5F 5C
+	   5C 20 5C 20 5C
+	   20 20 5C 5F 5F
+	   5F 5F 5C 20 5C
+	   20 20 5C 5F 7C
+	   5C 20 5C 20 00
+ 00000160 20 20 20 5C 20	wordy5	BYTE "   \ \____________\ \_______\ \__\\ _\\ \_______\ \_______\ \_______\",0
+	   5C 5F 5F 5F 5F
+	   5F 5F 5F 5F 5F
+	   5F 5F 5F 5C 20
+	   5C 5F 5F 5F 5F
+	   5F 5F 5F 5C 20
+	   5C 5F 5F 5C 5C
+	   20 5F 5C 5C 20
+	   5C 5F 5F 5F 5F
+	   5F 5F 5F 5C 20
+	   5C 5F 5F 5F 5F
+	   5F 5F 5F 5C 20
+	   5C 5F 5F 5F 5F
+	   5F 5F 5F 5C 00
+ 000001A6 20 20 20 20 5C	wordy6	BYTE "    \|____________|\|_______|\|__|\|__|\|_______|\|_______|\|_______|",0
+	   7C 5F 5F 5F 5F
+	   5F 5F 5F 5F 5F
+	   5F 5F 5F 7C 5C
+	   7C 5F 5F 5F 5F
+	   5F 5F 5F 7C 5C
+	   7C 5F 5F 7C 5C
+	   7C 5F 5F 7C 5C
+	   7C 5F 5F 5F 5F
+	   5F 5F 5F 7C 5C
+	   7C 5F 5F 5F 5F
+	   5F 5F 5F 7C 5C
+	   7C 5F 5F 5F 5F
+	   5F 5F 5F 7C 00
 
+ 000001EC 4D 45 4D 45		empty BYTE "MEME"  
 
-				wordy BYTE " ___ ", 0, "     ", 0, " __  ", 0, " ____", 0, "____ ", 0,
-graphics.asm(18) : error A2042:statement too complex
-				      BYTE " ____", 0, "____ ", 0, " ____", 0, "____ ", 0, " ___ ", 0,
-					  BYTE "     ", 0, " ____", 0, "___  ", 0, "     ",0,
-					  BYTE "||  \\", 0, "     ", 0, "|\\  \\", 0, "|\\   ", 0, "__  \\", 0,
-					  BYTE "|\\   ", 0, "__  \\", 0, "|\\   ", 0, "___ \\", 0, "|\\  \\", 0,
-					  BYTE "     ", 0, "|\\  _", 0, "__ \\ ", 0, "     ",0,
-graphics.asm(23) : error A2042:statement too complex
-					  BYTE "\\ \\  ", 0, "\\    ", 0, "\\ \\  ", 0, "\\ \\  ", 0,
-					  BYTE "\\|\\  ", 0, "\\ \\  ", 0, "\\|\\  ", 0, 
-					  BYTE "\\ \\  ", 0, "\\_|\\ ", 0, "\\ \\  ", 0,
-					  BYTE "\\    ", 0, "\\ \\  ", 0, " __/|", 0, "     ",0,
-					  BYTE " \\ \\ ", 0, " \\  _", 0, "_\\ \\ ", 0, " \\ \\ ", 0, 
-					  BYTE " \\\\\\ ", 0, " \\ \\ ", 0, "  _  ", 0, "_\\ \\ ", 0, 
-					  BYTE " \\ \\\\", 0, " \\ \\ ", 0, " \\   ", 0, " \\ \\ ", 0, " \\_|/", 0, "__   ",0,
-graphics.asm(30) : error A2042:statement too complex
-					  BYTE "  \\ \\", 0, "  \\|\\", 0, "__\\_\\", 0, "  \\ \\", 0,
-					  BYTE "  \\\\\\", 0, "  \\ \\", 0, "  \\\\ ", 0, " \\\\ \\", 0,
-					  BYTE "  \\_\\", 0, "\\ \\ \\", 0, "  \\__", 0, "__\\ \\", 0,
-					  BYTE "  \\_|", 0, "\\ \\  ",0,
-					  BYTE "   \\ ", 0, "\\____", 0, "_____", 0, "___\\ ", 0, "\\____", 0,
-					  ;BYTE "___\\ ", 0, "\\__\\\\", 0, " _\\\\ ", 0, "\\____", 0, "___\\ ", 0,
-					  ;BYTE "\\____", 0, "___\\ ", 0, "\\____", 0, "___\\ ",0,
-					  ;BYTE "    \\", 0, "|____", 0, "_____", 0, "___|\\", 0, "|____", 0, 
-					  ;BYTE "___|\\", 0, "|__|\\", 0, "|__|\\", 0, "|____", 0, "___|\\", 0, 
-					  ;BYTE "|____", 0, "___|\\", 0, "|____", 0, "___| ",0
+ 000001F0 0F			start_box_h BYTE 15
 
  00000000			.code
 
@@ -187,52 +262,147 @@ graphics.asm(30) : error A2042:statement too complex
  000000A1  C2 0008	   *	    ret    00008h
 
  000000A4			DisplayChar ENDP
-graphics.asm(115) : warning A6004:procedure argument or local not referenced : color_bg
+graphics.asm(101) : warning A6004:procedure argument or local not referenced : color_bg
+graphics.asm(101) : warning A6004:procedure argument or local not referenced : char
 
 				; Setup display to set background color and move cursor to the right position
- 000000A4			SetDisplay PROC
-
- 000000A4  B8 000000F8			mov eax, Gray + (white * 16)
- 000000A9  E8 00000000 E		call SetTextColor
- 000000AE  E8 00000000 E		call Clrscr
- 000000B3  B6 0A			mov DH, 10
- 000000B5  B2 1E		    mov DL, 30
- 000000B7  E8 00000000 E	    call    GotoXY
+ 000000A4			SetDisplay PROC uses eax
 					
- 000000BC  C3				ret
+ 000000A4  50		   *	    push   eax
+ 000000A5  B8 000000F8			mov eax, gray + (white * 16)
+ 000000AA  E8 00000000 E		call SetTextColor
 
- 000000BD			SetDisplay ENDP
+ 000000AF  E8 00000000 E		call Clrscr
+ 000000B4  B6 05			mov DH, 5
+ 000000B6  B2 14			mov DL, 20
+ 000000B8  E8 00000000 E		call GotoXY
 
- 000000BD			Winner PROC
+ 000000BD  E8 0000005D			call Wordle
+					
+ 000000C2  B6 0F			mov DH, 15
+ 000000C4  B2 32		    mov DL, 50
+ 000000C6  E8 00000000 E	    call    GotoXY
+
+ 000000CB  B8 00000088			mov eax, gray + (gray * 16)
+ 000000D0  E8 00000000 E		call SetTextColor
+
+ 000000D5  BE 00000000			mov esi, 0
+ 000000DA  B9 00000006			mov ecx, 6
+ 000000DF  80 EE 01			sub DH, 1
+					
+ 000000E2				BoxLoop:
+ 000000E2  B8 00000088				mov eax, gray + (gray * 16)
+ 000000E7  E8 00000000 E			call SetTextColor
+ 000000EC  52					push edx
+
+ 000000ED  BA 000001EC R			mov edx, OFFSET empty
+ 000000F2  E8 00000000 E			call WriteString
+ 000000F7  BA 00000000				mov edx, 0
+
+ 000000FC  5A					pop edx
+ 000000FD  B8 000000FF				mov eax, white + (white * 16)
+ 00000102  E8 00000000 E			call SetTextColor
+
+ 00000107  80 C6 01				add DH, 1
+ 0000010A  B2 32				mov DL, 50
+ 0000010C  E8 00000000 E			call GotoXY
+
+ 00000111  46					inc esi
+ 00000112  E2 CE				loop BoxLoop
+					
+ 00000114  B6 0F			mov DH, 15
+ 00000116  B2 32			mov DL, 50
+ 00000118  E8 00000000 E		call GotoXY
+
+					ret
+ 0000011D  58		   *	    pop    eax
+ 0000011E  C3		   *	    ret    00000h
+
+ 0000011F			SetDisplay ENDP
+
+
+
+ 0000011F			Winner PROC
 					
 					
- 000000BD			Winner ENDP
+ 0000011F			Winner ENDP
 
- 000000BD			Loser PROC
+ 0000011F			Loser PROC
 
- 000000BD			Loser ENDP
-
- 000000BD			Wordle PROC 
- 000000BD  B9 00000046			mov ecx, 70
- 000000C2  BE 00000000			mov esi, 0
-					mov edx, OFFSET wordy
-graphics.asm(143) : error A2006:undefined symbol : wordy
-graphics.asm(143) : warning A6004:procedure argument or local not referenced : char
-
- 000000D2				WordLoop:
- 000000D2  E8 00000000 E			call WriteString
- 000000D7  E8 00000000 E			call Crlf
- 000000DC  83 C2 06				add edx, 6 * SIZEOF BYTE
- 000000DF  46					inc esi
-						
+ 0000011F			Loser ENDP
 
 
- 000000E0			Wordle ENDP
+
+
+ 0000011F			Wordle PROC	
+					
+
+					
+ 0000011F  BA 00000002 R		mov edx, OFFSET wordy
+ 00000124  E8 00000000 E		call WriteString
+ 00000129  E8 00000000 E		call Crlf
+
+ 0000012E  B6 06			mov DH, 6
+ 00000130  B2 14			mov DL, 20
+ 00000132  E8 00000000 E		call GotoXY
+
+ 00000137  BA 00000048 R		mov edx, OFFSET wordy1
+ 0000013C  E8 00000000 E		call WriteString
+ 00000141  E8 00000000 E		call Crlf
+
+ 00000146  B6 07			mov DH, 7
+ 00000148  B2 14			mov DL, 20
+ 0000014A  E8 00000000 E		call GotoXY
+
+ 0000014F  BA 0000008E R		mov edx, OFFSET wordy2
+ 00000154  E8 00000000 E		call WriteString
+ 00000159  E8 00000000 E		call Crlf
+
+ 0000015E  B6 08			mov DH, 8
+ 00000160  B2 14			mov DL, 20
+ 00000162  E8 00000000 E		call GotoXY
+
+ 00000167  BA 000000D4 R		mov edx, OFFSET wordy3
+ 0000016C  E8 00000000 E		call WriteString
+ 00000171  E8 00000000 E		call Crlf
+
+ 00000176  B6 09			mov DH, 9
+ 00000178  B2 14			mov DL, 20
+ 0000017A  E8 00000000 E		call GotoXY
+
+ 0000017F  BA 0000011A R		mov edx, OFFSET wordy4
+ 00000184  E8 00000000 E		call WriteString
+ 00000189  E8 00000000 E		call Crlf
+
+ 0000018E  B6 0A			mov DH, 10
+ 00000190  B2 14			mov DL, 20
+ 00000192  E8 00000000 E		call GotoXY
+
+ 00000197  BA 00000160 R		mov edx, OFFSET wordy5
+ 0000019C  E8 00000000 E		call WriteString
+ 000001A1  E8 00000000 E		call Crlf
+
+ 000001A6  B6 0B			mov DH, 11
+ 000001A8  B2 14			mov DL, 20
+ 000001AA  E8 00000000 E		call GotoXY
+
+ 000001AF  BA 000001A6 R		mov edx, OFFSET wordy6
+ 000001B4  E8 00000000 E		call WriteString
+ 000001B9  E8 00000000 E		call Crlf
+
+ 000001BE  B6 0C			mov DH, 12
+ 000001C0  B2 14			mov DL, 20
+ 000001C2  E8 00000000 E		call GotoXY
+
+
+ 000001C7  C3				ret
+
+ 000001C8			Wordle ENDP
 
 
 
 				END
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 16:47:18
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/04/22 20:32:11
 graphics.asm						     Symbols 2 - 1
 
 
@@ -326,8 +496,8 @@ Segments and Groups:
 
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
-_DATA  . . . . . . . . . . . . .	32 Bit	 00000002 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 000000E0 Para	  Public  'CODE'	
+_DATA  . . . . . . . . . . . . .	32 Bit	 000001F1 Para	  Public  'DATA'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 000001C8 Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -391,7 +561,7 @@ HeapFree . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 HeapSize . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 IsDigit  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-Loser  . . . . . . . . . . . . .	P Near	 000000BD _TEXT	Length= 00000000 Public STDCALL
+Loser  . . . . . . . . . . . . .	P Near	 0000011F _TEXT	Length= 00000000 Public STDCALL
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBoxAsk  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBox . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -422,7 +592,8 @@ SetConsoleScreenBufferSize . . .	P Near	 00000000 FLAT	Length= 00000000 External
 SetConsoleTextAttribute  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleTitleA . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleWindowInfo . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-SetDisplay . . . . . . . . . . .	P Near	 000000A4 _TEXT	Length= 00000019 Public STDCALL
+SetDisplay . . . . . . . . . . .	P Near	 000000A4 _TEXT	Length= 0000007B Public STDCALL
+  BoxLoop  . . . . . . . . . . .	L Near	 000000E2 _TEXT	
 SetFilePointer . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetLocalTime . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetTextColor . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -436,9 +607,8 @@ Str_trim . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 Str_ucase  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SystemTimeToFileTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WaitMsg  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-Winner . . . . . . . . . . . . .	P Near	 000000BD _TEXT	Length= 00000000 Public STDCALL
-Wordle . . . . . . . . . . . . .	P Near	 000000BD _TEXT	Length= 00000023 Public STDCALL
-  WordLoop . . . . . . . . . . .	L Near	 000000D2 _TEXT	
+Winner . . . . . . . . . . . . .	P Near	 0000011F _TEXT	Length= 00000000 Public STDCALL
+Wordle . . . . . . . . . . . . .	P Near	 0000011F _TEXT	Length= 000000A9 Public STDCALL
 WriteBinB  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteBin . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteChar  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -678,6 +848,7 @@ black  . . . . . . . . . . . . .	Number	 00000000h
 blue . . . . . . . . . . . . . .	Number	 00000001h   
 brown  . . . . . . . . . . . . .	Number	 00000006h   
 cyan . . . . . . . . . . . . . .	Number	 00000003h   
+empty  . . . . . . . . . . . . .	Byte	 000001EC _DATA	
 exit . . . . . . . . . . . . . .	Text   	 INVOKE ExitProcess,0
 gray . . . . . . . . . . . . . .	Number	 00000008h   
 green  . . . . . . . . . . . . .	Number	 00000002h   
@@ -691,10 +862,18 @@ magenta  . . . . . . . . . . . .	Number	 00000005h
 nomaidens  . . . . . . . . . . .	Byte	 00000001 _DATA	
 red  . . . . . . . . . . . . . .	Number	 00000004h   
 rick . . . . . . . . . . . . . .	Byte	 00000000 _DATA	
+start_box_h  . . . . . . . . . .	Byte	 000001F0 _DATA	
 white  . . . . . . . . . . . . .	Number	 0000000Fh   
 wordlist . . . . . . . . . . . .	Byte	 00000000 FLAT	External STDCALL
+wordy1 . . . . . . . . . . . . .	Byte	 00000048 _DATA	
+wordy2 . . . . . . . . . . . . .	Byte	 0000008E _DATA	
+wordy3 . . . . . . . . . . . . .	Byte	 000000D4 _DATA	
+wordy4 . . . . . . . . . . . . .	Byte	 0000011A _DATA	
+wordy5 . . . . . . . . . . . . .	Byte	 00000160 _DATA	
+wordy6 . . . . . . . . . . . . .	Byte	 000001A6 _DATA	
+wordy  . . . . . . . . . . . . .	Byte	 00000002 _DATA	
 wsprintf . . . . . . . . . . . .	Text   	 wsprintfA
 yellow . . . . . . . . . . . . .	Number	 0000000Eh   
 
 	   2 Warnings
-	   4 Errors
+	   0 Errors

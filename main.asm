@@ -9,7 +9,7 @@ INCLUDE graphics.inc
 
 .data
 wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other",0,"words",0,"could",0,"write",0,"first",0,"water",0,"after",0,"where",0,"right",0,"think",0,"three", 0
-testword BYTE "their",0
+testword BYTE "light"
 
 
 .code
@@ -28,14 +28,7 @@ main PROC PUBLIC
     mov ecx, 17
     mov esi, 0
     mov edx, OFFSET wordlist
-    WordlistLoop:
-        ;// mov edx, OFFSET wordlist
-
-        call WriteString
-        call Crlf
-        add edx, 6 * SIZEOF BYTE
-        inc esi
-        loop WordlistLoop
+   
     call SelectRandomWord
     call WriteString
     INVOKE ExitProcess, 0
