@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 08:40:20
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 08:44:55
 graphics.asm						     Page 1 - 1
 
 
@@ -496,278 +496,280 @@ graphics.asm(116) : warning A6004:procedure argument or local not referenced : c
 graphics.asm(116) : warning A6004:procedure argument or local not referenced : char
 
 				; Setup display to set background color and move cursor to the right position
- 000000A4			SetDisplay PROC uses eax
+ 000000A4			SetDisplay PROC uses eax edx
 					
  000000A4  50		   *	    push   eax
- 000000A5  B8 000000F8			mov eax, gray + (white * 16)
- 000000AA  E8 00000000 E		call SetTextColor
+ 000000A5  52		   *	    push   edx
+ 000000A6  B8 000000F8			mov eax, gray + (white * 16)
+ 000000AB  E8 00000000 E		call SetTextColor
 
- 000000AF  E8 00000000 E		call Clrscr
- 000000B4  B6 05			mov DH, 5
- 000000B6  B2 14			mov DL, 20
- 000000B8  E8 00000000 E		call GotoXY
+ 000000B0  E8 00000000 E		call Clrscr
+ 000000B5  B6 05			mov DH, 5
+ 000000B7  B2 14			mov DL, 20
+ 000000B9  E8 00000000 E		call GotoXY
 
- 000000BD  E8 000001DA			call Wordle
+ 000000BE  E8 000001DB			call Wordle
 					
- 000000C2  B6 0F			mov DH, 15
- 000000C4  B2 32		    mov DL, 50
- 000000C6  E8 00000000 E	    call    GotoXY
+ 000000C3  B6 0F			mov DH, 15
+ 000000C5  B2 32		    mov DL, 50
+ 000000C7  E8 00000000 E	    call    GotoXY
 
- 000000CB  B8 00000088			mov eax, gray + (gray * 16)
- 000000D0  E8 00000000 E		call SetTextColor
+ 000000CC  B8 00000088			mov eax, gray + (gray * 16)
+ 000000D1  E8 00000000 E		call SetTextColor
 
- 000000D5  BE 00000000			mov esi, 0
- 000000DA  B9 00000006			mov ecx, 6
- 000000DF  80 EE 01			sub DH, 1
+ 000000D6  BE 00000000			mov esi, 0
+ 000000DB  B9 00000006			mov ecx, 6
+ 000000E0  80 EE 01			sub DH, 1
 					
- 000000E2				BoxLoop:
- 000000E2  B8 00000088				mov eax, gray + (gray * 16)
- 000000E7  E8 00000000 E			call SetTextColor
- 000000EC  52					push edx
+ 000000E3				BoxLoop:
+ 000000E3  B8 00000088				mov eax, gray + (gray * 16)
+ 000000E8  E8 00000000 E			call SetTextColor
+ 000000ED  52					push edx
 
- 000000ED  BA 0000062F R			mov edx, OFFSET empty
- 000000F2  E8 00000000 E			call WriteString
- 000000F7  BA 00000000				mov edx, 0
+ 000000EE  BA 0000062F R			mov edx, OFFSET empty
+ 000000F3  E8 00000000 E			call WriteString
+ 000000F8  BA 00000000				mov edx, 0
 
- 000000FC  5A					pop edx
- 000000FD  B8 000000FF				mov eax, white + (white * 16)
- 00000102  E8 00000000 E			call SetTextColor
+ 000000FD  5A					pop edx
+ 000000FE  B8 000000FF				mov eax, white + (white * 16)
+ 00000103  E8 00000000 E			call SetTextColor
 
- 00000107  80 C6 01				add DH, 1
- 0000010A  B2 32				mov DL, 50
- 0000010C  E8 00000000 E			call GotoXY
+ 00000108  80 C6 01				add DH, 1
+ 0000010B  B2 32				mov DL, 50
+ 0000010D  E8 00000000 E			call GotoXY
 
- 00000111  46					inc esi
- 00000112  E2 CE				loop BoxLoop
+ 00000112  46					inc esi
+ 00000113  E2 CE				loop BoxLoop
 					
- 00000114  B6 0F			mov DH, 15
- 00000116  B2 32			mov DL, 50
- 00000118  E8 00000000 E		call GotoXY
+ 00000115  B6 0F			mov DH, 15
+ 00000117  B2 32			mov DL, 50
+ 00000119  E8 00000000 E		call GotoXY
 
- 0000011D  B8 00000088			mov eax, gray + (gray * 16)
- 00000122  E8 00000000 E		call SetTextColor
+ 0000011E  B8 00000088			mov eax, gray + (gray * 16)
+ 00000123  E8 00000000 E		call SetTextColor
 
 					ret
- 00000127  58		   *	    pop    eax
- 00000128  C3		   *	    ret    00000h
+ 00000128  5A		   *	    pop    edx
+ 00000129  58		   *	    pop    eax
+ 0000012A  C3		   *	    ret    00000h
 
- 00000129			SetDisplay ENDP
+ 0000012B			SetDisplay ENDP
 
 
 
- 00000129			Winner PROC
- 00000129  B8 000000FF			mov eax, white + (white * 16)
- 0000012E  E8 00000000 E		call SetTextColor
- 00000133  E8 00000000 E		call ClrScr
+ 0000012B			Winner PROC
+ 0000012B  B8 000000FF			mov eax, white + (white * 16)
+ 00000130  E8 00000000 E		call SetTextColor
+ 00000135  E8 00000000 E		call ClrScr
 
- 00000138  B8 000000F2			mov eax, green + (white * 16)
- 0000013D  E8 00000000 E		call SetTextColor
+ 0000013A  B8 000000F2			mov eax, green + (white * 16)
+ 0000013F  E8 00000000 E		call SetTextColor
 
- 00000142  B6 05			mov DH, 5
- 00000144  B2 14			mov DL, 20
- 00000146  E8 00000000 E		call GotoXY
+ 00000144  B6 05			mov DH, 5
+ 00000146  B2 14			mov DL, 20
+ 00000148  E8 00000000 E		call GotoXY
 
- 0000014B  BA 00000000 R		mov edx, OFFSET winners
- 00000150  E8 00000000 E		call WriteString
+ 0000014D  BA 00000000 R		mov edx, OFFSET winners
+ 00000152  E8 00000000 E		call WriteString
 
- 00000155  B6 06			mov DH, 6
- 00000157  B2 14			mov DL, 20
- 00000159  E8 00000000 E		call GotoXY
+ 00000157  B6 06			mov DH, 6
+ 00000159  B2 14			mov DL, 20
+ 0000015B  E8 00000000 E		call GotoXY
 
- 0000015E  BA 00000047 R		mov edx, OFFSET winner1
- 00000163  E8 00000000 E		call WriteString
+ 00000160  BA 00000047 R		mov edx, OFFSET winner1
+ 00000165  E8 00000000 E		call WriteString
 
- 00000168  B6 07			mov DH, 7
- 0000016A  B2 14			mov DL, 20
- 0000016C  E8 00000000 E		call GotoXY
+ 0000016A  B6 07			mov DH, 7
+ 0000016C  B2 14			mov DL, 20
+ 0000016E  E8 00000000 E		call GotoXY
 
- 00000171  BA 0000008E R		mov edx, OFFSET winner2
- 00000176  E8 00000000 E		call WriteString
+ 00000173  BA 0000008E R		mov edx, OFFSET winner2
+ 00000178  E8 00000000 E		call WriteString
 					
- 0000017B  B6 08			mov DH, 8
- 0000017D  B2 14			mov DL, 20
- 0000017F  E8 00000000 E		call GotoXY
+ 0000017D  B6 08			mov DH, 8
+ 0000017F  B2 14			mov DL, 20
+ 00000181  E8 00000000 E		call GotoXY
 
- 00000184  BA 000000D5 R		mov edx, OFFSET winner3
- 00000189  E8 00000000 E		call WriteString
+ 00000186  BA 000000D5 R		mov edx, OFFSET winner3
+ 0000018B  E8 00000000 E		call WriteString
 					
- 0000018E  B6 09			mov DH, 9
- 00000190  B2 14			mov DL, 20
- 00000192  E8 00000000 E		call GotoXY
+ 00000190  B6 09			mov DH, 9
+ 00000192  B2 14			mov DL, 20
+ 00000194  E8 00000000 E		call GotoXY
 
- 00000197  BA 0000011C R		mov edx, OFFSET winner4
- 0000019C  E8 00000000 E		call WriteString
+ 00000199  BA 0000011C R		mov edx, OFFSET winner4
+ 0000019E  E8 00000000 E		call WriteString
 
- 000001A1  B6 0A			mov DH, 10
- 000001A3  B2 14			mov DL, 20
- 000001A5  E8 00000000 E		call GotoXY
+ 000001A3  B6 0A			mov DH, 10
+ 000001A5  B2 14			mov DL, 20
+ 000001A7  E8 00000000 E		call GotoXY
 
- 000001AA  BA 00000163 R		mov edx, OFFSET winner5
- 000001AF  E8 00000000 E		call WriteString
+ 000001AC  BA 00000163 R		mov edx, OFFSET winner5
+ 000001B1  E8 00000000 E		call WriteString
 
- 000001B4  B6 0B			mov DH, 11
- 000001B6  B2 14			mov DL, 20
- 000001B8  E8 00000000 E		call GotoXY
+ 000001B6  B6 0B			mov DH, 11
+ 000001B8  B2 14			mov DL, 20
+ 000001BA  E8 00000000 E		call GotoXY
 
- 000001BD  BA 000001AA R		mov edx, OFFSET winner6
- 000001C2  E8 00000000 E		call WriteString
+ 000001BF  BA 000001AA R		mov edx, OFFSET winner6
+ 000001C4  E8 00000000 E		call WriteString
 
 
- 000001C7  B6 0C			mov DH, 12
- 000001C9  B2 14			mov DL, 20
- 000001CB  E8 00000000 E		call GotoXY
+ 000001C9  B6 0C			mov DH, 12
+ 000001CB  B2 14			mov DL, 20
+ 000001CD  E8 00000000 E		call GotoXY
 
- 000001D0  BA 000001F1 R		mov edx, OFFSET winner7
- 000001D5  E8 00000000 E		call WriteString
+ 000001D2  BA 000001F1 R		mov edx, OFFSET winner7
+ 000001D7  E8 00000000 E		call WriteString
 
- 000001DA  B8 00002710			mov eax, 10000
- 000001DF  E8 00000000 E		call Delay
+ 000001DC  B8 00002710			mov eax, 10000
+ 000001E1  E8 00000000 E		call Delay
 
- 000001E4  C3				ret
+ 000001E6  C3				ret
 					
- 000001E5			Winner ENDP
+ 000001E7			Winner ENDP
 
- 000001E5			Loser PROC, wod: DWORD
- 000001E5  55		   *	    push   ebp
- 000001E6  8B EC	   *	    mov    ebp, esp
- 000001E8  B8 000000FF			mov eax, white + (white * 16)
- 000001ED  E8 00000000 E		call SetTextColor
- 000001F2  E8 00000000 E		call ClrScr
+ 000001E7			Loser PROC, wod: DWORD
+ 000001E7  55		   *	    push   ebp
+ 000001E8  8B EC	   *	    mov    ebp, esp
+ 000001EA  B8 000000FF			mov eax, white + (white * 16)
+ 000001EF  E8 00000000 E		call SetTextColor
+ 000001F4  E8 00000000 E		call ClrScr
 
- 000001F7  B8 000000FC			mov eax, lightRed + (white * 16)
- 000001FC  E8 00000000 E		call SetTextColor
+ 000001F9  B8 000000FC			mov eax, lightRed + (white * 16)
+ 000001FE  E8 00000000 E		call SetTextColor
 
- 00000201  B6 05			mov DH, 5
- 00000203  B2 14			mov DL, 20
- 00000205  E8 00000000 E		call GotoXY
+ 00000203  B6 05			mov DH, 5
+ 00000205  B2 14			mov DL, 20
+ 00000207  E8 00000000 E		call GotoXY
 
- 0000020A  BA 00000422 R		mov edx, OFFSET nomaidens
- 0000020F  E8 00000000 E		call WriteString
+ 0000020C  BA 00000422 R		mov edx, OFFSET nomaidens
+ 00000211  E8 00000000 E		call WriteString
 
- 00000214  B6 06			mov DH, 6
- 00000216  B2 14			mov DL, 20
- 00000218  E8 00000000 E		call GotoXY
+ 00000216  B6 06			mov DH, 6
+ 00000218  B2 14			mov DL, 20
+ 0000021A  E8 00000000 E		call GotoXY
 
- 0000021D  BA 00000474 R		mov edx, OFFSET nomaidens1
- 00000222  E8 00000000 E		call WriteString
+ 0000021F  BA 00000474 R		mov edx, OFFSET nomaidens1
+ 00000224  E8 00000000 E		call WriteString
 
- 00000227  B6 07			mov DH, 7
- 00000229  B2 14			mov DL, 20
- 0000022B  E8 00000000 E		call GotoXY
+ 00000229  B6 07			mov DH, 7
+ 0000022B  B2 14			mov DL, 20
+ 0000022D  E8 00000000 E		call GotoXY
 
- 00000230  BA 000004C6 R		mov edx, OFFSET nomaidens2
- 00000235  E8 00000000 E		call WriteString
+ 00000232  BA 000004C6 R		mov edx, OFFSET nomaidens2
+ 00000237  E8 00000000 E		call WriteString
 					
- 0000023A  B6 08			mov DH, 8
- 0000023C  B2 14			mov DL, 20
- 0000023E  E8 00000000 E		call GotoXY
+ 0000023C  B6 08			mov DH, 8
+ 0000023E  B2 14			mov DL, 20
+ 00000240  E8 00000000 E		call GotoXY
 
- 00000243  BA 00000518 R		mov edx, OFFSET nomaidens3
- 00000248  E8 00000000 E		call WriteString
+ 00000245  BA 00000518 R		mov edx, OFFSET nomaidens3
+ 0000024A  E8 00000000 E		call WriteString
 					
- 0000024D  B6 09			mov DH, 9
- 0000024F  B2 14			mov DL, 20
- 00000251  E8 00000000 E		call GotoXY
+ 0000024F  B6 09			mov DH, 9
+ 00000251  B2 14			mov DL, 20
+ 00000253  E8 00000000 E		call GotoXY
 
- 00000256  BA 0000056A R		mov edx, OFFSET nomaidens4
- 0000025B  E8 00000000 E		call WriteString
+ 00000258  BA 0000056A R		mov edx, OFFSET nomaidens4
+ 0000025D  E8 00000000 E		call WriteString
 
- 00000260  B6 0A			mov DH, 10
- 00000262  B2 14			mov DL, 20
- 00000264  E8 00000000 E		call GotoXY
+ 00000262  B6 0A			mov DH, 10
+ 00000264  B2 14			mov DL, 20
+ 00000266  E8 00000000 E		call GotoXY
 
- 00000269  BA 000005BC R		mov edx, OFFSET nomaidens5
- 0000026E  E8 00000000 E		call WriteString
+ 0000026B  BA 000005BC R		mov edx, OFFSET nomaidens5
+ 00000270  E8 00000000 E		call WriteString
 
- 00000273  B6 14			mov DH, 20
- 00000275  B2 28			mov DL, 40
- 00000277  E8 00000000 E		call GotoXY
+ 00000275  B6 14			mov DH, 20
+ 00000277  B2 28			mov DL, 40
+ 00000279  E8 00000000 E		call GotoXY
 
- 0000027C  BA 0000060E R		mov edx, OFFSET ending
- 00000281  E8 00000000 E		call WriteString
- 00000286  8B 55 08			mov edx, wod
- 00000289  E8 00000000 E		call WriteString
+ 0000027E  BA 0000060E R		mov edx, OFFSET ending
+ 00000283  E8 00000000 E		call WriteString
+ 00000288  8B 55 08			mov edx, wod
+ 0000028B  E8 00000000 E		call WriteString
 
 
- 0000028E  B8 00002710			mov eax, 10000
- 00000293  E8 00000000 E		call Delay
+ 00000290  B8 00002710			mov eax, 10000
+ 00000295  E8 00000000 E		call Delay
 
 					ret
- 00000298  C9		   *	    leave  
- 00000299  C2 0004	   *	    ret    00004h
+ 0000029A  C9		   *	    leave  
+ 0000029B  C2 0004	   *	    ret    00004h
 
- 0000029C			Loser ENDP
+ 0000029E			Loser ENDP
 
 
- 0000029C			Wordle PROC
- 0000029C  B8 000000FD			mov eax, lightMagenta + (white * 16)
- 000002A1  E8 00000000 E		call SetTextColor
+ 0000029E			Wordle PROC
+ 0000029E  B8 000000FD			mov eax, lightMagenta + (white * 16)
+ 000002A3  E8 00000000 E		call SetTextColor
 
 					
- 000002A6  BA 00000238 R		mov edx, OFFSET wordy
- 000002AB  E8 00000000 E		call WriteString
+ 000002A8  BA 00000238 R		mov edx, OFFSET wordy
+ 000002AD  E8 00000000 E		call WriteString
 					
 
- 000002B0  B6 06			mov DH, 6
- 000002B2  B2 14			mov DL, 20
- 000002B4  E8 00000000 E		call GotoXY
+ 000002B2  B6 06			mov DH, 6
+ 000002B4  B2 14			mov DL, 20
+ 000002B6  E8 00000000 E		call GotoXY
 
- 000002B9  BA 0000027E R		mov edx, OFFSET wordy1
- 000002BE  E8 00000000 E		call WriteString
+ 000002BB  BA 0000027E R		mov edx, OFFSET wordy1
+ 000002C0  E8 00000000 E		call WriteString
 					
 
- 000002C3  B6 07			mov DH, 7
- 000002C5  B2 14			mov DL, 20
- 000002C7  E8 00000000 E		call GotoXY
+ 000002C5  B6 07			mov DH, 7
+ 000002C7  B2 14			mov DL, 20
+ 000002C9  E8 00000000 E		call GotoXY
 
- 000002CC  BA 000002C4 R		mov edx, OFFSET wordy2
- 000002D1  E8 00000000 E		call WriteString
+ 000002CE  BA 000002C4 R		mov edx, OFFSET wordy2
+ 000002D3  E8 00000000 E		call WriteString
 					
 
- 000002D6  B6 08			mov DH, 8
- 000002D8  B2 14			mov DL, 20
- 000002DA  E8 00000000 E		call GotoXY
+ 000002D8  B6 08			mov DH, 8
+ 000002DA  B2 14			mov DL, 20
+ 000002DC  E8 00000000 E		call GotoXY
 
- 000002DF  BA 0000030A R		mov edx, OFFSET wordy3
- 000002E4  E8 00000000 E		call WriteString
+ 000002E1  BA 0000030A R		mov edx, OFFSET wordy3
+ 000002E6  E8 00000000 E		call WriteString
 					
 
- 000002E9  B6 09			mov DH, 9
- 000002EB  B2 14			mov DL, 20
- 000002ED  E8 00000000 E		call GotoXY
+ 000002EB  B6 09			mov DH, 9
+ 000002ED  B2 14			mov DL, 20
+ 000002EF  E8 00000000 E		call GotoXY
 
- 000002F2  BA 00000350 R		mov edx, OFFSET wordy4
- 000002F7  E8 00000000 E		call WriteString
-
-
- 000002FC  B6 0A			mov DH, 10
- 000002FE  B2 14			mov DL, 20
- 00000300  E8 00000000 E		call GotoXY
-
- 00000305  BA 00000396 R		mov edx, OFFSET wordy5
- 0000030A  E8 00000000 E		call WriteString
+ 000002F4  BA 00000350 R		mov edx, OFFSET wordy4
+ 000002F9  E8 00000000 E		call WriteString
 
 
- 0000030F  B6 0B			mov DH, 11
- 00000311  B2 14			mov DL, 20
- 00000313  E8 00000000 E		call GotoXY
+ 000002FE  B6 0A			mov DH, 10
+ 00000300  B2 14			mov DL, 20
+ 00000302  E8 00000000 E		call GotoXY
 
- 00000318  BA 000003DC R		mov edx, OFFSET wordy6
- 0000031D  E8 00000000 E		call WriteString
+ 00000307  BA 00000396 R		mov edx, OFFSET wordy5
+ 0000030C  E8 00000000 E		call WriteString
+
+
+ 00000311  B6 0B			mov DH, 11
+ 00000313  B2 14			mov DL, 20
+ 00000315  E8 00000000 E		call GotoXY
+
+ 0000031A  BA 000003DC R		mov edx, OFFSET wordy6
+ 0000031F  E8 00000000 E		call WriteString
 					
 
- 00000322  B6 0C			mov DH, 12
- 00000324  B2 14			mov DL, 20
- 00000326  E8 00000000 E		call GotoXY
+ 00000324  B6 0C			mov DH, 12
+ 00000326  B2 14			mov DL, 20
+ 00000328  E8 00000000 E		call GotoXY
 
- 0000032B  C3				ret
+ 0000032D  C3				ret
 
- 0000032C			Wordle ENDP
+ 0000032E			Wordle ENDP
 
 
 
 				END
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 08:40:20
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 08:44:55
 graphics.asm						     Symbols 2 - 1
 
 
@@ -862,7 +864,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 Para	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 00000634 Para	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 0000032C Para	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000032E Para	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -926,7 +928,7 @@ HeapFree . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 HeapSize . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 IsDigit  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 LocalFree  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-Loser  . . . . . . . . . . . . .	P Near	 000001E5 _TEXT	Length= 000000B7 Public STDCALL
+Loser  . . . . . . . . . . . . .	P Near	 000001E7 _TEXT	Length= 000000B7 Public STDCALL
   wod  . . . . . . . . . . . . .	DWord	 bp + 00000008
 MessageBoxA  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 MsgBoxAsk  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -958,8 +960,8 @@ SetConsoleScreenBufferSize . . .	P Near	 00000000 FLAT	Length= 00000000 External
 SetConsoleTextAttribute  . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleTitleA . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetConsoleWindowInfo . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-SetDisplay . . . . . . . . . . .	P Near	 000000A4 _TEXT	Length= 00000085 Public STDCALL
-  BoxLoop  . . . . . . . . . . .	L Near	 000000E2 _TEXT	
+SetDisplay . . . . . . . . . . .	P Near	 000000A4 _TEXT	Length= 00000087 Public STDCALL
+  BoxLoop  . . . . . . . . . . .	L Near	 000000E3 _TEXT	
 SetFilePointer . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetLocalTime . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SetTextColor . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
@@ -973,8 +975,8 @@ Str_trim . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 Str_ucase  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 SystemTimeToFileTime . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WaitMsg  . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-Winner . . . . . . . . . . . . .	P Near	 00000129 _TEXT	Length= 000000BC Public STDCALL
-Wordle . . . . . . . . . . . . .	P Near	 0000029C _TEXT	Length= 00000090 Public STDCALL
+Winner . . . . . . . . . . . . .	P Near	 0000012B _TEXT	Length= 000000BC Public STDCALL
+Wordle . . . . . . . . . . . . .	P Near	 0000029E _TEXT	Length= 00000090 Public STDCALL
 WriteBinB  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteBin . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteChar  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL

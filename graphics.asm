@@ -116,7 +116,7 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
 DisplayChar ENDP
 
 ; Setup display to set background color and move cursor to the right position
-SetDisplay PROC uses eax
+SetDisplay PROC uses eax edx
 	
 	mov eax, gray + (white * 16)
 	call SetTextColor
