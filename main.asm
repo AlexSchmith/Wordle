@@ -14,6 +14,7 @@ testword BYTE "light"
 
 .code
 main PROC PUBLIC
+    
     call SetDisplay
     call Randomize
 
@@ -30,7 +31,21 @@ main PROC PUBLIC
     mov edx, OFFSET wordlist
    
     call SelectRandomWord
-    call WriteString
+    call WaitMsg
+    push edx
+    mov DH, 50
+    mov DL, 0
+    call GotoXY
+    pop edx
+    
+    push edx
+    call Loser
+    mov DH, 30
+    mov DL, 0
+    call GotoXY
+    call WaitMsg
+
+ 
     INVOKE ExitProcess, 0
 main ENDP
 END main

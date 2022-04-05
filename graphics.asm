@@ -10,7 +10,6 @@ ExitProcess PROTO, dwExitCode: DWORD
 rick BYTE ?
 
 
-nomaidens BYTE ?
 
 
 wordy 	BYTE " ___       __   ________  ________  ________  ___       _______      ",0
@@ -20,6 +19,16 @@ wordy3	BYTE " \ \  \  __\ \  \ \  \\\  \ \   _  _\ \  \ \\ \ \  \    \ \  \_|/__
 wordy4	BYTE "  \ \  \|\__\_\  \ \  \\\  \ \  \\  \\ \  \_\\ \ \  \____\ \  \_|\ \ ",0
 wordy5	BYTE "   \ \____________\ \_______\ \__\\ _\\ \_______\ \_______\ \_______\",0
 wordy6	BYTE "    \|____________|\|_______|\|__|\|__|\|_______|\|_______|\|_______|",0
+
+nomaidens  BYTE " _   _        ___  ___      _     _                ",0
+nomaidens1 BYTE "| \ | |       |  \/  |     (_)   | |               ",0
+nomaidens2 BYTE "|  \| | ___   | .  . | __ _ _  __| | ___ _ __  ___ ",0
+nomaidens3 BYTE "| . ` |/ _ \  | |\/| |/ _` | |/ _` |/ _ \ '_ \/ __|",0
+nomaidens4 BYTE "| |\  | (_) | | |  | | (_| | | (_| |  __/ | | \__ \",0
+nomaidens5 BYTE "\_| \_/\___/  \_|  |_/\__,_|_|\__,_|\___|_| |_|___/",0
+nomaidens6 BYTE "                                                   ",0
+
+ending BYTE "Sorry. The Word of the Day was ",0 
 
 empty BYTE "MEME"  
 
@@ -46,7 +55,6 @@ CheckWord PROC uses eax ecx esi edi, current_word: DWORD, wod: DWORD
 		jmp Display
 
 		NotCorrect:
-
 		push wod
 		push [esi]
 		call CharInWord
@@ -159,20 +167,87 @@ Winner PROC
 	
 Winner ENDP
 
-Loser PROC
+Loser PROC, wod: DWORD
+	mov eax, white + (white * 16)
+	call SetTextColor
+	call ClrScr
+
+	mov eax, lightRed + (white * 16)
+	call SetTextColor
+
+	mov DH, 5
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET nomaidens
+	call WriteString
+
+	mov DH, 6
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET nomaidens1
+	call WriteString
+
+	mov DH, 7
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET nomaidens2
+	call WriteString
+	
+	mov DH, 8
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET nomaidens3
+	call WriteString
+	
+	mov DH, 9
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET nomaidens4
+	call WriteString
+
+	mov DH, 10
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET nomaidens5
+	call WriteString
+
+	mov DH, 11
+	mov DL, 20
+	call GotoXY
+
+	mov edx, OFFSET nomaidens6
+	call WriteString
+
+	mov DH, 20
+	mov DL, 40
+	call GotoXY
+
+	mov edx, OFFSET ending
+	call WriteString
+	mov edx, wod
+	call WriteString
+
+	ret
 
 Loser ENDP
 
 
 
 
-Wordle PROC	
-	
+Wordle PROC
+	mov eax, lightGreen + (white * 16)
+	call SetTextColor
 
 	
 	mov edx, OFFSET wordy
 	call WriteString
-	call Crlf
+	
 
 	mov DH, 6
 	mov DL, 20
@@ -180,7 +255,7 @@ Wordle PROC
 
 	mov edx, OFFSET wordy1
 	call WriteString
-	call Crlf
+	
 
 	mov DH, 7
 	mov DL, 20
@@ -188,7 +263,7 @@ Wordle PROC
 
 	mov edx, OFFSET wordy2
 	call WriteString
-	call Crlf
+	
 
 	mov DH, 8
 	mov DL, 20
@@ -196,7 +271,7 @@ Wordle PROC
 
 	mov edx, OFFSET wordy3
 	call WriteString
-	call Crlf
+	
 
 	mov DH, 9
 	mov DL, 20
@@ -204,7 +279,7 @@ Wordle PROC
 
 	mov edx, OFFSET wordy4
 	call WriteString
-	call Crlf
+
 
 	mov DH, 10
 	mov DL, 20
@@ -212,7 +287,7 @@ Wordle PROC
 
 	mov edx, OFFSET wordy5
 	call WriteString
-	call Crlf
+
 
 	mov DH, 11
 	mov DL, 20
@@ -220,12 +295,11 @@ Wordle PROC
 
 	mov edx, OFFSET wordy6
 	call WriteString
-	call Crlf
+	
 
 	mov DH, 12
 	mov DL, 20
 	call GotoXY
-
 
 	ret
 
