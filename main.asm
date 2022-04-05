@@ -21,6 +21,8 @@ main PROC PUBLIC
     push OFFSET wordlist
     push OFFSET testword
     call CheckWord
+    mov eax, 10000
+    call Delay
 
     mov edx, 0
 

@@ -1,4 +1,4 @@
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 07:55:50
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 07:59:44
 main.asm						     Page 1 - 1
 
 
@@ -96,37 +96,39 @@ c:\Irvine\SmallWin.inc(11) : warning A4011:multiple .MODEL directives found : .M
  0000000A  68 00000000 R	    push OFFSET wordlist
  0000000F  68 00000066 R	    push OFFSET testword
  00000014  E8 00000000 E	    call CheckWord
+ 00000019  B8 00002710		    mov eax, 10000
+ 0000001E  E8 00000000 E	    call Delay
 
- 00000019  BA 00000000		    mov edx, 0
+ 00000023  BA 00000000		    mov edx, 0
 
- 0000001E  B9 00000011		    mov ecx, 17
- 00000023  BE 00000000		    mov esi, 0
- 00000028  BA 00000000 R	    mov edx, OFFSET wordlist
+ 00000028  B9 00000011		    mov ecx, 17
+ 0000002D  BE 00000000		    mov esi, 0
+ 00000032  BA 00000000 R	    mov edx, OFFSET wordlist
 				   
- 0000002D  E8 00000000 E	    call SelectRandomWord
+ 00000037  E8 00000000 E	    call SelectRandomWord
 				    
- 00000032  52			    push edx
- 00000033  B6 32		    mov DH, 50
- 00000035  B2 00		    mov DL, 0
- 00000037  E8 00000000 E	    call GotoXY
- 0000003C  5A			    pop edx
+ 0000003C  52			    push edx
+ 0000003D  B6 32		    mov DH, 50
+ 0000003F  B2 00		    mov DL, 0
+ 00000041  E8 00000000 E	    call GotoXY
+ 00000046  5A			    pop edx
 				    
- 0000003D  52			    push edx
- 0000003E  E8 00000000 E	    call Loser
- 00000043  B6 1E		    mov DH, 30
- 00000045  B2 00		    mov DL, 0
- 00000047  E8 00000000 E	    call GotoXY
- 0000004C  E8 00000000 E	    call Winner
- 00000051  B6 1E		    mov DH, 30
- 00000053  B2 00		    mov DL, 0
- 00000055  E8 00000000 E	    call GotoXY
+ 00000047  52			    push edx
+ 00000048  E8 00000000 E	    call Loser
+ 0000004D  B6 1E		    mov DH, 30
+ 0000004F  B2 00		    mov DL, 0
+ 00000051  E8 00000000 E	    call GotoXY
+ 00000056  E8 00000000 E	    call Winner
+ 0000005B  B6 1E		    mov DH, 30
+ 0000005D  B2 00		    mov DL, 0
+ 0000005F  E8 00000000 E	    call GotoXY
 				 
 				    INVOKE ExitProcess, 0
- 0000005A  6A 00	   *	    push   +000000000h
- 0000005C  E8 00000000 E   *	    call   ExitProcess
- 00000061			main ENDP
+ 00000064  6A 00	   *	    push   +000000000h
+ 00000066  E8 00000000 E   *	    call   ExitProcess
+ 0000006B			main ENDP
 				END main
-Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 07:55:50
+Microsoft (R) Macro Assembler Version 14.29.30140.0	    04/05/22 07:59:44
 main.asm						     Symbols 2 - 1
 
 
@@ -221,7 +223,7 @@ Segments and Groups:
 FLAT . . . . . . . . . . . . . .	GROUP
 STACK  . . . . . . . . . . . . .	32 Bit	 00001000 DWord	  Stack	  'STACK'	 
 _DATA  . . . . . . . . . . . . .	32 Bit	 0000006B DWord	  Public  'DATA'	
-_TEXT  . . . . . . . . . . . . .	32 Bit	 00000061 DWord	  Public  'CODE'	
+_TEXT  . . . . . . . . . . . . .	32 Bit	 0000006B DWord	  Public  'CODE'	
 
 
 Procedures, parameters, and locals:
@@ -337,7 +339,7 @@ WriteStackFrame  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External
 WriteString  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteToFile  . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
 WriteWindowsMsg  . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External STDCALL
-main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 00000061 Public STDCALL
+main . . . . . . . . . . . . . .	P Near	 00000000 _TEXT	Length= 0000006B Public STDCALL
 printf . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 scanf  . . . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
 wsprintfA  . . . . . . . . . . .	P Near	 00000000 FLAT	Length= 00000000 External C
