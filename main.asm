@@ -42,7 +42,7 @@ main PROC PUBLIC
         ;// move cursor down 1 row
         inc DH
         call GotoXY
-        jl LoopRows
+        loop LoopRows
     ;// gone through tries, you have lost
     call Loser
     jmp Stop
