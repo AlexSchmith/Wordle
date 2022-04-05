@@ -47,11 +47,14 @@ main PROC PUBLIC
         call Str_compare
         je DisplayWinner
         inc tries
+        cmp tries, 5
+        je DisplayLoser
         ;// move cursor down 1 row
         loop LoopRows
     ;// gone through tries, you have lost
-    call Loser
-    jmp Stop
+    DisplayLoser:
+        call Loser
+        jmp Stop
     DisplayWinner:
         ;// looks like theyve won. Time to show it
         call Winner
