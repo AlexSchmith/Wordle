@@ -27,15 +27,14 @@ wordy4	BYTE "  \ \  \|\__\_\  \ \  \\\  \ \  \\  \\ \  \_\\ \ \  \____\ \  \_|\ 
 wordy5	BYTE "   \ \____________\ \_______\ \__\\ _\\ \_______\ \_______\ \_______\",0
 wordy6	BYTE "    \|____________|\|_______|\|__|\|__|\|_______|\|_______|\|_______|",0
 
-nomaidens  BYTE " _   _        ___  ___      _     _                ",0
-nomaidens1 BYTE "| \ | |       |  \/  |     (_)   | |               ",0
-nomaidens2 BYTE "|  \| | ___   | .  . | __ _ _  __| | ___ _ __  ___ ",0
-nomaidens3 BYTE "| . ` |/ _ \  | |\/| |/ _` | |/ _` |/ _ \ '_ \/ __|",0
-nomaidens4 BYTE "| |\  | (_) | | |  | | (_| | | (_| |  __/ | | \__ \",0
-nomaidens5 BYTE "\_| \_/\___/  \_|  |_/\__,_|_|\__,_|\___|_| |_|___/",0
-nomaidens6 BYTE "                                                   ",0
+nomaidens BYTE "____    ____  ______    __    __     __        ______        _______.___________.", 0
+nomaidens1 BYTE "\   \  /   / /  __  \  |  |  |  |   |  |      /  __  \      /       |           |", 0
+nomaidens2 BYTE " \   \/   / |  |  |  | |  |  |  |   |  |     |  |  |  |    |   (----`---|  |----`", 0
+nomaidens3 BYTE "  \_    _/  |  |  |  | |  |  |  |   |  |     |  |  |  |     \   \       |  |     ", 0
+nomaidens4 BYTE "    |  |    |  `--'  | |  `--'  |   |  `----.|  `--'  | .----)   |      |  |     ", 0
+nomaidens5 BYTE "    |__|     \______/   \______/    |_______| \______/  |_______/       |__|     ", 0
 
-ending 	BYTE "Sorry. The Word of the Day was ",0 
+ending 	BYTE "Sorry. The Word of the Day was: ",0 
 
 
 empty BYTE "MEME"  
@@ -289,13 +288,6 @@ Loser PROC, wod: DWORD
 	mov edx, OFFSET nomaidens5
 	call WriteString
 
-	mov DH, 11
-	mov DL, 20
-	call GotoXY
-
-	mov edx, OFFSET nomaidens6
-	call WriteString
-
 	mov DH, 20
 	mov DL, 40
 	call GotoXY
@@ -310,10 +302,8 @@ Loser PROC, wod: DWORD
 Loser ENDP
 
 
-
-
 Wordle PROC
-	mov eax, lightGreen + (white * 16)
+	mov eax, blue + (white * 16)
 	call SetTextColor
 
 	
