@@ -163,6 +163,9 @@ SetDisplay PROC uses eax
 	mov DL, 50
 	call GotoXY
 
+	mov eax, gray + (gray * 16)
+	call SetTextColor
+
 	ret
 
 SetDisplay ENDP
