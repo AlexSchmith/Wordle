@@ -3,8 +3,6 @@ INCLUDE Irvine32.inc
 INCLUDE logic.inc
 INCLUDE graphics.inc
 
-ExitProcess PROTO, dwExitCode: DWORD
-
 .data
 winners BYTE "$$\     $$\                                                           ", 0
 winner1 BYTE "\$$\   $$  |                                                          ", 0
