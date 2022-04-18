@@ -88,13 +88,7 @@ SetDisplay PROC uses eax edx
     mov DH, 15
     mov DL, 50
     call    GotoXY
-
-    mov eax, gray + (gray * 16)
-    call SetTextColor
-
-    mov esi, 0
     mov ecx, 6
-    sub DH, 1
     BoxLoop:
         mov eax, tableBackground + (tableBackground * 16)
         call SetTextColor
@@ -103,12 +97,9 @@ SetDisplay PROC uses eax edx
         call WriteString
         mov edx, 0
         pop edx
-        mov eax, white + (white * 16)
-        call SetTextColor
         add DH, 1
         mov DL, 50
         call GotoXY
-        inc esi
         loop BoxLoop
     mov DH, 15
     mov DL, 50
