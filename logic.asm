@@ -41,4 +41,18 @@ CharInSamePos PROC USES eax, Char1: BYTE, Char2 : BYTE
     ;// leave values from cmp to return true or false
     ret
 CharInSamePos ENDP
+;// checks if the given word exists within the list
+isWord PROC USES eax ecx, WordCheck: DWORD
+    mov ecx, 17
+    mov eax, OFFSET wordlist
+    isWordLoop:
+        push WordCheck
+        push eax
+        call Str_compare
+        je isWordInList
+        add eax, 6
+        loop isWordLoop
+    isWordInList:
+        ret
+isWord ENDP
 END
