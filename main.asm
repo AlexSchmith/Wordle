@@ -67,7 +67,7 @@ main PROC PUBLIC
         call Str_compare
         je DisplayWinner
         inc tries
-        cmp tries, 5
+        cmp tries, 6
         je DisplayLoser
         ;// move cursor down 1 row
         jmp DoLoopRows
