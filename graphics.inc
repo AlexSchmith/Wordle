@@ -1,4 +1,4 @@
-; iterate through the word and for each char return 
+; iterate through the word and for each char return
 CheckWord PROTO, current_word: DWORD, wod: DWORD
 
 ; Takes in the result of a character and the character itself
