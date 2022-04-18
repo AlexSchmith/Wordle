@@ -1,10 +1,11 @@
 INCLUDE irvine32.inc
 INCLUDE logic.inc
+INCLUDE wordlist.inc
 
 .code
 ;// outputs pointer to random word in wordlist to act as word chooser
 SelectRandomWord PROC USES eax ebx
-    mov eax, 18
+    mov eax, wordlistSize
     call RandomRange
     ;// saving random num in ebx
     mov ebx, eax
@@ -43,7 +44,7 @@ CharInSamePos PROC USES eax, Char1: BYTE, Char2 : BYTE
 CharInSamePos ENDP
 ;// checks if the given word exists within the list
 isWord PROC USES eax ecx, WordCheck: DWORD
-    mov ecx, 13
+    mov ecx, wordlistSize
     mov eax, OFFSET wordlist
     isWordLoop:
         push WordCheck
