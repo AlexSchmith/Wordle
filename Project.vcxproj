@@ -16,8 +16,10 @@
     <MASM Include="graphics.asm" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="colors.inc" />
     <None Include="logic.inc" />
     <None Include="graphics.inc" />
+    <None Include="wordart.inc" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{4164AA65-1EF9-4E69-899B-D1BED776070B}</ProjectGuid>

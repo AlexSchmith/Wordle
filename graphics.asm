@@ -1,33 +1,11 @@
 ; graphics.asm - module for all graphics
 INCLUDE Irvine32.inc
+INCLUDE colors.inc
 INCLUDE logic.inc
 INCLUDE graphics.inc
+INCLUDE wordart.inc
 
 .data
-winners BYTE "$$\     $$\                                                           ", 0
-winner1 BYTE "\$$\   $$  |                                                          ", 0
-winner2 BYTE " \$$\ $$  /$$$$$$\  $$\   $$\       $$\  $$\  $$\  $$$$$$\  $$$$$$$\  ", 0
-winner3 BYTE "  \$$$$  /$$  __$$\ $$ |  $$ |      $$ | $$ | $$ |$$  __$$\ $$  __$$\ ", 0
-winner4 BYTE "   \$$  / $$ /  $$ |$$ |  $$ |      $$ | $$ | $$ |$$ /  $$ |$$ |  $$ |", 0
-winner5 BYTE "    $$ |  $$ |  $$ |$$ |  $$ |      $$ | $$ | $$ |$$ |  $$ |$$ |  $$ |", 0
-winner6 BYTE "    $$ |  \$$$$$$  |\$$$$$$  |      \$$$$$\$$$$  |\$$$$$$  |$$ |  $$ |", 0
-winner7 BYTE "    \__|   \______/  \______/        \_____\____/  \______/ \__|  \__|", 0
-
-wordy   BYTE " ___       __   ________  ________  ________  ___       _______      ",0
-wordy1  BYTE "|\  \     |\  \|\   __  \|\   __  \|\   ___ \|\  \     |\  ___ \     ",0
-wordy2  BYTE "\ \  \    \ \  \ \  \|\  \ \  \|\  \ \  \_|\ \ \  \    \ \   __/|    ",0
-wordy3  BYTE " \ \  \  __\ \  \ \  \\\  \ \   _  _\ \  \ \\ \ \  \    \ \  \_|/__  ",0
-wordy4  BYTE "  \ \  \|\__\_\  \ \  \\\  \ \  \\  \\ \  \_\\ \ \  \____\ \  \_|\ \ ",0
-wordy5  BYTE "   \ \____________\ \_______\ \__\\ _\\ \_______\ \_______\ \_______\",0
-wordy6  BYTE "    \|____________|\|_______|\|__|\|__|\|_______|\|_______|\|_______|",0
-
-nomaidens  BYTE "____    ____  ______    __    __     __        ______        _______.___________.", 0
-nomaidens1 BYTE "\   \  /   / /  __  \  |  |  |  |   |  |      /  __  \      /       |           |", 0
-nomaidens2 BYTE " \   \/   / |  |  |  | |  |  |  |   |  |     |  |  |  |    |   (----`---|  |----`", 0
-nomaidens3 BYTE "  \_    _/  |  |  |  | |  |  |  |   |  |     |  |  |  |     \   \       |  |     ", 0
-nomaidens4 BYTE "    |  |    |  `--'  | |  `--'  |   |  `----.|  `--'  | .----)   |      |  |     ", 0
-nomaidens5 BYTE "    |__|     \______/   \______/    |_______| \______/  |_______/       |__|     ", 0
-
 ending BYTE "Sorry. The Word of the Day was: ",0
 empty BYTE "MEME"
 start_box_h BYTE 15
@@ -76,15 +54,15 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
     je inword
     push eax
     Correct:
-        mov eax, white + (lightGreen * 16)
+        mov eax, (highlightCorrectPos * 16) + fontColor
         call SetTextColor
         jmp print
     Wrong:
-        mov eax, white + (gray * 16)
+        mov eax, (tableBackground * 16) + fontColor
         call SetTextColor
         jmp print
     InWord:
-        mov eax, white + (lightCyan * 16)
+        mov eax, (highlightCorrectChar * 16) + fontColor
         call SetTextColor
     Print:
         pop eax
@@ -92,14 +70,14 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
         add DL, 1
         add DH, 0
         call GotoXY
-        mov eax, black + (white * 16)
+        mov eax, (white * 16) + black
         call SetTextColor
         ret
 DisplayChar ENDP
 
 ; Setup display to set background color and move cursor to the right position
 SetDisplay PROC uses eax edx
-    mov eax, gray + (lightGray * 16)
+    mov eax, backgroundColor * 17
     call SetTextColor
     call Clrscr
     mov DH, 5
@@ -110,179 +88,91 @@ SetDisplay PROC uses eax edx
     mov DH, 15
     mov DL, 50
     call    GotoXY
-
-    mov eax, gray + (gray * 16)
-    call SetTextColor
-
-    mov esi, 0
     mov ecx, 6
-    sub DH, 1
     BoxLoop:
-        mov eax, gray + (gray * 16)
+        mov eax, tableBackground * 17
         call SetTextColor
         push edx
         mov edx, OFFSET empty
         call WriteString
         mov edx, 0
         pop edx
-        mov eax, white + (white * 16)
-        call SetTextColor
         add DH, 1
         mov DL, 50
         call GotoXY
-        inc esi
         loop BoxLoop
     mov DH, 15
     mov DL, 50
     call GotoXY
 
-    mov eax, gray + (gray * 16)
+    mov eax, tableBackground * 17
     call SetTextColor
     ret
 SetDisplay ENDP
 
-Winner PROC
-    mov eax, white + (white * 16)
+Winner PROC USES eax ebx ecx edx esi
+    mov eax, backgroundColor * 17
     call SetTextColor
     call ClrScr
-    mov eax, green + (white * 16)
+    mov eax, (backgroundColor * 16) + winnerFontColor
     call SetTextColor
-    mov DH, 5
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winners
-    call WriteString
-    mov DH, 6
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner1
-    call WriteString
-    mov DH, 7
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner2
-    call WriteString
-    mov DH, 8
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner3
-    call WriteString
-    mov DH, 9
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner4
-    call WriteString
-    mov DH, 10
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner5
-    call WriteString
-    mov DH, 11
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner6
-    call WriteString
-    mov DH, 12
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner7
-    call WriteString
 
-    mov eax, 10000
-    call Delay
+    mov BH, 5
+    mov BL, 20
+    mov ecx, 8
+    mov esi, OFFSET waWinner
+    LoopWinner:
+        mov DH, BH
+        mov DL, BL
+        call GotoXY
+        mov edx, esi
+        call WriteString
+        inc BH
+        add esi, waWinnerRowSize
+        loop LoopWinner
     ret
 Winner ENDP
 
-Loser PROC, wod: DWORD
-    mov eax, white + (white * 16)
+Loser PROC USES eax ebx ecx edx esi, wod: DWORD
+    mov eax, backgroundColor * 17
     call SetTextColor
     call ClrScr
-    mov eax, lightRed + (white * 16)
+    mov eax, (backgroundColor * 16) + loserFontColor
     call SetTextColor
 
-    mov DH, 5
-    mov DL, 20
-    call GotoXY
-
-    mov edx, OFFSET nomaidens
-    call WriteString
-    mov DH, 6
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET nomaidens1
-    call WriteString
-    mov DH, 7
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET nomaidens2
-    call WriteString
-    mov DH, 8
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET nomaidens3
-    call WriteString
-    mov DH, 9
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET nomaidens4
-    call WriteString
-    mov DH, 10
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET nomaidens5
-    call WriteString
-    mov DH, 20
-    mov DL, 40
-    call GotoXY
-    mov edx, OFFSET ending
-    call WriteString
-    mov edx, wod
-    call WriteString
-
-    mov eax, 10000
-    call Delay
+    mov BH, 5
+    mov BL, 20
+    mov ecx, 6
+    mov esi, OFFSET waNomaidens
+    LoopLoser:
+        mov DH, BH
+        mov DL, BL
+        call GotoXY
+        mov edx, esi
+        call WriteString
+        inc BH
+        add esi, waNomaidensRowSize
+        loop LoopLoser
     ret
 Loser ENDP
 
-Wordle PROC
-    mov eax, lightMagenta + (lightGray* 16)
+Wordle PROC USES eax ebx ecx edx esi
+    mov eax, (backgroundColor * 16) + wordleFontColor
     call SetTextColor
 
-    mov edx, OFFSET wordy
-    call WriteString
-    mov DH, 6
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy1
-    call WriteString
-    mov DH, 7
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy2
-    call WriteString
-    mov DH, 8
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy3
-    call WriteString
-    mov DH, 9
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy4
-    call WriteString
-    mov DH, 10
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy5
-    call WriteString
-    mov DH, 11
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy6
-    call WriteString
-    mov DH, 12
-    mov DL, 20
-    call GotoXY
+    mov BH, 5
+    mov BL, 20
+    mov ecx, 7
+    mov esi, OFFSET waWordy
+    LoopWordleWA:
+        mov DH, BH
+        mov DL, BL
+        call GotoXY
+        mov edx, esi
+        call WriteString
+        inc BH
+        add esi, waWordyRowSize
+        loop LoopWordleWA
     ret
 Wordle ENDP
 END

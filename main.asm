@@ -6,6 +6,7 @@ ExitProcess PROTO, dwExitCode:DWORD
 INCLUDE irvine32.inc
 INCLUDE logic.inc
 INCLUDE graphics.inc
+INCLUDE colors.inc
 
 .data
 wod DWORD ?
@@ -30,7 +31,7 @@ main PROC PUBLIC
         ;// getting word input
         mov ecx, 6
         mov edx, OFFSET bufferWord
-        mov eax, white + (gray * 16)
+        mov eax, (tableBackground * 16) + fontColor
         call SetTextColor
         call ReadString
         ;// checking that inputed string is correct size
@@ -63,7 +64,7 @@ main PROC PUBLIC
         call Str_compare
         je DisplayWinner
         inc tries
-        cmp tries, 5
+        cmp tries, 6
         je DisplayLoser
         ;// move cursor down 1 row
         jmp DoLoopRows
