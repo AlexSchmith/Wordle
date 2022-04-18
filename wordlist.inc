@@ -1,5 +1,4 @@
 .data
-wordlistSize DWORD 5757
 wordlist BYTE "which",0
 BYTE "there",0
 BYTE "their",0
@@ -5757,3 +5756,4 @@ BYTE "roble",0
 BYTE "rumba",0
 BYTE "biffy",0
 BYTE "pupal",0
+wordlistSize equ ($ - wordlist)/6
