@@ -36,6 +36,23 @@ main PROC PUBLIC
         mov eax, white + (gray * 16)
         call SetTextColor
         call ReadString
+        ;// checking that inputed string is correct size
+        cmp eax, 5
+        jl ErrorStringTooShort
+        ;// checking that word is in dictionary
+        push OFFSET bufferWord
+        call isWord
+        jne ErrorNotInDictionary
+        jmp LoopNoError
+        ErrorStringTooShort:
+            ;// display line too short
+            jmp DoLoopRows
+        ErrorNotInDictionary:
+            ;// display not a word
+            jmp DoLoopRows
+        DoLoopRows:
+            loop LoopRows
+        LoopNoError:
         ;// moving cursor back to beginning of line
         mov DH, square_height
         add DH, tries
@@ -52,7 +69,7 @@ main PROC PUBLIC
         cmp tries, 5
         je DisplayLoser
         ;// move cursor down 1 row
-        loop LoopRows
+        jmp DoLoopRows
     ;// gone through tries, you have lost
     DisplayLoser:
         push wod
