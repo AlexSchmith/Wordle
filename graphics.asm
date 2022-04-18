@@ -1,5 +1,6 @@
 ; graphics.asm - module for all graphics
 INCLUDE Irvine32.inc
+INCLUDE colors.inc
 INCLUDE logic.inc
 INCLUDE graphics.inc
 INCLUDE wordart.inc
@@ -53,15 +54,15 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
     je inword
     push eax
     Correct:
-        mov eax, white + (lightGreen * 16)
+        mov eax, (highlightCorrectPos * 16) + fontColor
         call SetTextColor
         jmp print
     Wrong:
-        mov eax, white + (gray * 16)
+        mov eax, (tableBackground * 16) + fontColor
         call SetTextColor
         jmp print
     InWord:
-        mov eax, white + (lightCyan * 16)
+        mov eax, (highlightCorrectChar * 16) + fontColor
         call SetTextColor
     Print:
         pop eax
@@ -69,14 +70,14 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
         add DL, 1
         add DH, 0
         call GotoXY
-        mov eax, black + (white * 16)
+        mov eax, (white * 16) + black
         call SetTextColor
         ret
 DisplayChar ENDP
 
 ; Setup display to set background color and move cursor to the right position
 SetDisplay PROC uses eax edx
-    mov eax, gray + (lightGray * 16)
+    mov eax, (backgroundColor * 16) + backgroundColor
     call SetTextColor
     call Clrscr
     mov DH, 5
@@ -95,7 +96,7 @@ SetDisplay PROC uses eax edx
     mov ecx, 6
     sub DH, 1
     BoxLoop:
-        mov eax, gray + (gray * 16)
+        mov eax, tableBackground + (tableBackground * 16)
         call SetTextColor
         push edx
         mov edx, OFFSET empty
@@ -113,16 +114,16 @@ SetDisplay PROC uses eax edx
     mov DL, 50
     call GotoXY
 
-    mov eax, gray + (gray * 16)
+    mov eax, (tableBackground * 16) + tableBackground
     call SetTextColor
     ret
 SetDisplay ENDP
 
 Winner PROC
-    mov eax, white + (white * 16)
+    mov eax, (backgroundColor * 16) + backgroundColor
     call SetTextColor
     call ClrScr
-    mov eax, green + (white * 16)
+    mov eax, (backgroundColor * 16) + winnerFontColor
     call SetTextColor
     mov DH, 5
     mov DL, 20
@@ -171,10 +172,10 @@ Winner PROC
 Winner ENDP
 
 Loser PROC, wod: DWORD
-    mov eax, white + (white * 16)
+    mov eax, (backgroundColor * 16) + backgroundColor
     call SetTextColor
     call ClrScr
-    mov eax, lightRed + (white * 16)
+    mov eax, (backgroundColor * 16) + loserFontColor
     call SetTextColor
 
     mov DH, 5
@@ -222,7 +223,7 @@ Loser PROC, wod: DWORD
 Loser ENDP
 
 Wordle PROC
-    mov eax, lightMagenta + (lightGray* 16)
+    mov eax, (backgroundColor * 16) + wordleFontColor
     call SetTextColor
 
     mov edx, OFFSET wordy1
