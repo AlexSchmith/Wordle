@@ -1,6 +1,3 @@
-;// value for words
-EXTERNDEF wordlist:BYTE
-
 ;// functions for logic
 SelectRandomWord PROTO ;// outputs pointer to random word in wordlist to act as word chooser
 isWord PROTO, WordCheck: DWORD ;// checks if the given word exists within the list
