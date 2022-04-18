@@ -77,7 +77,7 @@ DisplayChar ENDP
 
 ; Setup display to set background color and move cursor to the right position
 SetDisplay PROC uses eax edx
-    mov eax, (backgroundColor * 16) + backgroundColor
+    mov eax, backgroundColor * 17
     call SetTextColor
     call Clrscr
     mov DH, 5
@@ -90,7 +90,7 @@ SetDisplay PROC uses eax edx
     call    GotoXY
     mov ecx, 6
     BoxLoop:
-        mov eax, tableBackground + (tableBackground * 16)
+        mov eax, tableBackground * 17
         call SetTextColor
         push edx
         mov edx, OFFSET empty
@@ -105,13 +105,13 @@ SetDisplay PROC uses eax edx
     mov DL, 50
     call GotoXY
 
-    mov eax, (tableBackground * 16) + tableBackground
+    mov eax, tableBackground * 17
     call SetTextColor
     ret
 SetDisplay ENDP
 
 Winner PROC
-    mov eax, (backgroundColor * 16) + backgroundColor
+    mov eax, backgroundColor * 17
     call SetTextColor
     call ClrScr
     mov eax, (backgroundColor * 16) + winnerFontColor
@@ -163,7 +163,7 @@ Winner PROC
 Winner ENDP
 
 Loser PROC, wod: DWORD
-    mov eax, (backgroundColor * 16) + backgroundColor
+    mov eax, backgroundColor * 17
     call SetTextColor
     call ClrScr
     mov eax, (backgroundColor * 16) + loserFontColor
