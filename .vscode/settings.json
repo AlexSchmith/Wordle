@@ -1,0 +1,11 @@
+{
+    "diffEditor.ignoreTrimWhitespace": true,
+    "editor.trimAutoWhitespace": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.insertSpaces": true,
+    "editor.useTabStops": true,
+    "files.associations": {
+        "*.asm": "asm-intel-x86-generic",
+        "*.inc": "asm-intel-x86-generic"
+    },
+}
