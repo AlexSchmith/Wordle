@@ -127,42 +127,42 @@ Winner PROC
     mov DH, 5
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET winners
+    mov edx, OFFSET winner1
     call WriteString
     mov DH, 6
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET winner1
+    mov edx, OFFSET winner2
     call WriteString
     mov DH, 7
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET winner2
+    mov edx, OFFSET winner3
     call WriteString
     mov DH, 8
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET winner3
+    mov edx, OFFSET winner4
     call WriteString
     mov DH, 9
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET winner4
+    mov edx, OFFSET winner5
     call WriteString
     mov DH, 10
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET winner5
+    mov edx, OFFSET winner6
     call WriteString
     mov DH, 11
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET winner6
+    mov edx, OFFSET winner7
     call WriteString
     mov DH, 12
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET winner7
+    mov edx, OFFSET winner8
     call WriteString
 
     mov eax, 10000
@@ -181,32 +181,32 @@ Loser PROC, wod: DWORD
     mov DL, 20
     call GotoXY
 
-    mov edx, OFFSET nomaidens
+    mov edx, OFFSET nomaidens1
     call WriteString
     mov DH, 6
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET nomaidens1
+    mov edx, OFFSET nomaidens2
     call WriteString
     mov DH, 7
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET nomaidens2
+    mov edx, OFFSET nomaidens3
     call WriteString
     mov DH, 8
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET nomaidens3
+    mov edx, OFFSET nomaidens4
     call WriteString
     mov DH, 9
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET nomaidens4
+    mov edx, OFFSET nomaidens5
     call WriteString
     mov DH, 10
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET nomaidens5
+    mov edx, OFFSET nomaidens6
     call WriteString
     mov DH, 20
     mov DL, 40
@@ -225,37 +225,37 @@ Wordle PROC
     mov eax, lightMagenta + (lightGray* 16)
     call SetTextColor
 
-    mov edx, OFFSET wordy
+    mov edx, OFFSET wordy1
     call WriteString
     mov DH, 6
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET wordy1
+    mov edx, OFFSET wordy2
     call WriteString
     mov DH, 7
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET wordy2
+    mov edx, OFFSET wordy3
     call WriteString
     mov DH, 8
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET wordy3
+    mov edx, OFFSET wordy4
     call WriteString
     mov DH, 9
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET wordy4
+    mov edx, OFFSET wordy5
     call WriteString
     mov DH, 10
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET wordy5
+    mov edx, OFFSET wordy6
     call WriteString
     mov DH, 11
     mov DL, 20
     call GotoXY
-    mov edx, OFFSET wordy6
+    mov edx, OFFSET wordy7
     call WriteString
     mov DH, 12
     mov DL, 20
