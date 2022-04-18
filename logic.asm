@@ -43,7 +43,7 @@ CharInSamePos PROC USES eax, Char1: BYTE, Char2 : BYTE
 CharInSamePos ENDP
 ;// checks if the given word exists within the list
 isWord PROC USES eax ecx, WordCheck: DWORD
-    mov ecx, 13
+    mov ecx, 17
     mov eax, OFFSET wordlist
     isWordLoop:
         push WordCheck
