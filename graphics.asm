@@ -110,53 +110,26 @@ SetDisplay PROC uses eax edx
     ret
 SetDisplay ENDP
 
-Winner PROC
+Winner PROC USES eax ebx ecx edx esi
     mov eax, backgroundColor * 17
     call SetTextColor
     call ClrScr
     mov eax, (backgroundColor * 16) + winnerFontColor
     call SetTextColor
-    mov DH, 5
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner1
-    call WriteString
-    mov DH, 6
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner2
-    call WriteString
-    mov DH, 7
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner3
-    call WriteString
-    mov DH, 8
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner4
-    call WriteString
-    mov DH, 9
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner5
-    call WriteString
-    mov DH, 10
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner6
-    call WriteString
-    mov DH, 11
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner7
-    call WriteString
-    mov DH, 12
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner8
-    call WriteString
 
+    mov BH, 5
+    mov BL, 20
+    mov ecx, 8
+    mov esi, OFFSET waWinner
+    LoopWinner:
+        mov DH, BH
+        mov DL, BL
+        call GotoXY
+        mov edx, esi
+        call WriteString
+        inc BH
+        add esi, waWinnerRowSize
+        loop LoopWinner
     ret
 Winner ENDP
 
