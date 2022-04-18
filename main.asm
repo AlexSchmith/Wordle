@@ -6,6 +6,7 @@ ExitProcess PROTO, dwExitCode:DWORD
 INCLUDE irvine32.inc
 INCLUDE logic.inc
 INCLUDE graphics.inc
+INCLUDE colors.inc
 
 .data
 
@@ -33,7 +34,7 @@ main PROC PUBLIC
         ;// getting word input
         mov ecx, 6
         mov edx, OFFSET bufferWord
-        mov eax, white + (gray * 16)
+        mov eax, (tableBackground * 16) + fontColor
         call SetTextColor
         call ReadString
         ;// moving cursor back to beginning of line
