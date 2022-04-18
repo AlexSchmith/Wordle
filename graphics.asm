@@ -110,143 +110,69 @@ SetDisplay PROC uses eax edx
     ret
 SetDisplay ENDP
 
-Winner PROC
+Winner PROC USES eax ebx ecx edx esi
     mov eax, backgroundColor * 17
     call SetTextColor
     call ClrScr
     mov eax, (backgroundColor * 16) + winnerFontColor
     call SetTextColor
-    mov DH, 5
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner1
-    call WriteString
-    mov DH, 6
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner2
-    call WriteString
-    mov DH, 7
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner3
-    call WriteString
-    mov DH, 8
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner4
-    call WriteString
-    mov DH, 9
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner5
-    call WriteString
-    mov DH, 10
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner6
-    call WriteString
-    mov DH, 11
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner7
-    call WriteString
-    mov DH, 12
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET winner8
-    call WriteString
 
+    mov BH, 5
+    mov BL, 20
+    mov ecx, 8
+    mov esi, OFFSET waWinner
+    LoopWinner:
+        mov DH, BH
+        mov DL, BL
+        call GotoXY
+        mov edx, esi
+        call WriteString
+        inc BH
+        add esi, waWinnerRowSize
+        loop LoopWinner
     ret
 Winner ENDP
 
-Loser PROC, wod: DWORD
+Loser PROC USES eax ebx ecx edx esi, wod: DWORD
     mov eax, backgroundColor * 17
     call SetTextColor
     call ClrScr
     mov eax, (backgroundColor * 16) + loserFontColor
     call SetTextColor
 
-    mov DH, 5
-    mov DL, 20
-    call GotoXY
-
-    mov edx, OFFSET nomaidens1
-    call WriteString
-    mov DH, 6
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET nomaidens2
-    call WriteString
-    mov DH, 7
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET nomaidens3
-    call WriteString
-    mov DH, 8
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET nomaidens4
-    call WriteString
-    mov DH, 9
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET nomaidens5
-    call WriteString
-    mov DH, 10
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET nomaidens6
-    call WriteString
-    mov DH, 20
-    mov DL, 40
-    call GotoXY
-    mov edx, OFFSET ending
-    call WriteString
-    mov edx, wod
-    call WriteString
+    mov BH, 5
+    mov BL, 20
+    mov ecx, 6
+    mov esi, OFFSET waNomaidens
+    LoopLoser:
+        mov DH, BH
+        mov DL, BL
+        call GotoXY
+        mov edx, esi
+        call WriteString
+        inc BH
+        add esi, waNomaidensRowSize
+        loop LoopLoser
     ret
 Loser ENDP
 
-Wordle PROC
+Wordle PROC USES eax ebx ecx edx esi
     mov eax, (backgroundColor * 16) + wordleFontColor
     call SetTextColor
 
-    mov edx, OFFSET wordy1
-    call WriteString
-    mov DH, 6
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy2
-    call WriteString
-    mov DH, 7
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy3
-    call WriteString
-    mov DH, 8
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy4
-    call WriteString
-    mov DH, 9
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy5
-    call WriteString
-    mov DH, 10
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy6
-    call WriteString
-    mov DH, 11
-    mov DL, 20
-    call GotoXY
-    mov edx, OFFSET wordy7
-    call WriteString
-    mov DH, 12
-    mov DL, 20
-    call GotoXY
+    mov BH, 5
+    mov BL, 20
+    mov ecx, 7
+    mov esi, OFFSET waWordy
+    LoopWordleWA:
+        mov DH, BH
+        mov DL, BL
+        call GotoXY
+        mov edx, esi
+        call WriteString
+        inc BH
+        add esi, waWordyRowSize
+        loop LoopWordleWA
     ret
 Wordle ENDP
 END
