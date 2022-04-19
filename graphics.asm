@@ -153,6 +153,14 @@ Loser PROC USES eax ebx ecx edx esi, wod: DWORD
         inc BH
         add esi, waNomaidensRowSize
         loop LoopLoser
+    ;// finished printing loser ascii, printing correct word
+    mov DH, 20
+    mov DL, 40
+    call GotoXY
+    mov edx, OFFSET ending
+    call WriteString
+    mov edx, wod
+    call WriteString
     ret
 Loser ENDP
 
