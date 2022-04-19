@@ -7,7 +7,8 @@ INCLUDE wordart.inc
 
 .data
 ending BYTE "Sorry. The Word of the Day was: ",0
-empty BYTE "MEME"
+empty BYTE "_____",0
+why BYTE "________________________________________________________",0
 start_box_h BYTE 15
 
 .code
@@ -109,6 +110,34 @@ SetDisplay PROC uses eax edx
     call SetTextColor
     ret
 SetDisplay ENDP
+
+ClearLine PROC uses edx, tries: DWORD
+     
+     mov eax, backgroundColor * 17
+     call SetTextColor
+
+     mov dl, 55
+     mov dh, 15
+     add dh, byte ptr [tries]
+     call GotoXY
+
+     mov edx, OFFSET why
+     call WriteString
+
+     mov dl, 50
+     mov dh, 15
+     add dh, byte ptr [tries]
+     call GotoXY
+
+     mov eax, tableBackground * 17
+     call SetTextColor
+
+     mov edx, OFFSET empty
+     call WriteString
+
+     ret
+
+ClearLine ENDP
 
 Winner PROC USES eax ebx ecx edx esi
     mov eax, backgroundColor * 17

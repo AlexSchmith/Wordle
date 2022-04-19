@@ -47,9 +47,16 @@ main PROC PUBLIC
         jmp LoopNoError
         ErrorStringTooShort:
             ;// display line too short
+            movzx ebx, tries
+            push ebx
+            call ClearLine
+
             jmp DoLoopRows
         ErrorNotInDictionary:
             ;// display not a word
+            movzx ebx, tries
+            push ebx
+            call ClearLine
             jmp DoLoopRows
         DoLoopRows:
             loop LoopRows

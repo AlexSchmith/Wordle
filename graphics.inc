@@ -8,6 +8,8 @@ DisplayChar PROTO, color_bg: BYTE, char: BYTE
 ; Changes the background and sets the cursor to the right position also creates a box and ascii art
 SetDisplay PROTO
 
+ClearLine PROTO, ypos: DWORD
+
 ; ASCII art with results and title screen
 Winner PROTO
 Loser PROTO, wod: DWORD
