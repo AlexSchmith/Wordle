@@ -202,7 +202,7 @@ Loser PROC USES eax ebx ecx edx esi, wod: DWORD
         inc bh
         add esi, waNomaidensRowSize
         loop LoopLoser
-    ;// finished printing loser ascii, printing correct word
+    ; finished printing loser ascii, printing correct word
     mov dh, 20
     mov dl, 40
     call GotoXY

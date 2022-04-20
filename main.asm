@@ -18,33 +18,33 @@ square_height BYTE 15
 
 .code
 main PROC PUBLIC
-    ;// start by getting random word
+    ; start by getting random word
     call Randomize
     call SelectRandomWord
     mov wod, edx
-    ;// setting display
+    ; setting display
     call SetDisplay
     LoopRows:
         mov dh, square_height
         add dh, tries
         mov dl, square_length
-        call GotoXY ;// dont need to set position because theyre already set
-        ;// getting word input
+        call GotoXY ; dont need to set position because theyre already set
+        ; getting word input
         mov ecx, 7
         mov edx, OFFSET bufferWord
         mov eax, (tableBackground * 16) + fontColor
         call SetTextColor
         call ReadString
-        ;// checking that inputed string is correct size
+        ; checking that inputed string is correct size
         cmp eax, 5
         jne ErrorStringWrongLength
-        ;// checking that word is in dictionary
+        ; checking that word is in dictionary
         push OFFSET bufferWord
         call isWord
         jne ErrorNotInDictionary
         jmp LoopNoError
         ErrorStringWrongLength:
-            ;// display line too short
+            ; display line too short
             movzx ebx, tries
             push ebx
             call ClearLine
@@ -54,7 +54,7 @@ main PROC PUBLIC
 
             jmp DoLoopRows
         ErrorNotInDictionary:
-            ;// display not a word
+            ; display not a word
             movzx ebx, tries
             push ebx
             call ClearLine
@@ -66,11 +66,11 @@ main PROC PUBLIC
         DoLoopRows:
             loop LoopRows
         LoopNoError:
-        ;// moving cursor back to beginning of line
+        ; moving cursor back to beginning of line
         mov dh, square_height
         add dh, tries
         mov dl, square_length
-        call GotoXY ;// dont need to set position because theyre already set
+        call GotoXY ; dont need to set position because theyre already set
         push wod
         push OFFSET bufferWord
         call CheckWord
@@ -81,15 +81,15 @@ main PROC PUBLIC
         inc tries
         cmp tries, 6
         je DisplayLoser
-        ;// move cursor down 1 row
+        ; move cursor down 1 row
         jmp DoLoopRows
-    ;// gone through tries, you have lost
+    ; gone through tries, you have lost
     DisplayLoser:
         push wod
         call Loser
         jmp Stop
     DisplayWinner:
-        ;// looks like theyve won. Time to show it
+        ; looks like theyve won. Time to show it
         call Winner
     Stop:
         INVOKE ExitProcess, 0
