@@ -111,11 +111,13 @@ SetDisplay PROC USES eax edx
     ret
 SetDisplay ENDP
 
-ClearLine PROC USES edx, tries: DWORD
+; Clears line in wordle table after error
+ClearLine PROC USES eax edx, tries: DWORD
      mov eax, backgroundColor * 17
      call SetTextColor
      mov dl, 55
      mov dh, 15
+     ; Get value by dereference from tries as a byte from dword
      add dh, byte ptr [tries]
      call GotoXY
      mov edx, OFFSET why
@@ -123,6 +125,7 @@ ClearLine PROC USES edx, tries: DWORD
 
      mov dl, 50
      mov dh, 15
+     ; Get value by dereference from tries as a byte from dword
      add dh, byte ptr [tries]
      call GotoXY
      mov eax, tableBackground * 17
@@ -132,7 +135,7 @@ ClearLine PROC USES edx, tries: DWORD
      ret
 ClearLine ENDP
 
-DisplayError PROC
+DisplayError PROC uses edx eax
     mov dl, 25
     mov dh, 25
     call GotoXY
@@ -154,6 +157,7 @@ DisplayError PROC
     ret
 DisplayError ENDP
 
+; Prints out You Won to the screen
 Winner PROC USES eax ebx ecx edx esi
     mov eax, backgroundColor * 17
     call SetTextColor
@@ -177,6 +181,7 @@ Winner PROC USES eax ebx ecx edx esi
     ret
 Winner ENDP
 
+; Print out You Lose to screen
 Loser PROC USES eax ebx ecx edx esi, wod: DWORD
     mov eax, backgroundColor * 17
     call SetTextColor
@@ -208,6 +213,7 @@ Loser PROC USES eax ebx ecx edx esi, wod: DWORD
     ret
 Loser ENDP
 
+; Print out wordle as title screen
 Wordle PROC USES eax ebx ecx edx esi
     mov eax, wordleColor
     call SetTextColor
