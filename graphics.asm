@@ -135,11 +135,11 @@ ClearLine PROC USES eax edx, tries: DWORD
      ret
 ClearLine ENDP
 
-DisplayError PROC uses edx eax
+DisplayError PROC uses eax edx
     mov dl, 25
     mov dh, 25
     call GotoXY
-    mov eax, loserColor 
+    mov eax, loserColor
     call SetTextColor
     mov edx, OFFSET error
     call WriteString
