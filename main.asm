@@ -10,7 +10,7 @@ INCLUDE colors.inc
 
 .data
 wod DWORD ?
-bufferWord BYTE 6 DUP (?), 0
+bufferWord BYTE 7 DUP (?), 0
 tries BYTE 0
 square_length BYTE 50
 square_height BYTE 15
@@ -24,37 +24,51 @@ main PROC PUBLIC
     ;// setting display
     call SetDisplay
     LoopRows:
-        mov DH, square_height
-        add DH, tries
-        mov DL, square_length
+        mov dh, square_height
+        add dh, tries
+        mov dl, square_length
         call GotoXY ;// dont need to set position because theyre already set
         ;// getting word input
-        mov ecx, 6
+        mov ecx, 7
         mov edx, OFFSET bufferWord
         mov eax, (tableBackground * 16) + fontColor
         call SetTextColor
         call ReadString
         ;// checking that inputed string is correct size
         cmp eax, 5
-        jl ErrorStringTooShort
+        jne ErrorStringWrongLength
         ;// checking that word is in dictionary
         push OFFSET bufferWord
         call isWord
         jne ErrorNotInDictionary
         jmp LoopNoError
-        ErrorStringTooShort:
+        ErrorStringWrongLength:
             ;// display line too short
+            movzx ebx, tries
+            push ebx
+            call ClearLine
+
+            mov eax,0
+            call DisplayError
+
             jmp DoLoopRows
         ErrorNotInDictionary:
             ;// display not a word
+            movzx ebx, tries
+            push ebx
+            call ClearLine
+
+            mov eax, 1
+            call DisplayError
+
             jmp DoLoopRows
         DoLoopRows:
             loop LoopRows
         LoopNoError:
         ;// moving cursor back to beginning of line
-        mov DH, square_height
-        add DH, tries
-        mov DL, square_length
+        mov dh, square_height
+        add dh, tries
+        mov dl, square_length
         call GotoXY ;// dont need to set position because theyre already set
         push wod
         push OFFSET bufferWord
