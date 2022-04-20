@@ -135,7 +135,7 @@ ClearLine PROC USES eax edx, tries: DWORD
      ret
 ClearLine ENDP
 
-DisplayError PROC uses eax edx
+DisplayError PROC USES eax edx
     mov dl, 25
     mov dh, 25
     call GotoXY
