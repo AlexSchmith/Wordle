@@ -30,21 +30,21 @@ CheckWord PROC USES eax ecx esi edi, current_word: DWORD, wod: DWORD
         mov ebx, 2
         jmp Display
         NotCorrect:
-        push wod
-        push [esi]
-        call CharInWord
-        jne Wrong
-        mov ebx, 1
-        jmp Display
+            push wod
+            push [esi]
+            call CharInWord
+            jne Wrong
+            mov ebx, 1
+            jmp Display
         Wrong:
-        mov ebx, 0
+            mov ebx, 0
         Display:
-        push eax
-        push ebx
-        call DisplayChar
-        inc esi
-        inc edi
-        loop WordLoop
+            push eax
+            push ebx
+            call DisplayChar
+            inc esi
+            inc edi
+            loop WordLoop
     ret
 CheckWord ENDP
 
@@ -104,26 +104,21 @@ SetDisplay PROC USES eax edx
         mov dl, 50
         call GotoXY
         loop BoxLoop
-
     mov dh, 15
     mov dl, 50
     call GotoXY
-
     mov eax, tableBackground * 17
     call SetTextColor
     ret
 SetDisplay ENDP
 
 ClearLine PROC USES edx, tries: DWORD
-
      mov eax, backgroundColor * 17
      call SetTextColor
-
      mov dl, 55
      mov dh, 15
      add dh, byte ptr [tries]
      call GotoXY
-
      mov edx, OFFSET why
      call WriteString
 
@@ -131,26 +126,19 @@ ClearLine PROC USES edx, tries: DWORD
      mov dh, 15
      add dh, byte ptr [tries]
      call GotoXY
-
      mov eax, tableBackground * 17
      call SetTextColor
-
      mov edx, OFFSET empty
      call WriteString
-
      ret
-
 ClearLine ENDP
 
 DisplayError PROC
-
     mov dl, 25
     mov dh, 25
     call GotoXY
-
     mov eax, tableBackground * 17
     call SetTextColor
-
     mov edx, OFFSET why
     call WriteString
 
@@ -159,12 +147,9 @@ DisplayError PROC
     call GotoXY
     mov eax, tableBackground * 16 (LoserFontColor * 8)
     call SetTextColor
-
     mov edx, OFFSET error
     call WriteString
-
     ret
-
 DisplayError ENDP
 
 Winner PROC USES eax ebx ecx edx esi
