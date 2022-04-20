@@ -14,7 +14,7 @@ bufferWord BYTE 7 DUP (?), 0
 tries BYTE 0
 square_length BYTE 50
 square_height BYTE 15
-try_again BYTE "Press y to try again",0
+try_again BYTE "Play again? [y/n] ",0
 
 .code
 main PROC PUBLIC
