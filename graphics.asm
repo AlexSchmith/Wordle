@@ -57,7 +57,7 @@ DisplayChar PROC USES ebx eax, color_bg: BYTE, char: BYTE
     je inword
     push eax
     Correct:
-        mov eax, (highlightCorrectPos * 16) + fontColor
+        mov eax, highlightCorrectPos
         call SetTextColor
         jmp print
     Wrong:
@@ -65,16 +65,13 @@ DisplayChar PROC USES ebx eax, color_bg: BYTE, char: BYTE
         call SetTextColor
         jmp print
     InWord:
-        mov eax, (highlightCorrectChar * 16) + fontColor
+        mov eax, highlightCorrectChar
         call SetTextColor
     Print:
         pop eax
         call WriteChar
         add dl, 1
-        add dh, 0
         call GotoXY
-        mov eax, (white * 16) + black
-        call SetTextColor
         ret
 DisplayChar ENDP
 
@@ -145,7 +142,7 @@ DisplayError PROC
     mov dl, 25
     mov dh, 25
     call GotoXY
-    mov eax, tableBackground * 16 (LoserFontColor * 8)
+    mov eax, loserColor
     call SetTextColor
     mov edx, OFFSET error
     call WriteString
@@ -156,7 +153,7 @@ Winner PROC USES eax ebx ecx edx esi
     mov eax, backgroundColor * 17
     call SetTextColor
     call ClrScr
-    mov eax, (backgroundColor * 16) + winnerFontColor
+    mov eax, winnerColor
     call SetTextColor
 
     mov bh, 5
@@ -179,7 +176,7 @@ Loser PROC USES eax ebx ecx edx esi, wod: DWORD
     mov eax, backgroundColor * 17
     call SetTextColor
     call ClrScr
-    mov eax, (backgroundColor * 16) + loserFontColor
+    mov eax, loserColor
     call SetTextColor
 
     mov bh, 5
@@ -207,7 +204,7 @@ Loser PROC USES eax ebx ecx edx esi, wod: DWORD
 Loser ENDP
 
 Wordle PROC USES eax ebx ecx edx esi
-    mov eax, (backgroundColor * 16) + wordleFontColor
+    mov eax, wordleColor
     call SetTextColor
 
     mov bh, 5
