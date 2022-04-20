@@ -27,9 +27,9 @@ main PROC PUBLIC
     ;// setting display
     call SetDisplay
     LoopRows:
-        mov DH, square_height
-        add DH, tries
-        mov DL, square_length
+        mov dh, square_height
+        add dh, tries
+        mov dl, square_length
         call GotoXY ;// dont need to set position because theyre already set
         ;// getting word input
         mov ecx, 7
@@ -51,7 +51,7 @@ main PROC PUBLIC
             push ebx
             call ClearLine
 
-            mov eax,0 
+            mov eax,0
             call DisplayError
 
             jmp DoLoopRows
@@ -69,9 +69,9 @@ main PROC PUBLIC
             loop LoopRows
         LoopNoError:
         ;// moving cursor back to beginning of line
-        mov DH, square_height
-        add DH, tries
-        mov DL, square_length
+        mov dh, square_height
+        add dh, tries
+        mov dl, square_length
         call GotoXY ;// dont need to set position because theyre already set
         push wod
         push OFFSET bufferWord

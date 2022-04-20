@@ -16,7 +16,7 @@ start_box_h BYTE 15
 .code
 ; Function that checks each character in the word and displays them
 ; Uses esi for the wod and edi for the word
-CheckWord PROC uses eax ecx esi edi, current_word: DWORD, wod: DWORD
+CheckWord PROC USES eax ecx esi edi, current_word: DWORD, wod: DWORD
     ;use al for each individual char
     mov ecx, 5
     mov esi, current_word
@@ -50,7 +50,7 @@ CheckWord ENDP
 
 ; Display the character and whether the character is in the word, in the right position or not in the word
 ; uses eax for color bg and esi for char
-DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
+DisplayChar PROC USES ebx eax, color_bg: BYTE, char: BYTE
     cmp ebx, 0
     je wrong
     cmp ebx, 1
@@ -70,8 +70,8 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
     Print:
         pop eax
         call WriteChar
-        add DL, 1
-        add DH, 0
+        add dl, 1
+        add dh, 0
         call GotoXY
         mov eax, (white * 16) + black
         call SetTextColor
@@ -79,17 +79,17 @@ DisplayChar PROC uses ebx eax, color_bg: BYTE, char: BYTE
 DisplayChar ENDP
 
 ; Setup display to set background color and move cursor to the right position
-SetDisplay PROC uses eax edx
+SetDisplay PROC USES eax edx
     mov eax, backgroundColor * 17
     call SetTextColor
     call Clrscr
-    mov DH, 5
-    mov DL, 20
+    mov dh, 5
+    mov dl, 20
     call GotoXY
     call Wordle
 
-    mov DH, 15
-    mov DL, 50
+    mov dh, 15
+    mov dl, 50
     call    GotoXY
     mov ecx, 6
     BoxLoop:
@@ -100,13 +100,13 @@ SetDisplay PROC uses eax edx
         call WriteString
         mov edx, 0
         pop edx
-        add DH, 1
-        mov DL, 50
+        add dh, 1
+        mov dl, 50
         call GotoXY
         loop BoxLoop
 
-    mov DH, 15
-    mov DL, 50
+    mov dh, 15
+    mov dl, 50
     call GotoXY
 
     mov eax, tableBackground * 17
@@ -114,8 +114,8 @@ SetDisplay PROC uses eax edx
     ret
 SetDisplay ENDP
 
-ClearLine PROC uses edx, tries: DWORD
-     
+ClearLine PROC USES edx, tries: DWORD
+
      mov eax, backgroundColor * 17
      call SetTextColor
 
@@ -159,10 +159,10 @@ DisplayError PROC
     call GotoXY
     mov eax, tableBackground * 16 (LoserFontColor * 8)
     call SetTextColor
-    
+
     mov edx, OFFSET error
     call WriteString
-        
+
     ret
 
 DisplayError ENDP
@@ -174,17 +174,17 @@ Winner PROC USES eax ebx ecx edx esi
     mov eax, (backgroundColor * 16) + winnerFontColor
     call SetTextColor
 
-    mov BH, 5
-    mov BL, 20
+    mov bh, 5
+    mov bl, 20
     mov ecx, 8
     mov esi, OFFSET waWinner
     LoopWinner:
-        mov DH, BH
-        mov DL, BL
+        mov dh, bh
+        mov dl, bl
         call GotoXY
         mov edx, esi
         call WriteString
-        inc BH
+        inc bh
         add esi, waWinnerRowSize
         loop LoopWinner
     ret
@@ -197,22 +197,22 @@ Loser PROC USES eax ebx ecx edx esi, wod: DWORD
     mov eax, (backgroundColor * 16) + loserFontColor
     call SetTextColor
 
-    mov BH, 5
-    mov BL, 20
+    mov bh, 5
+    mov bl, 20
     mov ecx, 6
     mov esi, OFFSET waNomaidens
     LoopLoser:
-        mov DH, BH
-        mov DL, BL
+        mov dh, bh
+        mov dl, bl
         call GotoXY
         mov edx, esi
         call WriteString
-        inc BH
+        inc bh
         add esi, waNomaidensRowSize
         loop LoopLoser
     ;// finished printing loser ascii, printing correct word
-    mov DH, 20
-    mov DL, 40
+    mov dh, 20
+    mov dl, 40
     call GotoXY
     mov edx, OFFSET ending
     call WriteString
@@ -225,17 +225,17 @@ Wordle PROC USES eax ebx ecx edx esi
     mov eax, (backgroundColor * 16) + wordleFontColor
     call SetTextColor
 
-    mov BH, 5
-    mov BL, 20
+    mov bh, 5
+    mov bl, 20
     mov ecx, 7
     mov esi, OFFSET waWordy
     LoopWordleWA:
-        mov DH, BH
-        mov DL, BL
+        mov dh, bh
+        mov dl, bl
         call GotoXY
         mov edx, esi
         call WriteString
-        inc BH
+        inc bh
         add esi, waWordyRowSize
         loop LoopWordleWA
     ret
