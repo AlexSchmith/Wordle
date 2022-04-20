@@ -1,9 +1,9 @@
-;// base colors
+; base colors
 backgroundColor equ black
 tableBackground equ gray
 fontColor equ white
 
-;// correction highlights
+; correction highlights
 highlightCorrectCharBG equ yellow
 highlightCorrectCharFG equ black
 highlightCorrectPosBG equ lightGreen
@@ -12,7 +12,7 @@ highlightCorrectPosFG equ white
 highlightCorrectChar equ (16 * highlightCorrectCharBG) + highlightCorrectCharFG
 highlightCorrectPos equ (16 * highlightCorrectPosBG) + highlightCorrectPosFG
 
-;// ascii art fonts
+; ascii art fonts
 wordleFG equ lightCyan
 winnerFG equ lightCyan
 loserFG equ lightRed
