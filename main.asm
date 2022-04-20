@@ -36,31 +36,18 @@ main PROC PUBLIC
         call ReadString
         ; checking that inputed string is correct size
         cmp eax, 5
-        jne ErrorStringWrongLength
+        jne Error
         ; checking that word is in dictionary
         push OFFSET bufferWord
         call isWord
-        jne ErrorNotInDictionary
+        jne Error
         jmp LoopNoError
-        ErrorStringWrongLength:
+        Error:
             ; display line too short
             movzx ebx, tries
             push ebx
             call ClearLine
-
-            mov eax,0
             call DisplayError
-
-            jmp DoLoopRows
-        ErrorNotInDictionary:
-            ; display not a word
-            movzx ebx, tries
-            push ebx
-            call ClearLine
-
-            mov eax, 1
-            call DisplayError
-
             jmp DoLoopRows
         DoLoopRows:
             loop LoopRows
