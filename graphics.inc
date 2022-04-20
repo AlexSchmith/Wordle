@@ -10,6 +10,8 @@ SetDisplay PROTO
 
 ClearLine PROTO, ypos: DWORD
 
+DisplayError PROTO
+
 ; ASCII art with results and title screen
 Winner PROTO
 Loser PROTO, wod: DWORD

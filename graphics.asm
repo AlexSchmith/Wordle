@@ -6,9 +6,11 @@ INCLUDE graphics.inc
 INCLUDE wordart.inc
 
 .data
+
 ending BYTE "Sorry. The Word of the Day was: ",0
+error BYTE "Please enter a five letter word in the dictionary",0
 empty BYTE "_____",0
-why BYTE "________________________________________________________",0
+why BYTE "_________________________________________________",0
 start_box_h BYTE 15
 
 .code
@@ -102,6 +104,7 @@ SetDisplay PROC uses eax edx
         mov DL, 50
         call GotoXY
         loop BoxLoop
+
     mov DH, 15
     mov DL, 50
     call GotoXY
@@ -138,6 +141,31 @@ ClearLine PROC uses edx, tries: DWORD
      ret
 
 ClearLine ENDP
+
+DisplayError PROC
+
+    mov dl, 25
+    mov dh, 25
+    call GotoXY
+
+    mov eax, tableBackground * 17
+    call SetTextColor
+
+    mov edx, OFFSET why
+    call WriteString
+
+    mov dl, 25
+    mov dh, 25
+    call GotoXY
+    mov eax, tableBackground * 16 (LoserFontColor * 8)
+    call SetTextColor
+    
+    mov edx, OFFSET error
+    call WriteString
+        
+    ret
+
+DisplayError ENDP
 
 Winner PROC USES eax ebx ecx edx esi
     mov eax, backgroundColor * 17

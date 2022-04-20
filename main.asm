@@ -13,7 +13,7 @@ INCLUDE colors.inc
 
 wordlist BYTE "which",0,"there",0,"their",0,"about",0,"would",0,"these",0,"other",0,"words",0,"could",0,"write",0,"first",0,"water",0,"after",0,"where",0,"right",0,"think",0,"three", 0
 wod DWORD ?
-bufferWord BYTE 6 DUP (?), 0
+bufferWord BYTE 7 DUP (?), 0
 tries BYTE 0
 square_length BYTE 50
 square_height BYTE 15
@@ -32,24 +32,27 @@ main PROC PUBLIC
         mov DL, square_length
         call GotoXY ;// dont need to set position because theyre already set
         ;// getting word input
-        mov ecx, 6
+        mov ecx, 7
         mov edx, OFFSET bufferWord
         mov eax, (tableBackground * 16) + fontColor
         call SetTextColor
         call ReadString
         ;// checking that inputed string is correct size
         cmp eax, 5
-        jl ErrorStringTooShort
+        jne ErrorStringWrongLength
         ;// checking that word is in dictionary
         push OFFSET bufferWord
         call isWord
         jne ErrorNotInDictionary
         jmp LoopNoError
-        ErrorStringTooShort:
+        ErrorStringWrongLength:
             ;// display line too short
             movzx ebx, tries
             push ebx
             call ClearLine
+
+            mov eax,0 
+            call DisplayError
 
             jmp DoLoopRows
         ErrorNotInDictionary:
@@ -57,6 +60,10 @@ main PROC PUBLIC
             movzx ebx, tries
             push ebx
             call ClearLine
+
+            mov eax, 1
+            call DisplayError
+
             jmp DoLoopRows
         DoLoopRows:
             loop LoopRows
