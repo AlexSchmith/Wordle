@@ -81,7 +81,6 @@ main PROC PUBLIC
         ; looks like theyve won. Time to show it
         call Winner
     Stop:
-        
         mov dl, 25
         mov dh, 25
         call GotoXY
@@ -92,7 +91,6 @@ main PROC PUBLIC
         call ReadChar
         cmp al, 'y'
         je GameOn
-       
         INVOKE ExitProcess, 0
 main ENDP
 END main
