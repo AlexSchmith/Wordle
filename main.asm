@@ -88,9 +88,12 @@ main PROC PUBLIC
         call SetTextColor
         mov edx, OFFSET try_again
         call WriteString
+        TryAgainPrompt:
         call ReadChar
         cmp al, 'y'
         je GameOn
+        cmp al, 'n'
+        jne TryAgainPrompt
         INVOKE ExitProcess, 0
 main ENDP
 END main
