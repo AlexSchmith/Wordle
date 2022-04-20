@@ -45,6 +45,8 @@ CheckWord PROC USES eax ecx esi edi, current_word: DWORD, wod: DWORD
             inc esi
             inc edi
             loop WordLoop
+    mov eax, 500
+    call Delay
     ret
 CheckWord ENDP
 
@@ -134,15 +136,7 @@ DisplayError PROC
     mov dl, 25
     mov dh, 25
     call GotoXY
-    mov eax, tableBackground * 17
-    call SetTextColor
-    mov edx, OFFSET why
-    call WriteString
-
-    mov dl, 25
-    mov dh, 25
-    call GotoXY
-    mov eax, loserColor
+    mov eax, loserColor 
     call SetTextColor
     mov edx, OFFSET error
     call WriteString
