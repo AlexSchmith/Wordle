@@ -146,6 +146,17 @@ DisplayError PROC
     call SetTextColor
     mov edx, OFFSET error
     call WriteString
+
+    mov eax, 1000
+    call Delay
+
+    mov dl, 25
+    mov dh, 25
+    call GotoXY
+    mov eax, backgroundColor * 17
+    call SetTextColor
+    mov edx, OFFSET why
+    call WriteString
     ret
 DisplayError ENDP
 
